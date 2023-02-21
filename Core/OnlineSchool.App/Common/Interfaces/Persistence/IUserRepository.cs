@@ -6,4 +6,5 @@ public interface IUserRepository
 {
     void Add(UserEntity user);
     UserEntity? FindUserByEmail(string email);
+    UserEntity? FindUserById(Guid id);
 }

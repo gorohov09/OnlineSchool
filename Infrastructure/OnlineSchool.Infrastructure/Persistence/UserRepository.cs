@@ -16,4 +16,9 @@ public class UserRepository : IUserRepository
     {
         return _users.FirstOrDefault(x => x.Email == email);
     }
+
+    public UserEntity? FindUserById(Guid id)
+    {
+        return _users.FirstOrDefault(x => x.Id == id);
+    }
 }
