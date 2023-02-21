@@ -20,14 +20,4 @@ public class Student
     {
         return $"{LastName} {FirstName} {Patronymic}";
     }
-
-    public int GetAge()
-    {
-        var age = DateTime.Now.Year - BirthDay.Year;
-
-        if (DateTime.Now.DayOfYear < BirthDay.DayOfYear)
-            age++;
-
-        return age;
-    }
 }
