@@ -17,4 +17,8 @@
     <ProjectReference Include="..\OnlineSchool.Domain\OnlineSchool.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Authentication\Queries\" />
+  </ItemGroup>
+
 </Project>

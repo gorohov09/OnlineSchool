@@ -8,16 +8,19 @@ public class Student
 
     public string FirstName { get; }
 
-    public string Patronymic { get; }
+    public string? Patronymic { get; }
 
     public DateTime BirthDay { get; }
 
-    public string Login { get; }
-
-    public string Password { get; }
+    public Student(Guid id, string firstName, string lastName)
+    {
+        Id = id;
+        FirstName = firstName;
+        LastName = lastName;
+    }
 
     public string GetFullName()
     {
-        return $"{LastName} {FirstName} {Patronymic}";
+        return Patronymic is null ? $"{LastName} {FirstName}": $"{LastName} {FirstName} {Patronymic}";
     }
 }

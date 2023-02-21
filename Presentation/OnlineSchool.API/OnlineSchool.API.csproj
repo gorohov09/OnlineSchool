@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Core\OnlineSchool.App\OnlineSchool.App.csproj" />
     <ProjectReference Include="..\..\Infrastructure\OnlineSchool.Infrastructure\OnlineSchool.Infrastructure.csproj" />
     <ProjectReference Include="..\OnlineSchool.Contracts\OnlineSchool.Contracts.csproj" />
