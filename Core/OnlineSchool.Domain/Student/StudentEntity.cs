@@ -26,6 +26,11 @@ public class StudentEntity
         LastName = lastName;
     }
 
+    public StudentEntity()
+    {
+
+    }
+
     public void EnrollCourse(CourseEntity course)
     {
         _informationAdmissions.Add(new InformationAdmissionEntity(this, course));

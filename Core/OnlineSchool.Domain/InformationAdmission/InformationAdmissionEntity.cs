@@ -5,6 +5,8 @@ namespace OnlineSchool.Domain.InformationAdmission;
 
 public class InformationAdmissionEntity
 {
+    public Guid Id { get; set; }
+
     /// <summary>
     /// Студент
     /// </summary>
@@ -26,9 +28,15 @@ public class InformationAdmissionEntity
 
     public InformationAdmissionEntity(StudentEntity student, CourseEntity course)
     {
+        Id = Guid.NewGuid();
         Student = student;
         Course = course;
         DateAdmission = DateTime.Now;
+    }
+
+    public InformationAdmissionEntity()
+    {
+
     }
 
     public double GetPercentPassing()

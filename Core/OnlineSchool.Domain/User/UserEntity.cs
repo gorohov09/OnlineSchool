@@ -20,4 +20,9 @@ public class UserEntity
         Password = password;
         Email = email;
     }
+
+    public UserEntity()
+    {
+
+    }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using OnlineSchool.App.Common.Interfaces.Authentication;
 using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.App.Common.Interfaces.Services;
@@ -19,6 +20,11 @@ public static class DependencyInjection
         services.AddScoped<IStudentRepository, StudentRepository>();
 
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+
+        services.AddDbContext<OnlineSchoolDbContext>(options =>
+        {
+            options.UseSqlServer("Data Source=LAPTOP-IGE01LPP\\SQLEXPRESS;Initial Catalog=OnlineSchoolDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+        });
 
         return services;
     }

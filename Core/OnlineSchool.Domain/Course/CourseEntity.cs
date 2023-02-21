@@ -54,4 +54,9 @@ public class CourseEntity
         Created = DateTime.Now;
         Updated = DateTime.Now;
     }
+
+    public CourseEntity()
+    {
+
+    }
 }
