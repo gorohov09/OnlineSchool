@@ -1,6 +1,6 @@
 ﻿namespace OnlineSchool.Domain.User;
 
-public class User
+public class UserEntity
 {
     public Guid Id { get; set; }
 
@@ -12,7 +12,7 @@ public class User
 
     public string Email { get; }
 
-    public User(string firstName, string lastName, string password, string email)
+    public UserEntity(string firstName, string lastName, string password, string email)
     {
         Id = Guid.NewGuid();
         FirstName = firstName;

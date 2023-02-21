@@ -5,9 +5,9 @@ namespace OnlineSchool.Infrastructure.Persistence;
 
 public class StudentRepository : IStudentRepository
 {
-    public static readonly List<Student> _students = new();
+    public static readonly List<StudentEntity> _students = new();
 
-    public void AddStudent(Student student)
+    public void AddStudent(StudentEntity student)
     {
         _students.Add(student);
     }

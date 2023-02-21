@@ -4,6 +4,6 @@ namespace OnlineSchool.App.Common.Interfaces.Persistence;
 
 public interface IStudentRepository
 {
-    void AddStudent(Student student);
+    void AddStudent(StudentEntity student);
 }
 

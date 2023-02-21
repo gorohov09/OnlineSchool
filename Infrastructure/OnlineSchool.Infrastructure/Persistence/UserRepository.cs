@@ -5,14 +5,14 @@ namespace OnlineSchool.Infrastructure.Persistence;
 
 public class UserRepository : IUserRepository
 {
-    public static readonly List<User> _users = new();
+    public static readonly List<UserEntity> _users = new();
 
-    public void Add(User user)
+    public void Add(UserEntity user)
     {
         _users.Add(user);
     }
 
-    public User? FindUserByEmail(string email)
+    public UserEntity? FindUserByEmail(string email)
     {
         return _users.FirstOrDefault(x => x.Email == email);
     }

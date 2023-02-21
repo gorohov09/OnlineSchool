@@ -4,6 +4,6 @@ namespace OnlineSchool.App.Common.Interfaces.Persistence;
 
 public interface IUserRepository
 {
-    void Add(User user);
-    User? FindUserByEmail(string email);
+    void Add(UserEntity user);
+    UserEntity? FindUserByEmail(string email);
 }
