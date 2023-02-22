@@ -33,6 +33,9 @@ public class StudentController : ControllerBase
     private CoursesStudentResponse Map(CoursesStudentVm courses)
     {
         return new CoursesStudentResponse(
+            courses.Id,
+            courses.LastName,
+            courses.FirstName,
             courses.Courses.Select(c => new CourseResponse(c.Id, c.Name, c.Description, c.PersentPassing))
             .ToList());
     }

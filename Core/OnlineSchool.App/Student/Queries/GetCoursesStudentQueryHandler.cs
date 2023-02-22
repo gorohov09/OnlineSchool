@@ -30,13 +30,14 @@ public class GetCoursesStudentQueryHandler
         }
 
         // 1. Проверим, что такой пользователь существует
-        if (_userRepository.FindUserById(studentId) is null)
+        var student = await _userRepository.FindUserById(studentId);
+        if (student is null)
         {
             return Errors.User.UserNotFound;
         }
 
         // 2. Получаем информацию по курсам, на которые зачислен ученик
-        var informationAddmission = _studentRepository.GetInformationAdmissions(studentId);
+        var informationAddmission = await _studentRepository.GetInformationAdmissions(studentId);
 
         //3. Преобразуем в нужный список - информация по каждому курсу для данного ученика
         var coursesInformation = informationAddmission.Select(course => new CourseVm(
@@ -47,6 +48,10 @@ public class GetCoursesStudentQueryHandler
             .ToList();
 
         //4. Формируем итоговую модель
-        return new CoursesStudentVm(coursesInformation);
+        return new CoursesStudentVm(
+            student.Id.ToString(),
+            student.LastName,
+            student.FirstName,
+            coursesInformation);
     }
 }

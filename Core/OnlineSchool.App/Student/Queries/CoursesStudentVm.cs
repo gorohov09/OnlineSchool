@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 namespace OnlineSchool.App.Student.Queries
 {
     public record CoursesStudentVm(
+        string Id,
+        string LastName,
+        string FirstName,
         List<CourseVm> Courses);
 
     public record CourseVm(

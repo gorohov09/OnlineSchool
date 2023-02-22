@@ -43,6 +43,6 @@ public class InformationAdmissionEntity
     {
         var countJob = (double)Course.CountLessons + Course.CountLessons;
         var countCompletedJob = (double)CountCompletedLessons + CountCompletedTasks;
-        return (countJob / countCompletedJob) * 100;
+        return (countCompletedJob / countJob) * 100;
     }
 }

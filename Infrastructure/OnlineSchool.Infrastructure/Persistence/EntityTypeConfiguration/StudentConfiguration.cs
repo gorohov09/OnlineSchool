@@ -10,5 +10,10 @@ public class StudentConfiguration : IEntityTypeConfiguration<StudentEntity>
     {
         builder.ToTable("Students");
         builder.HasKey(student => student.Id);
+        builder.Property(student => student.LastName);
+        builder.Property(student => student.FirstName);
+        builder.Property(student => student.Patronymic);
+        builder.Property(student => student.BirthDay);
+
     }
 }

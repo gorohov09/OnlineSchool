@@ -5,6 +5,7 @@ using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.App.Common.Interfaces.Services;
 using OnlineSchool.Infrastructure.Authentication;
 using OnlineSchool.Infrastructure.Persistence;
+using OnlineSchool.Infrastructure.Persistence.Repositories;
 using OnlineSchool.Infrastructure.Services;
 
 namespace OnlineSchool.Infrastructure;
