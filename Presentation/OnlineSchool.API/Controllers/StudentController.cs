@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineSchool.App.Student.Queries;
+using OnlineSchool.App.Student.Queries.GetCourses;
 using OnlineSchool.Contracts.Student;
 
 namespace OnlineSchool.API.Controllers;

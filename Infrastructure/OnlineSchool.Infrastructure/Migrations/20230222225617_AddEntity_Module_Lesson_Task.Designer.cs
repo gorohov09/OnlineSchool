@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineSchool.Infrastructure.Persistence;
 
@@ -11,9 +12,10 @@ using OnlineSchool.Infrastructure.Persistence;
 namespace OnlineSchool.Infrastructure.Migrations
 {
     [DbContext(typeof(OnlineSchoolDbContext))]
-    partial class OnlineSchoolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230222225617_AddEntity_Module_Lesson_Task")]
+    partial class AddEntity_Module_Lesson_Task
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
