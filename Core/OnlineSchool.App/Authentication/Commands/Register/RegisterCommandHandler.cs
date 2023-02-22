@@ -28,20 +28,20 @@ public class RegisterCommandHandler :
 
     public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
-        if (_userRepository.FindUserByEmail(request.Email) is not null)
+        if (await _userRepository.FindUserByEmail(request.Email) is not null)
         {
             return Errors.Authentication.DuplicateEmail;
         }
 
-        var user = new User(request.FirstName, request.LastName,
+        var user = new UserEntity(request.FirstName, request.LastName,
             request.Password, request.Email);
 
-        _userRepository.Add(user);
+        await _userRepository.Add(user);
 
         if (request.IsStudent)
         {
-            var student = new Student(user.Id, user.FirstName, user.LastName);
-            _studentRepository.AddStudent(student);
+            var student = new StudentEntity(user.Id, user.FirstName, user.LastName);
+            await _studentRepository.AddStudent(student);
         }
 
         var token = _jwtTokenGenerator.GenerateToken(user.Id, user.FirstName, user.LastName, request.IsStudent);

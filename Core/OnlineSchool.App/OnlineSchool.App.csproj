@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Authentication\Queries\" />
+    <Folder Include="Student\Commands\" />
   </ItemGroup>
 
 </Project>
