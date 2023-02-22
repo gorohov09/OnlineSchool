@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineSchool.App.Student.Queries
+namespace OnlineSchool.App.Student.Queries.GetCourses
 {
     public record CoursesStudentVm(
         string Id,

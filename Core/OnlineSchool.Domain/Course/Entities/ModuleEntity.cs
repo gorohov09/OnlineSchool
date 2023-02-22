@@ -16,12 +16,19 @@ namespace OnlineSchool.Domain.Course.Entities
 
         public int Order { get; private set; }
 
+        public CourseEntity Course { get; }
+
         public IReadOnlyList<LessonEntity> Lessons => _lessons.AsReadOnly();
 
         public ModuleEntity(string name)
         {
             Id = Guid.NewGuid();
             Name = name;
+        }
+
+        public ModuleEntity()
+        {
+
         }
 
         /// <summary>

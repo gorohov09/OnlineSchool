@@ -23,6 +23,9 @@ public class OnlineSchoolDbContext : DbContext
         builder.ApplyConfiguration(new CourseConfiguration());
         builder.ApplyConfiguration(new InformationAdmissionConfiguration());
         builder.ApplyConfiguration(new UserConfiguration());
+        builder.ApplyConfiguration(new ModuleConfiguration());
+        builder.ApplyConfiguration(new LessonConfiguration());
+        builder.ApplyConfiguration(new TaskConfiguration());
 
         base.OnModelCreating(builder);
     }

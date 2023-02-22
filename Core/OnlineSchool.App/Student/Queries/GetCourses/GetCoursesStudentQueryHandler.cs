@@ -3,16 +3,16 @@ using MediatR;
 using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.Domain.Common.Errors;
 
-namespace OnlineSchool.App.Student.Queries;
+namespace OnlineSchool.App.Student.Queries.GetCourses;
 
-public class GetCoursesStudentQueryHandler 
+public class GetCoursesStudentQueryHandler
     : IRequestHandler<GetCoursesStudentQuery, ErrorOr<CoursesStudentVm>>
 {
     private readonly IStudentRepository _studentRepository;
     private readonly IUserRepository _userRepository;
 
     public GetCoursesStudentQueryHandler(
-        IStudentRepository studentRepository, 
+        IStudentRepository studentRepository,
         IUserRepository userRepository)
     {
         _studentRepository = studentRepository;
@@ -20,7 +20,7 @@ public class GetCoursesStudentQueryHandler
     }
 
     public async Task<ErrorOr<CoursesStudentVm>> Handle(
-        GetCoursesStudentQuery request, 
+        GetCoursesStudentQuery request,
         CancellationToken cancellationToken)
     {
         // 1. Проверка корректности Id пользователя

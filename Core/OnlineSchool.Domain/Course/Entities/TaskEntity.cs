@@ -14,6 +14,8 @@ public class TaskEntity
 
     public string RightAnswer { get; }
 
+    public LessonEntity Lesson { get; }
+
     public TaskEntity(string name, string description, string type, string rightAnswer)
     {
         Id = Guid.NewGuid();
@@ -21,6 +23,11 @@ public class TaskEntity
         Description = description;
         TaskType = GetTypeTask(type);
         RightAnswer = rightAnswer;
+    }
+
+    public TaskEntity()
+    {
+
     }
 
     public void SetOrder(int order) => Order = order;
