@@ -1,4 +1,5 @@
-﻿using OnlineSchool.Domain.InformationAdmission;
+﻿using OnlineSchool.Domain.Course.Entities;
+using OnlineSchool.Domain.InformationAdmission;
 
 namespace OnlineSchool.Domain.Course;
 
@@ -8,6 +9,7 @@ namespace OnlineSchool.Domain.Course;
 public class CourseEntity
 {
     private List<InformationAdmissionEntity> _informationAdmissions = new();
+    private List<ModuleEntity> _modules = new();
 
     /// <summary>
     /// Id
@@ -35,16 +37,12 @@ public class CourseEntity
     public DateTime Updated { get; }
 
     /// <summary>
-    /// Колличество уроков
-    /// </summary>
-    public int CountLessons { get; }
-
-    /// <summary>
     /// Колличество заданий
     /// </summary>
     public int CountTasks { get; }
 
     public IReadOnlyList<InformationAdmissionEntity> InformationAdmissions => _informationAdmissions.AsReadOnly();
+    public IReadOnlyList<ModuleEntity> Modules => _modules.AsReadOnly();
 
     public CourseEntity(string name, string description)
     {
@@ -58,5 +56,18 @@ public class CourseEntity
     public CourseEntity()
     {
 
+    }
+
+    /// <summary>
+    /// Добавление модуля
+    /// </summary>
+    /// <param name="module"></param>
+    public void AddModule(ModuleEntity module)
+    {
+        //Логика по установке номера курса по порядку. Подумать над вставкой курса в середину.
+        //Следовательно, другие номера должны измениться
+        var maxOrder = _modules.Max(m => m.Order);
+        module.SetOrder(maxOrder + 1);
+        _modules.Add(module);
     }
 }

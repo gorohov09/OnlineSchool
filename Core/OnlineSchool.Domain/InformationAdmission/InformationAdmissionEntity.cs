@@ -22,8 +22,6 @@ public class InformationAdmissionEntity
     /// </summary>
     public DateTime DateAdmission { get; }
 
-    public int CountCompletedLessons { get; }
-
     public int CountCompletedTasks { get; }
 
     public InformationAdmissionEntity(StudentEntity student, CourseEntity course)
@@ -41,8 +39,6 @@ public class InformationAdmissionEntity
 
     public double GetPercentPassing()
     {
-        var countJob = (double)Course.CountLessons + Course.CountLessons;
-        var countCompletedJob = (double)CountCompletedLessons + CountCompletedTasks;
-        return (countCompletedJob / countJob) * 100;
+        return ((double)Course.CountTasks / (double)CountCompletedTasks) * 100;
     }
 }

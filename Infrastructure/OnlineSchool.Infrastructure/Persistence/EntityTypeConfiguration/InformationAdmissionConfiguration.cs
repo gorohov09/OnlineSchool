@@ -11,7 +11,6 @@ public class InformationAdmissionConfiguration : IEntityTypeConfiguration<Inform
         builder.ToTable("InformationAdmission");
 
         builder.HasKey(inf => inf.Id);
-        builder.Property(inf => inf.CountCompletedLessons);
         builder.Property(inf => inf.CountCompletedTasks);
 
         builder.HasOne(inf => inf.Student)
