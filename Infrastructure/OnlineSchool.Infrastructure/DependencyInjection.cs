@@ -25,7 +25,7 @@ public static class DependencyInjection
 
         services.AddDbContext<OnlineSchoolDbContext>(options =>
         {
-            options.UseSqlServer(@"data source=LAPTOP-9S2AK2B9;initial catalog=OnlineSchoolDB;trusted_connection=true");
+            options.UseSqlServer("Data Source=LAPTOP-IGE01LPP\\SQLEXPRESS;Initial Catalog=OnlineSchoolDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         });
         //@"data source=LAPTOP-9S2AK2B9;initial catalog=OnlineSchoolDB;trusted_connection=true"
         //"Data Source=LAPTOP-IGE01LPP\\SQLEXPRESS;Initial Catalog=OnlineSchoolDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
