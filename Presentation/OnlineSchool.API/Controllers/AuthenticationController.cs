@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineSchool.App.Authentication.Commands.Register;
 using OnlineSchool.App.Authentication.Common;
+using OnlineSchool.App.Authentication.Queries.Login;
 using OnlineSchool.Contracts.Authentication;
 
 namespace OnlineSchool.API.Controllers;
@@ -36,8 +37,18 @@ public class AuthenticationController : ControllerBase
             );
     }
 
+    [HttpPost("login")]
     public async Task<IActionResult> Login(LoginRequest request)
     {
         //var command = _mapper.Map<>(request);
+
+        var query = new LoginQuery(request.Email, request.Password);
+
+        var authResult = await _mediator.Send(query);
+
+        return authResult.Match(
+            authResult => Ok(new AuthenticationResponse(authResult.Token)),
+            errors => Problem("Ошибка")
+            );
     }
 }
