@@ -35,4 +35,9 @@ public class AuthenticationController : ControllerBase
             errors => Problem("Ошибка")
             );
     }
+
+    public async Task<IActionResult> Login(LoginRequest request)
+    {
+        //var command = _mapper.Map<>(request);
+    }
 }

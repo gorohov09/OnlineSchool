@@ -2,5 +2,5 @@
 
 public interface IJwtTokenGenerator
 {
-    string GenerateToken(Guid userId, string firstName, string lastName, bool isStudent);
+    string GenerateToken(Guid userId, string firstName, string lastName, bool isStudent = true);
 }
