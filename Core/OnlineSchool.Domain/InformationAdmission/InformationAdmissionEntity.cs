@@ -39,6 +39,6 @@ public class InformationAdmissionEntity
 
     public double GetPercentPassing()
     {
-        return ((double)Course.CountTasks / (double)CountCompletedTasks) * 100;
+        return ((double)CountCompletedTasks / (double)Course.CountTasks) * 100;
     }
 }

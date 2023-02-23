@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using MapsterMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineSchool.App.Student.Queries;
@@ -12,10 +13,12 @@ namespace OnlineSchool.API.Controllers;
 public class StudentController : ControllerBase
 {
     private readonly ISender _mediator;
+    private readonly IMapper _mapper;
 
-    public StudentController(ISender mediator)
+    public StudentController(ISender mediator, IMapper mapper)
     {
         _mediator = mediator;
+        _mapper = mapper;
     }
 
     [HttpGet("{studentId}/courses")]
@@ -26,7 +29,7 @@ public class StudentController : ControllerBase
         var coursesResult = await _mediator.Send(queru);
 
         return coursesResult.Match(
-            coursesResult => Ok(Map(coursesResult)),
+            coursesResult => Ok(_mapper.Map<CoursesStudentResponse>(coursesResult)),
             errors => Problem("Ошибка")
             );
     }
