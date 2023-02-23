@@ -1,8 +1,10 @@
 ﻿using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using OnlineSchool.App.Course.Commands.AddModule;
 using OnlineSchool.App.Course.Commands.CreateCourse;
 using OnlineSchool.Contracts.Course;
+using OnlineSchool.Contracts.Course.Module;
 
 namespace OnlineSchool.API.Controllers;
 
@@ -19,7 +21,7 @@ public class CourseController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpPost]
+    [HttpPost("create")]
     public async Task<IActionResult> CreateCourse(CreateCourseRequest request)
     {
         var command = _mapper.Map<CreateCourseCommand>(request);
@@ -28,6 +30,19 @@ public class CourseController : ControllerBase
 
         return result.Match(
             coursesResult => Ok(result.Value),
+            errors => Problem("Ошибка")
+            );
+    }
+
+    [HttpPost("{courseId}/addModule")]
+    public async Task<IActionResult> AddModule(string courseId, [FromBody]AddModuleRequest request)
+    {
+        var command = _mapper.Map<AddModuleCommand>((request, courseId));
+
+        var result = await _mediator.Send(command);
+
+        return result.Match(
+            coursesResult => Ok(new AddModuleResponse(result.Value)),
             errors => Problem("Ошибка")
             );
     }
