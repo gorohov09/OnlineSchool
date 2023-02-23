@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineSchool.Infrastructure.Persistence;
 
@@ -11,9 +12,10 @@ using OnlineSchool.Infrastructure.Persistence;
 namespace OnlineSchool.Infrastructure.Migrations
 {
     [DbContext(typeof(OnlineSchoolDbContext))]
-    partial class OnlineSchoolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230223200049_added_user_password")]
+    partial class added_user_password
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -194,10 +196,6 @@ namespace OnlineSchool.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
