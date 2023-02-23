@@ -12,7 +12,7 @@ public class UserConfiguration : IEntityTypeConfiguration<UserEntity>
         builder.HasKey(user => user.Id);
         builder.Property(user => user.FirstName);
         builder.Property(user => user.LastName);
-        builder.Property(user => user.Password);
+        builder.Property(user => user.Password).IsRequired();
         builder.Property(user => user.Email);
     }
 }
