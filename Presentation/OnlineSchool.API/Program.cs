@@ -1,16 +1,17 @@
+using OnlineSchool.API.Common.Mapping;
 using OnlineSchool.App;
 using OnlineSchool.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddControllers();
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
     builder.Services
         .AddApplication()
-        .AddInfrastructure();
+        .AddInfrastructure()
+        .AddMappings();
 }
 
 var app = builder.Build();
