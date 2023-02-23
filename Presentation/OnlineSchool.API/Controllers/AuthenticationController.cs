@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using MapsterMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,27 +15,24 @@ namespace OnlineSchool.API.Controllers;
 public class AuthenticationController : ControllerBase
 {
     private readonly ISender _mediator;
+    private readonly IMapper _mapper;
 
-    public AuthenticationController(ISender mediator)
+    public AuthenticationController(ISender mediator, IMapper mapper)
     {
         _mediator = mediator;
+        _mapper = mapper;
     }
 
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterRequest request)
     {
-        var command = new RegisterCommand(request.FirstName, request.LastName, request.Email, request.Password, request.IsStudent);
+        var command = _mapper.Map<RegisterCommand>(request);
 
         var authResult = await _mediator.Send(command);
 
         return authResult.Match(
-            authResult => Ok(Map(authResult)),
+            authResult => Ok(_mapper.Map<AuthenticationResponse>(authResult)),
             errors => Problem("Ошибка")
             );
-    }
-
-    private AuthenticationResponse Map(AuthenticationResult authResult)
-    {
-        return new AuthenticationResponse(authResult.Token);
     }
 }
