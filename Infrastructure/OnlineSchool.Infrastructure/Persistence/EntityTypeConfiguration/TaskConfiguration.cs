@@ -10,6 +10,11 @@ public class TaskConfiguration : IEntityTypeConfiguration<TaskEntity>
     {
         builder.ToTable("Tasks");
         builder.HasKey(task => task.Id);
+
+        builder.Property(task => task.Id)
+            .IsRequired()
+            .ValueGeneratedNever();
+
         builder.Property(task => task.Name);
         builder.Property(task => task.Order);
         builder.Property(task => task.Description);

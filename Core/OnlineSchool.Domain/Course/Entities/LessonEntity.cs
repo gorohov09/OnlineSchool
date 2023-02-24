@@ -41,8 +41,14 @@ namespace OnlineSchool.Domain.Course.Entities
         {
             //Логика по установке номера курса по порядку. Подумать над вставкой курса в середину.
             //Следовательно, другие номера должны измениться
-            var maxOrder = _tasks.Max(m => m.Order);
-            task.SetOrder(maxOrder + 1);
+            if (_tasks.Any())
+            {
+                var maxOrder = _tasks.Max(m => m.Order);
+                task.SetOrder(maxOrder + 1);
+            }
+            else
+                task.SetOrder(1);
+
             _tasks.Add(task);
         }
 

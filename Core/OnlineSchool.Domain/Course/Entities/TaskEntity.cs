@@ -12,16 +12,19 @@ public class TaskEntity
 
     public TaskTypeEnum TaskType { get; }
 
+    public string Question { get; }
+
     public string RightAnswer { get; }
 
     public LessonEntity Lesson { get; }
 
-    public TaskEntity(string name, string description, string type, string rightAnswer)
+    public TaskEntity(string name, string description, string type, string question, string rightAnswer)
     {
         Id = Guid.NewGuid();
         Name = name;
         Description = description;
         TaskType = GetTypeTask(type);
+        Question = question;
         RightAnswer = rightAnswer;
     }
 

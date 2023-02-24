@@ -1,8 +1,14 @@
 ﻿using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using OnlineSchool.App.Course.Commands.AddLesson;
+using OnlineSchool.App.Course.Commands.AddModule;
+using OnlineSchool.App.Course.Commands.AddTask;
 using OnlineSchool.App.Course.Commands.CreateCourse;
 using OnlineSchool.Contracts.Course;
+using OnlineSchool.Contracts.Course.Lesson;
+using OnlineSchool.Contracts.Course.Module;
+using OnlineSchool.Contracts.Course.Task;
 
 namespace OnlineSchool.API.Controllers;
 
@@ -30,5 +36,42 @@ public class CourseController : ControllerBase
             coursesResult => Ok(result.Value),
             errors => Problem("Ошибка")
             );
+    }
+
+    [HttpPost("{courseId}/addModule")]
+    public async Task<IActionResult> AddModule(string courseId, [FromBody]AddModuleRequest request)
+    {
+        var command = _mapper.Map<AddModuleCommand>((request, courseId));
+
+        var result = await _mediator.Send(command);
+
+        return result.Match(
+            coursesResult => Ok(new AddModuleResponse(result.Value)),
+            errors => Problem("Ошибка")
+            );
+    }
+
+    [HttpPost("module/{moduleId}/addLesson")]
+    public async Task<IActionResult> AddLesson(string moduleId, [FromBody]AddLessonRequest request)
+    {
+        var command = _mapper.Map<AddLessonCommand>((request, moduleId));
+
+        var result = await _mediator.Send(command);
+
+        return result.Match(
+            module => Ok(new AddLessonResponse(result.Value)),
+            errors => Problem("Ошибка"));
+    }
+
+    [HttpPost("lesson/{lessonId}/addTask")]
+    public async Task<IActionResult> AddTask(string lessonId, [FromBody]AddTaskRequest request)
+    {
+        var command = _mapper.Map<AddTaskCommand>((request, lessonId));
+
+        var result = await _mediator.Send(command);
+
+        return result.Match(
+            module => Ok(new AddTaskResponse(result.Value)),
+            errors => Problem("Ошибка"));
     }
 }

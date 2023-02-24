@@ -10,6 +10,11 @@ public class LessonConfiguration : IEntityTypeConfiguration<LessonEntity>
     {
         builder.ToTable("Lessons");
         builder.HasKey(lesson => lesson.Id);
+
+        builder.Property(lesson => lesson.Id)
+            .IsRequired()
+            .ValueGeneratedNever();
+
         builder.Property(lesson => lesson.Name);
         builder.Property(lesson => lesson.Order);
 

@@ -10,6 +10,11 @@ public class ModuleConfiguration : IEntityTypeConfiguration<ModuleEntity>
     {
         builder.ToTable("Modules");
         builder.HasKey(module => module.Id);
+
+        builder.Property(module => module.Id)
+            .IsRequired()
+            .ValueGeneratedNever();
+
         builder.Property(module => module.Name);
         builder.Property(module => module.Order);
 

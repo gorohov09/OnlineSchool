@@ -66,8 +66,14 @@ public class CourseEntity
     {
         //Логика по установке номера курса по порядку. Подумать над вставкой курса в середину.
         //Следовательно, другие номера должны измениться
-        var maxOrder = _modules.Max(m => m.Order);
-        module.SetOrder(maxOrder + 1);
+        if (_modules.Any())
+        {
+            var maxOrder = _modules.Max(m => m.Order);
+            module.SetOrder(maxOrder + 1);
+        }
+        else
+            module.SetOrder(1);
+
         _modules.Add(module);
     }
 }
