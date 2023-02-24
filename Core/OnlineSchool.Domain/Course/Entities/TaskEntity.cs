@@ -1,7 +1,11 @@
-﻿namespace OnlineSchool.Domain.Course.Entities;
+﻿using OnlineSchool.Domain.StudentTaskInformation;
+
+namespace OnlineSchool.Domain.Course.Entities;
 
 public class TaskEntity
 {
+    private List<StudentTaskInformationEntity> _students = new();
+
     public Guid Id { get; }
 
     public string Name { get; }
@@ -17,6 +21,8 @@ public class TaskEntity
     public string RightAnswer { get; }
 
     public LessonEntity Lesson { get; }
+
+    public IReadOnlyCollection<StudentTaskInformationEntity> Students => _students.AsReadOnly();
 
     public TaskEntity(string name, string description, string type, string question, string rightAnswer)
     {
