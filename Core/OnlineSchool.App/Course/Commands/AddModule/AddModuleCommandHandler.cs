@@ -17,7 +17,7 @@ public class AddModuleCommandHandler
 
     public async Task<ErrorOr<string>> Handle(AddModuleCommand request, CancellationToken cancellationToken)
     {
-        // 1. Проверка корректности Id пользователя
+        // 1. Проверка корректности Id курса
         if (!Guid.TryParse(request.CourseId, out var courseId))
         {
             return Errors.Course.InvalidId;

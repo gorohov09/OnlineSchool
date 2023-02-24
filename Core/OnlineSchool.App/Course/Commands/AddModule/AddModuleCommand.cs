@@ -4,5 +4,5 @@ using MediatR;
 namespace OnlineSchool.App.Course.Commands.AddModule;
 
 public record AddModuleCommand(
-    string CourseId,
-    string Name) : IRequest<ErrorOr<string>>;
+        string Name,
+        string CourseId) : IRequest<ErrorOr<string>>;

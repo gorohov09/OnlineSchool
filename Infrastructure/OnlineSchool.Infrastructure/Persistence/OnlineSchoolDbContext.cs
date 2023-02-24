@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineSchool.Domain.Course;
+using OnlineSchool.Domain.Course.Entities;
 using OnlineSchool.Domain.InformationAdmission;
 using OnlineSchool.Domain.Student;
 using OnlineSchool.Domain.User;
@@ -13,6 +14,9 @@ public class OnlineSchoolDbContext : DbContext
     public DbSet<CourseEntity> Courses { get; set; }
     public DbSet<InformationAdmissionEntity> InformationAdmissions { get; set; }
     public DbSet<UserEntity> Users { get; set; }
+    public DbSet<ModuleEntity> Modules { get; set; }
+    public DbSet<LessonEntity> Lessons { get; set; }
+    public DbSet<TaskEntity> Tasks { get; set; }
 
     public OnlineSchoolDbContext(DbContextOptions<OnlineSchoolDbContext> options)
         : base(options) { }
