@@ -19,7 +19,7 @@ public class CourseController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpPost]
+    [HttpPost("create")]
     public async Task<IActionResult> CreateCourse(CreateCourseRequest request)
     {
         var command = _mapper.Map<CreateCourseCommand>(request);

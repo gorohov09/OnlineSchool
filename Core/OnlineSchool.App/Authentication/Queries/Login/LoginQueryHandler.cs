@@ -11,11 +11,16 @@ namespace OnlineSchool.App.Authentication.Queries.Login
     {
         private readonly IUserRepository _userRepository;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
+        private readonly IStudentRepository _studentRepository;
 
-        public LoginQueryHandler(IUserRepository userRepository, IJwtTokenGenerator jwtTokenGenerator)
+        public LoginQueryHandler(
+            IUserRepository userRepository,
+            IJwtTokenGenerator jwtTokenGenerator,
+            IStudentRepository studentRepository)
         {
             _userRepository = userRepository;
             _jwtTokenGenerator = jwtTokenGenerator;
+            _studentRepository = studentRepository;
         }
 
         public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery request, CancellationToken cancellationToken)
@@ -25,7 +30,9 @@ namespace OnlineSchool.App.Authentication.Queries.Login
             {
                 if (user.Password == request.Password)
                 {
-                    var jwtToken = _jwtTokenGenerator.GenerateToken(user.Id, user.FirstName, user.LastName);
+                    var isStudent = await _studentRepository.IsExists(user.Id);
+
+                    var jwtToken = _jwtTokenGenerator.GenerateToken(user.Id, user.FirstName, user.LastName, isStudent);
                     return new AuthenticationResult(jwtToken);
                 }
             }

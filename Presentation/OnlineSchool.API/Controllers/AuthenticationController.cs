@@ -40,8 +40,6 @@ public class AuthenticationController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginRequest request)
     {
-        //var command = _mapper.Map<>(request);
-
         var query = new LoginQuery(request.Email, request.Password);
 
         var authResult = await _mediator.Send(query);

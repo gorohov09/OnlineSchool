@@ -29,4 +29,9 @@ public class StudentRepository : IStudentRepository
 
         return user?.InformationAdmissions.ToList();
     }
+
+    public async Task<bool> IsExists(Guid studentId)
+    {
+        return await _context.Students.AnyAsync(student => student.Id == studentId);
+    }
 }

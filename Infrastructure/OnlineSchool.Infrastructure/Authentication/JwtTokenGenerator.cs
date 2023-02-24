@@ -17,7 +17,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         _dateTimeProvider = dateTimeProvider;
     }
 
-    public string GenerateToken(Guid userId, string firstName, string lastName, bool isStudent = true)
+    public string GenerateToken(Guid userId, string firstName, string lastName, bool isStudent)
     {
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(
