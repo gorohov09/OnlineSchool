@@ -10,4 +10,7 @@ public interface ICourseRepository
     Task<bool> UpdateCourse(CourseEntity course);
     Task<ModuleEntity?> FindModuleById(Guid moduleId);
     Task<bool> UpdateModule(ModuleEntity module);
+    Task<LessonEntity?> FindLessonById(Guid lessonId);
+    Task<bool> UpdateLesson(LessonEntity lesson);
+
 }

@@ -27,6 +27,13 @@ public class CourseRepository : ICourseRepository
             .FirstOrDefaultAsync(course => course.Id == courseId);
     }
 
+    public async Task<LessonEntity?> FindLessonById(Guid lessonId)
+    {
+        return await _context.Lessons
+            .Include(lesson => lesson.Tasks)
+            .FirstOrDefaultAsync(lesson => lesson.Id == lessonId);
+    }
+
     public async Task<ModuleEntity?> FindModuleById(Guid moduleId)
     {
         return await _context.Modules
@@ -37,6 +44,12 @@ public class CourseRepository : ICourseRepository
     public async Task<bool> UpdateCourse(CourseEntity course)
     {
         _context.Courses.Update(course);
+        return await _context.SaveChangesAsync() > 0 ? true : false;
+    }
+
+    public async Task<bool> UpdateLesson(LessonEntity lesson)
+    {
+        _context.Lessons.Update(lesson);
         return await _context.SaveChangesAsync() > 0 ? true : false;
     }
 

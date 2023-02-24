@@ -3,10 +3,12 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using OnlineSchool.App.Course.Commands.AddLesson;
 using OnlineSchool.App.Course.Commands.AddModule;
+using OnlineSchool.App.Course.Commands.AddTask;
 using OnlineSchool.App.Course.Commands.CreateCourse;
 using OnlineSchool.Contracts.Course;
 using OnlineSchool.Contracts.Course.Lesson;
 using OnlineSchool.Contracts.Course.Module;
+using OnlineSchool.Contracts.Course.Task;
 
 namespace OnlineSchool.API.Controllers;
 
@@ -58,6 +60,18 @@ public class CourseController : ControllerBase
 
         return result.Match(
             module => Ok(new AddLessonResponse(result.Value)),
+            errors => Problem("Ошибка"));
+    }
+
+    [HttpPost("lesson/{lessonId}/addTask")]
+    public async Task<IActionResult> AddTask(string lessonId, [FromBody]AddTaskRequest request)
+    {
+        var command = _mapper.Map<AddTaskCommand>((request, lessonId));
+
+        var result = await _mediator.Send(command);
+
+        return result.Match(
+            module => Ok(new AddTaskResponse(result.Value)),
             errors => Problem("Ошибка"));
     }
 }
