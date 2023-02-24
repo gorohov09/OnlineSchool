@@ -3,6 +3,7 @@ using OnlineSchool.Domain.Course;
 using OnlineSchool.Domain.Course.Entities;
 using OnlineSchool.Domain.InformationAdmission;
 using OnlineSchool.Domain.Student;
+using OnlineSchool.Domain.StudentTaskInformation;
 using OnlineSchool.Domain.User;
 using OnlineSchool.Infrastructure.Persistence.EntityTypeConfiguration;
 
@@ -17,6 +18,7 @@ public class OnlineSchoolDbContext : DbContext
     public DbSet<ModuleEntity> Modules { get; set; }
     public DbSet<LessonEntity> Lessons { get; set; }
     public DbSet<TaskEntity> Tasks { get; set; }
+    public DbSet<StudentTaskInformationEntity> StudentTaskInformation { get; set; }
 
     public OnlineSchoolDbContext(DbContextOptions<OnlineSchoolDbContext> options)
         : base(options) { }
@@ -30,6 +32,7 @@ public class OnlineSchoolDbContext : DbContext
         builder.ApplyConfiguration(new ModuleConfiguration());
         builder.ApplyConfiguration(new LessonConfiguration());
         builder.ApplyConfiguration(new TaskConfiguration());
+        builder.ApplyConfiguration(new StudentTaskInformationConfiguration());
 
         base.OnModelCreating(builder);
     }
