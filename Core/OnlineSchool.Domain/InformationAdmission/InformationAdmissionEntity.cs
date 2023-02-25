@@ -39,7 +39,8 @@ public class InformationAdmissionEntity
 
     public double GetPercentPassing()
     {
-        if (Course.CountTasks == 0) return 0;
-        return ((double)CountCompletedTasks / (double)Course.CountTasks) * 100;
+        var countTaskCourse = Course.GetCountTasks();
+        if (countTaskCourse == 0) return 0;
+        return ((double)CountCompletedTasks / (double)countTaskCourse) * 100;
     }
 }

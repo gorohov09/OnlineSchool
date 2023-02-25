@@ -33,6 +33,9 @@ public class StudentRepository : IStudentRepository
         var user = await _context.Students
             .Include(student => student.InformationAdmissions)
             .ThenInclude(inf => inf.Course)
+            .ThenInclude(course => course.Modules)
+            .ThenInclude(module => module.Lessons)
+            .ThenInclude(lesson => lesson.Tasks)
             .FirstOrDefaultAsync(student => student.Id == studentId);
 
         return user?.InformationAdmissions.ToList();

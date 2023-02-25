@@ -16,6 +16,5 @@ public class CourseConfiguration : IEntityTypeConfiguration<CourseEntity>
         builder.Property(course => course.Description);
         builder.Property(course => course.Created);
         builder.Property(course => course.Updated);
-        builder.Property(course => course.CountTasks);
     }
 }
