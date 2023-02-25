@@ -8,5 +8,7 @@ public interface IStudentRepository
     Task AddStudent(StudentEntity student);
     Task<List<InformationAdmissionEntity>> GetInformationAdmissions(Guid studentId);
     Task<bool> IsExists(Guid studentId);
+    Task<StudentEntity?> FindStudentById(Guid studentId);
+    Task<bool> UpdateStudent(StudentEntity student);
 }
 

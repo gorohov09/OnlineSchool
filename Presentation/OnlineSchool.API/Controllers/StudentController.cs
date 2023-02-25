@@ -22,7 +22,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet("{studentId}/courses")]
-    public async Task<IActionResult> GetCoursest(string studentId)
+    public async Task<IActionResult> GetCourses(string studentId)
     {
         var queru = new GetCoursesStudentQuery(studentId);
 

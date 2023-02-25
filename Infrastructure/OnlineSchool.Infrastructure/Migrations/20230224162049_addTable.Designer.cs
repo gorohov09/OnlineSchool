@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineSchool.Infrastructure.Persistence;
 
@@ -11,9 +12,10 @@ using OnlineSchool.Infrastructure.Persistence;
 namespace OnlineSchool.Infrastructure.Migrations
 {
     [DbContext(typeof(OnlineSchoolDbContext))]
-    partial class OnlineSchoolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230224162049_addTable")]
+    partial class addTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,6 +132,7 @@ namespace OnlineSchool.Infrastructure.Migrations
             modelBuilder.Entity("OnlineSchool.Domain.InformationAdmission.InformationAdmissionEntity", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CountCompletedTasks")
@@ -137,9 +140,6 @@ namespace OnlineSchool.Infrastructure.Migrations
 
                     b.Property<Guid>("CourseId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("DateAdmission")
-                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
@@ -181,6 +181,7 @@ namespace OnlineSchool.Infrastructure.Migrations
             modelBuilder.Entity("OnlineSchool.Domain.StudentTaskInformation.StudentTaskInformationEntity", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CountAttempts")
@@ -204,7 +205,7 @@ namespace OnlineSchool.Infrastructure.Migrations
 
                     b.HasIndex("TaskId");
 
-                    b.ToTable("StudentTaskInformation", (string)null);
+                    b.ToTable("UserTaskInformation", (string)null);
                 });
 
             modelBuilder.Entity("OnlineSchool.Domain.User.UserEntity", b =>
