@@ -36,6 +36,11 @@ public class CourseRepository : ICourseRepository
             .FirstOrDefaultAsync(lesson => lesson.Id == lessonId);
     }
 
+    public Task<LessonEntity?> FindLessonByIdWithTasks(Guid lessonId)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<ModuleEntity?> FindModuleById(Guid moduleId)
     {
         return await _context.Modules

@@ -30,7 +30,7 @@ public class GetLessonTasksQueryHandler
         }
 
         //1. Получаем задачи урока
-        var lesson = await _courseRepository.FindLessonByIdWithTasks(lessonId);
+        var lesson = await _courseRepository.FindLessonById(lessonId);
         if (lesson is null)
         {
             return Errors.Lesson.NotFound;
@@ -41,10 +41,21 @@ public class GetLessonTasksQueryHandler
         //2. Получаем информацию по задачам для студента
         var tasksInformation = await _studentTaskRepository.GetTasksStudentForLesson(studentId, tasksIds);
 
+        //Делаем првоерку, если урок не доступен студенту
+        if (tasksIds.Count != tasksInformation.Count)
+            return Errors.Student.StudentNotEnrollLesson;
+
         //3. Формируем список для результата
-        var listTaskVm = tasksInformation
-            .Select(taskInform => new TaskVm(taskInform.TaskId, taskInform.IsSolve))
-            .ToList();
+        var listTaskVm = new List<TaskVm>();
+
+        int order = 1;
+        foreach (var taskInformation in tasksInformation)
+        {
+            listTaskVm.Add(new TaskVm(taskInformation.TaskId, order, 
+                taskInformation.Task.Name, taskInformation.IsSolve));
+
+            order++;
+        }
 
         return new LessonTasksVm(listTaskVm);
     }

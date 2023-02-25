@@ -11,4 +11,6 @@ public record LessonTasksVm(
 
 public record TaskVm(
     Guid Id,
+    int Order,
+    string Name,
     bool IsSolve);

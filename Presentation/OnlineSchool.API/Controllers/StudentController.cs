@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineSchool.App.Student.Queries;
 using OnlineSchool.App.Student.Queries.GetCourses;
+using OnlineSchool.App.Student.Queries.GetLessonTasks;
 using OnlineSchool.Contracts.Student;
 
 namespace OnlineSchool.API.Controllers;
@@ -34,13 +35,13 @@ public class StudentController : ControllerBase
             );
     }
 
-    private CoursesStudentResponse Map(CoursesStudentVm courses)
+    [HttpGet("{studentId}/{lessonId}/tasks")]
+    public async Task<IActionResult> GetTasksLesson(string studentId, string lessonId)
     {
-        return new CoursesStudentResponse(
-            courses.Id,
-            courses.LastName,
-            courses.FirstName,
-            courses.Courses.Select(c => new CourseResponse(c.Id, c.Name, c.Description, c.PersentPassing))
-            .ToList());
+        var queru = new GetLessonTasksQuery(studentId, lessonId);
+
+        var tasksLessonResult = await _mediator.Send(queru);
+
+        return Ok(tasksLessonResult.Value);
     }
 }
