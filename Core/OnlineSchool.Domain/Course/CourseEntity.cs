@@ -36,11 +36,6 @@ public class CourseEntity
     /// </summary>
     public DateTime Updated { get; }
 
-    /// <summary>
-    /// Колличество заданий
-    /// </summary>
-    public int CountTasks { get; }
-
     public IReadOnlyList<InformationAdmissionEntity> InformationAdmissions => _informationAdmissions.AsReadOnly();
     public IReadOnlyList<ModuleEntity> Modules => _modules.AsReadOnly();
 
@@ -75,5 +70,25 @@ public class CourseEntity
             module.SetOrder(1);
 
         _modules.Add(module);
+    }
+
+    public int GetCountTasks()
+    {
+        return _modules
+            .SelectMany(m => m.Lessons)
+            .SelectMany(l => l.Tasks)
+            .Count();
+    }
+
+    public int GetCountLessons()
+    {
+        return _modules
+            .SelectMany(m => m.Lessons)
+            .Count();
+    }
+
+    public int GetCountModules()
+    {
+        return _modules.Count();
     }
 }
