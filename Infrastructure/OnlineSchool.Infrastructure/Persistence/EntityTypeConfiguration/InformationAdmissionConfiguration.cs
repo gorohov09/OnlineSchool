@@ -11,7 +11,12 @@ public class InformationAdmissionConfiguration : IEntityTypeConfiguration<Inform
         builder.ToTable("InformationAdmission");
 
         builder.HasKey(inf => inf.Id);
+        builder.Property(inf => inf.Id)
+            .IsRequired()
+            .ValueGeneratedNever();
+
         builder.Property(inf => inf.CountCompletedTasks);
+        builder.Property(inf => inf.DateAdmission);
 
         builder.HasOne(inf => inf.Student)
             .WithMany(student => student.InformationAdmissions)

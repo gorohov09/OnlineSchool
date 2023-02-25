@@ -34,9 +34,26 @@ public class StudentEntity
 
     }
 
-    public void EnrollCourse(CourseEntity course)
+    public bool EnrollCourse(CourseEntity course)
     {
+        //Если студент уже записан на этот курс, возвращаем false
+        if (_informationAdmissions.Any(inf => inf.Course.Id == course.Id))
+            return false;
+
         _informationAdmissions.Add(new InformationAdmissionEntity(this, course));
+
+        //Получение Ids всех задач курса
+        var tasksIds = course.Modules
+            .SelectMany(module => module.Lessons)
+            .SelectMany(lesson => lesson.Tasks)
+            .Select(task => task.Id)
+            .ToList();
+
+        //Создаем информацию по всем задачам для студента
+        foreach (var taskId in tasksIds)
+            _tasks.Add(new StudentTaskInformationEntity(Id, taskId));
+
+        return true;
     }
 
     public string GetFullName()

@@ -5,6 +5,7 @@ using OnlineSchool.App.Course.Commands.AddLesson;
 using OnlineSchool.App.Course.Commands.AddModule;
 using OnlineSchool.App.Course.Commands.AddTask;
 using OnlineSchool.App.Course.Commands.CreateCourse;
+using OnlineSchool.App.Course.Commands.Entroll;
 using OnlineSchool.Contracts.Course;
 using OnlineSchool.Contracts.Course.Lesson;
 using OnlineSchool.Contracts.Course.Module;
@@ -72,6 +73,18 @@ public class CourseController : ControllerBase
 
         return result.Match(
             module => Ok(new AddTaskResponse(result.Value)),
+            errors => Problem("Ошибка"));
+    }
+
+    [HttpPost("enroll/{courseId}/{studentId}")]
+    public async Task<IActionResult> Enroll(string courseId, string studentId)
+    {
+        var command = _mapper.Map<EnrollCommand>((studentId, courseId));
+
+        var resultEnroll = await _mediator.Send(command);
+
+        return resultEnroll.Match(
+            module => Ok(_mapper.Map<EnrollResponse>(resultEnroll.Value)),
             errors => Problem("Ошибка"));
     }
 }

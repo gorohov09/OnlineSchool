@@ -8,9 +8,13 @@ public class StudentTaskInformationConfiguration : IEntityTypeConfiguration<Stud
 {
     public void Configure(EntityTypeBuilder<StudentTaskInformationEntity> builder)
     {
-        builder.ToTable("UserTaskInformation");
+        builder.ToTable("StudentTaskInformation");
 
         builder.HasKey(inf => inf.Id);
+        builder.Property(inf => inf.Id)
+            .IsRequired()
+            .ValueGeneratedNever();
+
         builder.Property(inf => inf.CountAttempts);
         builder.Property(inf => inf.IsSolve);
         builder.Property(inf => inf.TimeLastAttempt);

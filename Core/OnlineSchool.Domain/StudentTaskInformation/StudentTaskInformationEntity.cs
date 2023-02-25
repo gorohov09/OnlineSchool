@@ -32,6 +32,7 @@ public class StudentTaskInformationEntity
 
     public StudentTaskInformationEntity(Guid userId, Guid taskId)
     {
+        Id = Guid.NewGuid();
         StudentId = userId;
         TaskId = taskId;
     }
