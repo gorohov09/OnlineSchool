@@ -1,6 +1,7 @@
 ﻿using ErrorOr;
 using MediatR;
 using OnlineSchool.App.Common.Interfaces.Persistence;
+using OnlineSchool.App.Common.Interfaces.Services;
 using OnlineSchool.Domain.Common.Errors;
 using OnlineSchool.Domain.Course.Entities;
 
@@ -10,10 +11,14 @@ public class AddLessonCommandHandler
     : IRequestHandler<AddLessonCommand, ErrorOr<string>>
 {
     private readonly ICourseRepository _courseRepository;
+    private readonly IYouTubeService _youTubeService;
 
-    public AddLessonCommandHandler(ICourseRepository courseRepository)
+    public AddLessonCommandHandler(
+        ICourseRepository courseRepository,
+        IYouTubeService youTubeService)
     {
         _courseRepository = courseRepository;
+        _youTubeService = youTubeService;
     }
 
     public async Task<ErrorOr<string>> Handle(AddLessonCommand request, CancellationToken cancellationToken)
@@ -33,6 +38,8 @@ public class AddLessonCommandHandler
 
         //3. Создаем сущность модуля и добавляем в курс
         var lesson = new LessonEntity(request.Name);
+        var lessonVideoCode = await _youTubeService.GetEmbedCodeByLink("link_video");
+
         module.AddLesson(lesson);
 
         //4. Обновляем курс в БД
