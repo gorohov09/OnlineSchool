@@ -6,7 +6,7 @@ namespace OnlineSchool.Infrastructure.Services;
 public class YouTubeService : IYouTubeService
 {
     private const string YOU_TUBE_API_URL = "https://youtube.googleapis.com/youtube/v3";
-    private const string API_KEY = "AIzaSyBa0PWVV4-_zKEnIiXPsDXVyH4gNRjmrzA";
+    private const string API_KEY = "";
 
     public async Task<string> GetEmbedCodeByLink(string linkVideo)
     {
