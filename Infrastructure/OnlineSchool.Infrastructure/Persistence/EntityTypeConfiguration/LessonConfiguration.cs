@@ -17,7 +17,7 @@ public class LessonConfiguration : IEntityTypeConfiguration<LessonEntity>
 
         builder.Property(lesson => lesson.Name);
         builder.Property(lesson => lesson.Order);
-
+        builder.Property(lesson => lesson.VideoEmbedCode);
 
         builder.HasOne(lesson => lesson.Module)
             .WithMany(module => module.Lessons)

@@ -36,10 +36,12 @@ public class AddLessonCommandHandler
             return Errors.Module.NotFound;
         }
 
-        //3. Создаем сущность модуля и добавляем в курс
-        var lesson = new LessonEntity(request.Name);
-        var lessonVideoCode = await _youTubeService.GetEmbedCodeByLink("link_video");
+        //3. Получаем код видео для вставки
+        var lessonVideoCode = await _youTubeService.GetEmbedCodeByLink(request.LinkVideo);
+        if (lessonVideoCode is null)
+            return Errors.Lesson.CouldNotFindVideo;
 
+        var lesson = new LessonEntity(request.Name, lessonVideoCode);
         module.AddLesson(lesson);
 
         //4. Обновляем курс в БД
