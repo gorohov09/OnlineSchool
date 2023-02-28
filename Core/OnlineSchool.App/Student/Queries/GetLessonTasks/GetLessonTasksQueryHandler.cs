@@ -2,6 +2,7 @@
 using MediatR;
 using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.Domain.Common.Errors;
+using OnlineSchool.Domain.StudentTaskInformation;
 
 namespace OnlineSchool.App.Student.Queries.GetLessonTasks;
 
@@ -50,13 +51,18 @@ public class GetLessonTasksQueryHandler
 
         int order = 1;
         foreach (var taskInformation in tasksInformation)
-        {
-            listTaskVm.Add(new TaskVm(taskInformation.TaskId, order, 
-                taskInformation.Task.Name, taskInformation.IsSolve));
-
-            order++;
-        }
+            AddTaskVm(listTaskVm, taskInformation, order++);
 
         return new LessonTasksVm(listTaskVm);
+    }
+
+    private void AddTaskVm(List<TaskVm> tasks, StudentTaskInformationEntity taskInformation, int order)
+    {
+        if (taskInformation.TimeLastAttempt.Year < 2000)
+            tasks.Add(new TaskVm(taskInformation.TaskId, order,
+                taskInformation.Task.Name, taskInformation.IsSolve, true, null));
+        else
+            tasks.Add(new TaskVm(taskInformation.TaskId, order,
+                taskInformation.Task.Name, taskInformation.IsSolve, false, taskInformation.TimeLastAttempt));
     }
 }

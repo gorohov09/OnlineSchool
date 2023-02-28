@@ -13,4 +13,6 @@ public record TaskVm(
     Guid Id,
     int Order,
     string Name,
-    bool IsSolve);
+    bool IsSolve,
+    bool IsFirstAttempt,
+    DateTime? LastAttempt);
