@@ -1,6 +1,10 @@
 ﻿namespace OnlineSchool.App.Course.Queries.GetStructureOfCourses;
 
-public record CoursesModulesLessonsVm(
+
+public record StudentCoursesModulesLessonsVm(
+    Guid ID
+    );
+public record CourseVm(
     Guid ID,
     string Name,
     List<ModuleVm> Modules

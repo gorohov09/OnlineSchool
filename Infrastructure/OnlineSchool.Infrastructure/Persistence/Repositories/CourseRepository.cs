@@ -2,6 +2,7 @@
 using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.Domain.Course;
 using OnlineSchool.Domain.Course.Entities;
+using OnlineSchool.Domain.InformationAdmission;
 
 namespace OnlineSchool.Infrastructure.Persistence.Repositories;
 
@@ -60,4 +61,15 @@ public class CourseRepository : ICourseRepository
         _context.Modules.Update(module);
         return await _context.SaveChangesAsync() > 0 ? true : false;
     }
+
+    public async Task<CourseEntity?> FindCourseWithModulesAndLessonsById(Guid courseId)
+    {
+        return await _context.Courses
+            .Include(course => course.Modules)
+            .ThenInclude(module => module.Lessons)
+            .ThenInclude(lesson => lesson.Tasks)
+            .FirstOrDefaultAsync(course => course.Id == courseId);
+    }
+
+
 }
