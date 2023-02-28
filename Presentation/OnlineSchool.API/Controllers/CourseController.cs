@@ -6,6 +6,7 @@ using OnlineSchool.App.Course.Commands.AddModule;
 using OnlineSchool.App.Course.Commands.AddTask;
 using OnlineSchool.App.Course.Commands.CreateCourse;
 using OnlineSchool.App.Course.Commands.Entroll;
+using OnlineSchool.App.Course.Queries.GetStructureOfCourses;
 using OnlineSchool.Contracts.Course;
 using OnlineSchool.Contracts.Course.Lesson;
 using OnlineSchool.Contracts.Course.Module;
@@ -87,4 +88,17 @@ public class CourseController : ControllerBase
             module => Ok(_mapper.Map<EnrollResponse>(resultEnroll.Value)),
             errors => Problem("Ошибка"));
     }
+
+    [HttpPost("getStructure")]
+    public async Task<IActionResult> GetStructure(string courseId)
+    {
+        var query = new GetCourseStructureQuery(courseId);
+        
+        var result = await _mediator.Send(query);
+
+        return result.Match(
+            course => Ok(_mapper.Map<CourseStructureResponse>(course)),
+            errors => Problem("Ошибка"));
+    }
+
 }

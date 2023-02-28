@@ -6,18 +6,21 @@ using OnlineSchool.Domain.Common.Errors;
 namespace OnlineSchool.App.Course.Queries.GetStructureOfCourses
 {
     public class GetCoursesModulesLessonsQueryHandler
-        : IRequestHandler<GetCoursesModulesLessonsQuery, ErrorOr<StudentCoursesModulesLessonsVm>>
+        : IRequestHandler<GetCourseStructureQuery, ErrorOr<CourseStructureVm>>
     {
-        private readonly IStudentRepository _studentRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly ICourseRepository _courseRepository;
 
-        public GetCoursesModulesLessonsQueryHandler(IStudentRepository studentRepository, IUserRepository userRepository)
+        public GetCoursesModulesLessonsQueryHandler(ICourseRepository courseRepository)
         {
-            _studentRepository = studentRepository;
-            _userRepository = userRepository;
+            _courseRepository = courseRepository;
         }
-        public async Task<ErrorOr<StudentCoursesModulesLessonsVm>> Handle(
-            GetCoursesModulesLessonsQuery request,
+
+        //public Task<ErrorOr<CourseStructureVm>> Handle(GetCourseStructureQuery request, CancellationToken cancellationToken)
+        //{
+        //    throw new NotImplementedException();
+        //}
+        public async Task<ErrorOr<CourseStructureVm>> Handle(
+            GetCourseStructureQuery request,
             CancellationToken cancellationToken)
         {
             //1. Проверяем на корректность ID курса.
@@ -26,19 +29,31 @@ namespace OnlineSchool.App.Course.Queries.GetStructureOfCourses
                 return Errors.Course.InvalidId;
             }
 
-            //2. Проверяем, существует ли данный пользователь.
+            //2. Проверяем, существует ли данный rehc.
             var course = await _courseRepository.FindCourseWithModulesAndLessonsById(courseId);
             if (course is null)
             {
                 return Errors.Course.NotFound;
             }
 
-            var courseInformationAdmission = _courseRepository.GetInformationAdmissionFindCourseWithModulesAndLessonsById(courseId);
-            //3. 
-            var courseInformation = courseInformationAdmission.Select(course => new CoursesModulesLessonsVm()
-            {
+            var result = new CourseStructureVm(
+                course.Id,
+                course.Name,
+                course.Modules.OrderBy(module => module.Order)
+                .Select(module => new ModuleVm(
+                    module.Id,
+                    module.Name,
+                    module.Lessons.OrderBy(lesson => lesson.Order)
+                    .Select(lesson => new LessonVm(
+                        lesson.Id,
+                        lesson.Name
+                        )).ToList()
+                    )).ToList()
+                );
 
-            })
+            return result;
+
+            
         }
     }
 }

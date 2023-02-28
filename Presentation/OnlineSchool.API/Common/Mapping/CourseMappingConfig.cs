@@ -4,6 +4,7 @@ using OnlineSchool.App.Course.Commands.AddModule;
 using OnlineSchool.App.Course.Commands.AddTask;
 using OnlineSchool.App.Course.Commands.CreateCourse;
 using OnlineSchool.App.Course.Commands.Entroll;
+using OnlineSchool.App.Course.Queries.GetStructureOfCourses;
 using OnlineSchool.Contracts.Course;
 using OnlineSchool.Contracts.Course.Lesson;
 using OnlineSchool.Contracts.Course.Module;
@@ -40,5 +41,17 @@ public class CourseMappingConfig : IRegister
         config.NewConfig<EnrollResult, EnrollResponse>()
             .Map(dest => dest.CourseId, src => src.CourseId)
             .Map(dest => dest.IsSuccess, src => src.IsSuccess);
+
+        config.NewConfig<CourseStructureVm, CourseStructureResponse>()
+            .Map(dest => dest.ID, src => src.ID)
+            .Map(dest => dest.Name, src => src.Name)
+            .Map(dest => dest.Modules, src => src.Modules);
+        config.NewConfig<ModuleVm, ModuleResponse>()
+            .Map(dest => dest.ID, src => src.ID)
+            .Map(dest => dest.Name, src => src.Name)
+            .Map(dest => dest.Lessons, src => src.Lessons);
+        config.NewConfig<LessonVm, LessonResponse>()
+            .Map(dest => dest.ID, src => src.ID)
+            .Map(dest => dest.Name, src => src.Name);
     }
 }

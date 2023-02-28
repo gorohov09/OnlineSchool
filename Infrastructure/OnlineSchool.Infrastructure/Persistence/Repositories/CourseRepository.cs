@@ -48,7 +48,7 @@ public class CourseRepository : ICourseRepository
     {
         _context.Courses.Update(course);
         return await _context.SaveChangesAsync() > 0 ? true : false;
-    }
+     }
 
     public async Task<bool> UpdateLesson(LessonEntity lesson)
     {
@@ -67,7 +67,6 @@ public class CourseRepository : ICourseRepository
         return await _context.Courses
             .Include(course => course.Modules)
             .ThenInclude(module => module.Lessons)
-            .ThenInclude(lesson => lesson.Tasks)
             .FirstOrDefaultAsync(course => course.Id == courseId);
     }
 
