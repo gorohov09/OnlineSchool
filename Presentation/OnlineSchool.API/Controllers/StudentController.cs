@@ -42,6 +42,9 @@ public class StudentController : ControllerBase
 
         var tasksLessonResult = await _mediator.Send(queru);
 
-        return Ok(tasksLessonResult.Value);
+        return tasksLessonResult.Match(
+            tasksLessonResult => Ok(_mapper.Map<TasksStudentByLessonResponse>(tasksLessonResult)),
+            errors => Problem("Ошибка")
+            );
     }
 }
