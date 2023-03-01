@@ -2,7 +2,11 @@
 
 public interface IUnitOfWork
 {
-    IStudentRepository Users { get; }
+    IStudentRepository Students { get; }
+    IModuleRepository Modules { get; }
+    ILessonRepository Lessons { get; }
+    ICourseRepository Courses { get; }
+    IUserRepository Users { get; }
 
-    Task CompleteAsync();
+    Task<bool> CompleteAsync();
 }

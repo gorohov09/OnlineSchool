@@ -10,14 +10,14 @@ namespace OnlineSchool.App.Course.Commands.AddLesson;
 public class AddLessonCommandHandler
     : IRequestHandler<AddLessonCommand, ErrorOr<string>>
 {
-    private readonly ICourseRepository _courseRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IYouTubeService _youTubeService;
 
     public AddLessonCommandHandler(
-        ICourseRepository courseRepository,
+        IUnitOfWork unitOfWork,
         IYouTubeService youTubeService)
     {
-        _courseRepository = courseRepository;
+        _unitOfWork = unitOfWork;
         _youTubeService = youTubeService;
     }
 
@@ -30,7 +30,7 @@ public class AddLessonCommandHandler
         }
 
         //2. Ищес курс по Id
-        var module = await _courseRepository.FindModuleById(moduleId);
+        var module = await _unitOfWork.Modules.FindModuleByIdWithLessons(moduleId);
         if (module is null)
         {
             return Errors.Module.NotFound;
@@ -44,8 +44,10 @@ public class AddLessonCommandHandler
         var lesson = new LessonEntity(request.Name, lessonVideoCode);
         module.AddLesson(lesson);
 
+        _unitOfWork.Modules.Update(module);
+
         //4. Обновляем курс в БД
-        if (await _courseRepository.UpdateModule(module))
+        if (await _unitOfWork.CompleteAsync())
         {
             return lesson.Id.ToString();
         }

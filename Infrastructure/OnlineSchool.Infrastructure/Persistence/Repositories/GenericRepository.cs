@@ -13,14 +13,16 @@ public class GenericRepository<T> : IGenericRepository<T>
         _context = context;
     }
 
-    public async Task Add(T entity)
+    public async Task<bool> Add(T entity)
     {
         await _context.Set<T>().AddAsync(entity);
+        return true;
     }
 
-    public void Delete(T entity)
+    public bool Delete(T entity)
     {
         _context.Set<T>().Remove(entity);
+        return true;
     }
 
     public async Task<IEnumerable<T>> GetAll()
@@ -28,13 +30,14 @@ public class GenericRepository<T> : IGenericRepository<T>
         return await _context.Set<T>().ToListAsync();
     }
 
-    public async Task<T> GetById(Guid id)
+    public async Task<T?> FindById(Guid id)
     {
         return await _context.Set<T>().FindAsync(id);
     }
 
-    public void Update(T entity)
+    public bool Update(T entity)
     {
         _context.Set<T>().Update(entity);
+        return true;
     }
 }

@@ -8,15 +8,11 @@ namespace OnlineSchool.App.Student.Queries.GetCourses;
 public class GetCoursesStudentQueryHandler
     : IRequestHandler<GetCoursesStudentQuery, ErrorOr<CoursesStudentVm>>
 {
-    private readonly IStudentRepository _studentRepository;
-    private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetCoursesStudentQueryHandler(
-        IStudentRepository studentRepository,
-        IUserRepository userRepository)
+    public GetCoursesStudentQueryHandler(IUnitOfWork unitOfWork)
     {
-        _studentRepository = studentRepository;
-        _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<CoursesStudentVm>> Handle(
@@ -30,24 +26,21 @@ public class GetCoursesStudentQueryHandler
         }
 
         // 1. Проверим, что такой пользователь существует
-        var student = await _userRepository.FindUserById(studentId);
+        var student = await _unitOfWork.Students.FindStudentByIdWithInformAdmissions(studentId);
         if (student is null)
         {
             return Errors.User.UserNotFound;
         }
 
-        // 2. Получаем информацию по курсам, на которые зачислен ученик
-        var informationAddmission = await _studentRepository.GetInformationAdmissions(studentId);
-
-        //3. Преобразуем в нужный список - информация по каждому курсу для данного ученика
-        var coursesInformation = informationAddmission.Select(course => new CourseVm(
+        //2. Преобразуем в нужный список - информация по каждому курсу для данного ученика
+        var coursesInformation = student.InformationAdmissions.Select(course => new CourseVm(
             course.Course.Id,
             course.Course.Name,
             course.Course.Description,
             course.GetPercentPassing()))
             .ToList();
 
-        //4. Формируем итоговую модель
+        //3. Формируем итоговую модель
         return new CoursesStudentVm(
             student.Id.ToString(),
             student.LastName,

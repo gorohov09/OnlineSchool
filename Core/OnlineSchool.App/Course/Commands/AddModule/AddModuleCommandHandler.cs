@@ -8,11 +8,11 @@ namespace OnlineSchool.App.Course.Commands.AddModule;
 public class AddModuleCommandHandler
     : IRequestHandler<AddModuleCommand, ErrorOr<string>>
 {
-    private readonly ICourseRepository _courseRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public AddModuleCommandHandler(ICourseRepository courseRepository)
+    public AddModuleCommandHandler(IUnitOfWork unitOfWork)
     {
-        _courseRepository = courseRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<string>> Handle(AddModuleCommand request, CancellationToken cancellationToken)
@@ -23,8 +23,8 @@ public class AddModuleCommandHandler
             return Errors.Course.InvalidId;
         }
 
-        //2. Ищес курс по Id
-        var course = await _courseRepository.FindCourseById(courseId);
+        //2. Ищем курс по Id
+        var course = await _unitOfWork.Courses.FindCourseByIdWithModules(courseId);
         if (course is null)
         {
             return Errors.Course.NotFound;
@@ -34,8 +34,11 @@ public class AddModuleCommandHandler
         var module = new ModuleEntity(request.Name);
         course.AddModule(module);
 
+        //!Важно! Посмотреть у курса tracking значение, чтобы проверить, нужно ли вызывать метод update. Пока вызываем
+        _unitOfWork.Courses.Update(course);
+
         //4. Обновляем курс в БД
-        if (await _courseRepository.UpdateCourse(course))
+        if (await _unitOfWork.CompleteAsync())
         {
             return module.Id.ToString();
         }
