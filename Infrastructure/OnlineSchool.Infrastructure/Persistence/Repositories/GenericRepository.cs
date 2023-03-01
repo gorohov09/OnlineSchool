@@ -1,38 +1,40 @@
-﻿using OnlineSchool.App.Common.Interfaces.Persistence;
-using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineSchool.App.Common.Interfaces.Persistence;
 
 namespace OnlineSchool.Infrastructure.Persistence.Repositories;
 
 public class GenericRepository<T> : IGenericRepository<T>
     where T : class
 {
-    public Task<bool> Add(T entity)
+    protected readonly ApplicationDbContext _context;
+
+    public GenericRepository(ApplicationDbContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
     }
 
-    public Task<IEnumerable<T>> All()
+    public async Task Add(T entity)
     {
-        throw new NotImplementedException();
+        await _context.Set<T>().AddAsync(entity);
     }
 
-    public Task<bool> Delete(Guid id)
+    public void Delete(T entity)
     {
-        throw new NotImplementedException();
+        _context.Set<T>().Remove(entity);
     }
 
-    public Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate)
+    public async Task<IEnumerable<T>> GetAll()
     {
-        throw new NotImplementedException();
+        return await _context.Set<T>().ToListAsync();
     }
 
-    public Task<T> GetById(Guid id)
+    public async Task<T> GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return await _context.Set<T>().FindAsync(id);
     }
 
-    public Task<bool> Update(T entity)
+    public void Update(T entity)
     {
-        throw new NotImplementedException();
+        _context.Set<T>().Update(entity);
     }
 }
