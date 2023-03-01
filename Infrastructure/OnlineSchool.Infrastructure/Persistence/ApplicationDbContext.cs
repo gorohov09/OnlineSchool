@@ -9,7 +9,7 @@ using OnlineSchool.Infrastructure.Persistence.EntityTypeConfiguration;
 
 namespace OnlineSchool.Infrastructure.Persistence;
 
-public class OnlineSchoolDbContext : DbContext
+public class ApplicationDbContext : DbContext
 {
     public DbSet<StudentEntity> Students { get; set; }
     public DbSet<CourseEntity> Courses { get; set; }
@@ -20,7 +20,7 @@ public class OnlineSchoolDbContext : DbContext
     public DbSet<TaskEntity> Tasks { get; set; }
     public DbSet<StudentTaskInformationEntity> StudentTaskInformation { get; set; }
 
-    public OnlineSchoolDbContext(DbContextOptions<OnlineSchoolDbContext> options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder builder)

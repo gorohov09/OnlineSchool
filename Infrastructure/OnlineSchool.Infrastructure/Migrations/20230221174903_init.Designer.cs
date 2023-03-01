@@ -11,7 +11,7 @@ using OnlineSchool.Infrastructure.Persistence;
 
 namespace OnlineSchool.Infrastructure.Migrations
 {
-    [DbContext(typeof(OnlineSchoolDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20230221174903_init")]
     partial class init
     {

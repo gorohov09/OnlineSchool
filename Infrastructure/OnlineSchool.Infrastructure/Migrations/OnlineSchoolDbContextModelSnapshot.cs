@@ -10,7 +10,7 @@ using OnlineSchool.Infrastructure.Persistence;
 
 namespace OnlineSchool.Infrastructure.Migrations
 {
-    [DbContext(typeof(OnlineSchoolDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class OnlineSchoolDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

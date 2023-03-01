@@ -7,9 +7,9 @@ namespace OnlineSchool.Infrastructure.Persistence.Repositories;
 
 public class CourseRepository : ICourseRepository
 {
-    private readonly OnlineSchoolDbContext _context;
+    private readonly ApplicationDbContext _context;
 
-    public CourseRepository(OnlineSchoolDbContext context)
+    public CourseRepository(ApplicationDbContext context)
     {
         _context = context;
     }

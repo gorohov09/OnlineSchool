@@ -6,9 +6,9 @@ namespace OnlineSchool.Infrastructure.Persistence.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    private readonly OnlineSchoolDbContext _context;
+    private readonly ApplicationDbContext _context;
 
-    public UserRepository(OnlineSchoolDbContext context)
+    public UserRepository(ApplicationDbContext context)
     {
         _context = context;
     }
