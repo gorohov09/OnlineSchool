@@ -3,14 +3,9 @@ using OnlineSchool.Domain.Course.Entities;
 
 namespace OnlineSchool.App.Common.Interfaces.Persistence;
 
-public interface ICourseRepository
+public interface ICourseRepository : IGenericRepository<CourseEntity>
 {
-    Task<bool> AddCourse(CourseEntity course);
-    Task<CourseEntity?> FindCourseById(Guid courseId);
-    Task<bool> UpdateCourse(CourseEntity course);
-    Task<ModuleEntity?> FindModuleById(Guid moduleId);
-    Task<bool> UpdateModule(ModuleEntity module);
-    Task<LessonEntity?> FindLessonById(Guid lessonId);
-    Task<bool> UpdateLesson(LessonEntity lesson);
-
+    Task<CourseEntity?> FindCourseByIdWithModulesLessonsTasks(Guid id);
+    Task<CourseEntity?> FindCourseByIdWithModulesLessons(Guid id);
+    Task<CourseEntity?> FindCourseByIdWithModules(Guid id);
 }
