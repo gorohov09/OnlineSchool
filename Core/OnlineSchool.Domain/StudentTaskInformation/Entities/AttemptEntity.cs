@@ -22,4 +22,6 @@ public class AttemptEntity
         IsRight = isRight;
         Answer = Answer;
     }
+
+    public StudentTaskInformationEntity StudentTaskInformation { get; }
 }
