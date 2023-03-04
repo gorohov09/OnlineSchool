@@ -1,10 +1,13 @@
 ﻿using OnlineSchool.Domain.Course.Entities;
 using OnlineSchool.Domain.Student;
+using OnlineSchool.Domain.StudentTaskInformation.Entities;
 
 namespace OnlineSchool.Domain.StudentTaskInformation;
 
 public class StudentTaskInformationEntity
 {
+    private List<AttemptEntity> _attempts = new();
+
     public Guid Id { get; }
 
     public Guid StudentId { get; }
@@ -30,6 +33,8 @@ public class StudentTaskInformationEntity
     /// </summary>
     public DateTime TimeLastAttempt { get; set; }
 
+    public IReadOnlyList<AttemptEntity> Attempts => _attempts.AsReadOnly();
+
     public StudentTaskInformationEntity(Guid userId, Guid taskId)
     {
         Id = Guid.NewGuid();
@@ -40,5 +45,10 @@ public class StudentTaskInformationEntity
     public StudentTaskInformationEntity()
     {
 
+    }
+
+    public void AddAttempt(AttemptEntity attempt)
+    {
+        _attempts.Add(attempt);
     }
 }
