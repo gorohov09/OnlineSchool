@@ -16,11 +16,12 @@ public class AttemptEntity
 
     public bool IsRight { get; }
 
-    public AttemptEntity(DateTime dateDispatch, bool isRight)
+    public AttemptEntity(DateTime dateDispatch, bool isRight, string answer)
     {
+        Id = Guid.NewGuid();
         DateDispatch = dateDispatch;
         IsRight = isRight;
-        Answer = Answer;
+        Answer = answer;
     }
 
     public StudentTaskInformationEntity StudentTaskInformation { get; }
