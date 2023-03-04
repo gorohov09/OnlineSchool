@@ -84,7 +84,7 @@ public class CourseController : ControllerBase
         var resultAttempt = await _mediator.Send(command);
 
         return resultAttempt.Match(
-            resAttempt => Ok(_mapper.Map<EnrollResponse>(resAttempt)),
+            resAttempt => Ok(resAttempt),
             errors => Problem("Ошибка"));
     }
 

@@ -8,6 +8,7 @@ public interface IUnitOfWork
     ICourseRepository Courses { get; }
     IUserRepository Users { get; }
     IStudentTaskRepository StudentTasks { get; }
+    IStudentCourseRepository StudentCourses { get; }
 
     Task<bool> CompleteAsync();
 }

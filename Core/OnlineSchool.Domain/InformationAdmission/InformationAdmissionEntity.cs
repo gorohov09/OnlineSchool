@@ -22,7 +22,7 @@ public class InformationAdmissionEntity
     /// </summary>
     public DateTime DateAdmission { get; }
 
-    public int CountCompletedTasks { get; }
+    public int CountCompletedTasks { get; set; }
 
     public InformationAdmissionEntity(StudentEntity student, CourseEntity course)
     {

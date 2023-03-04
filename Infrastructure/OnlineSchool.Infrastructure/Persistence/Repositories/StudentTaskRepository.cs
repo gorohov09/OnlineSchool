@@ -16,6 +16,7 @@ public class StudentTaskRepository : IStudentTaskRepository
     public async Task<StudentTaskInformationEntity> GetTaskInformStudentWithTask(Guid studentId, Guid taskId)
     {
         return await _context.StudentTaskInformation
+            .Include(studentTaskInform => studentTaskInform.Attempts)
             .Include(studentTaskInform => studentTaskInform.Task)
             .Where(studentTaskInform => studentTaskInform.StudentId == studentId &&
             studentTaskInform.TaskId == taskId)
