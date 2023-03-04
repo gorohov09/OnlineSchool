@@ -11,7 +11,7 @@ using OnlineSchool.Infrastructure.Persistence;
 
 namespace OnlineSchool.Infrastructure.Migrations
 {
-    [DbContext(typeof(OnlineSchoolDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20230222225617_AddEntity_Module_Lesson_Task")]
     partial class AddEntity_Module_Lesson_Task
     {

@@ -11,7 +11,7 @@ using OnlineSchool.Infrastructure.Persistence;
 
 namespace OnlineSchool.Infrastructure.Migrations
 {
-    [DbContext(typeof(OnlineSchoolDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20230225100745_AddTime_InformationAdmission")]
     partial class AddTime_InformationAdmission
     {
