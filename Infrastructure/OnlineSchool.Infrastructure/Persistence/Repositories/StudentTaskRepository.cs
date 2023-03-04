@@ -6,9 +6,9 @@ namespace OnlineSchool.Infrastructure.Persistence.Repositories;
 
 public class StudentTaskRepository : IStudentTaskRepository
 {
-    private readonly OnlineSchoolDbContext _context;
+    private readonly ApplicationDbContext _context;
 
-    public StudentTaskRepository(OnlineSchoolDbContext context)
+    public StudentTaskRepository(ApplicationDbContext context)
     {
         _context = context;
     }

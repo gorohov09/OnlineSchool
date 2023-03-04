@@ -9,15 +9,11 @@ namespace OnlineSchool.App.Student.Queries.GetLessonTasks;
 public class GetLessonTasksQueryHandler
     : IRequestHandler<GetLessonTasksQuery, ErrorOr<LessonTasksVm>>
 {
-    private readonly ICourseRepository _courseRepository;
-    private readonly IStudentTaskRepository _studentTaskRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetLessonTasksQueryHandler(
-        ICourseRepository courseRepository,
-        IStudentTaskRepository studentTaskRepository)
+    public GetLessonTasksQueryHandler(IUnitOfWork unitOfWork)
     {
-        _courseRepository = courseRepository;
-        _studentTaskRepository = studentTaskRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<LessonTasksVm>> Handle(
@@ -31,7 +27,7 @@ public class GetLessonTasksQueryHandler
         }
 
         //1. Получаем задачи урока
-        var lesson = await _courseRepository.FindLessonById(lessonId);
+        var lesson = await _unitOfWork.Lessons.FindLessonByIdWithTasks(lessonId);
         if (lesson is null)
         {
             return Errors.Lesson.NotFound;
@@ -40,7 +36,7 @@ public class GetLessonTasksQueryHandler
         var tasksIds = lesson.Tasks.Select(t => t.Id).ToList();
 
         //2. Получаем информацию по задачам для студента
-        var tasksInformation = await _studentTaskRepository.GetTasksStudentForLesson(studentId, tasksIds);
+        var tasksInformation = await _unitOfWork.StudentTasks.GetTasksStudentForLesson(studentId, tasksIds);
 
         //Делаем првоерку, если урок не доступен студенту
         if (tasksIds.Count != tasksInformation.Count)
