@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.Domain.User;
+using System;
 
 namespace OnlineSchool.Infrastructure.Persistence.Repositories;
 

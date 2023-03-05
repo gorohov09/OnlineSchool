@@ -9,6 +9,7 @@ using OnlineSchool.Infrastructure.Authentication;
 using OnlineSchool.Infrastructure.Persistence;
 using OnlineSchool.Infrastructure.Persistence.Repositories;
 using OnlineSchool.Infrastructure.Services;
+using OnlineSchool.Infrastructure.Services.Email;
 using OnlineSchool.Infrastructure.Services.YouTube;
 
 namespace OnlineSchool.Infrastructure;
@@ -34,12 +35,13 @@ public static class DependencyInjection
 
         services.AddScoped<IYouTubeService, YouTubeService>();
         services.AddScoped<IStudentTaskRepository, StudentTaskRepository>();
+        services.AddScoped<IEmailService, EmailGoogleService>();
 
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 
         services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.UseSqlServer("Data Source=LAPTOP-IGE01LPP\\SQLEXPRESS;Initial Catalog=OnlineSchoolDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            options.UseSqlServer("data source = VLAD\\VLAD; initial catalog = OnlineSchoolDb; trusted_connection = true");
         });
         //@"data source=LAPTOP-9S2AK2B9;initial catalog=OnlineSchoolDB;trusted_connection=true"
         //"Data Source=LAPTOP-IGE01LPP\\SQLEXPRESS;Initial Catalog=OnlineSchoolDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
