@@ -11,12 +11,10 @@ public class EnrollCommandHandler
     : IRequestHandler<EnrollCommand, ErrorOr<EnrollResult>>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IEmailService _emailService;
 
-    public EnrollCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService)
+    public EnrollCommandHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
-        _emailService = emailService;
     }
 
     public async Task<ErrorOr<EnrollResult>> Handle(EnrollCommand request, CancellationToken cancellationToken)
@@ -44,13 +42,6 @@ public class EnrollCommandHandler
         //5. Сохранить все в БД
         if (await _unitOfWork.CompleteAsync())
             return new EnrollResult(course.Id.ToString(), true);
-
-        //6. Отправить письмо на почту
-        var user = await _unitOfWork.Users.FindById(studentId);
-        if(user is null)
-            return Errors.User.UserNotFound;
-
-        await _emailService.SendEmailAsync(user.Email, "Вступление на курс", "Добро пожаловать!");
 
         return Errors.Enroll.CouldNotEnroll;
 
