@@ -9,6 +9,7 @@ using OnlineSchool.Infrastructure.Authentication;
 using OnlineSchool.Infrastructure.Persistence;
 using OnlineSchool.Infrastructure.Persistence.Repositories;
 using OnlineSchool.Infrastructure.Services;
+using OnlineSchool.Infrastructure.Services.Email;
 using OnlineSchool.Infrastructure.Services.YouTube;
 
 namespace OnlineSchool.Infrastructure;
@@ -34,6 +35,7 @@ public static class DependencyInjection
 
         services.AddScoped<IYouTubeService, YouTubeService>();
         services.AddScoped<IStudentTaskRepository, StudentTaskRepository>();
+        services.AddScoped<IEmailService, EmailYandexService>();
 
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 

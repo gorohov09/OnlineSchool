@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace OnlineSchool.App.Common.Interfaces.Services
 {
-    internal interface IEmailService
+    public interface IEmailService
     {
+        Task SendEmailAsync(string email, string subject, string message);
     }
 }
