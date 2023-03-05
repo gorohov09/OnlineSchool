@@ -35,7 +35,7 @@ public static class DependencyInjection
 
         services.AddScoped<IYouTubeService, YouTubeService>();
         services.AddScoped<IStudentTaskRepository, StudentTaskRepository>();
-        services.AddScoped<IEmailService, EmailYandexService>();
+        services.AddScoped<IEmailService, EmailGoogleService>();
 
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 
