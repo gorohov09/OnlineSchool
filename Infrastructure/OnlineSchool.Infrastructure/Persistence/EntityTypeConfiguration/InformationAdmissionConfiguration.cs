@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using OnlineSchool.Domain.InformationAdmission;
+using OnlineSchool.Domain.StudentCourseInformation;
 
 namespace OnlineSchool.Infrastructure.Persistence.EntityTypeConfiguration;
 
-public class InformationAdmissionConfiguration : IEntityTypeConfiguration<InformationAdmissionEntity>
+public class InformationAdmissionConfiguration : IEntityTypeConfiguration<StudentCourseInformationEntity>
 {
-    public void Configure(EntityTypeBuilder<InformationAdmissionEntity> builder)
+    public void Configure(EntityTypeBuilder<StudentCourseInformationEntity> builder)
     {
         builder.ToTable("InformationAdmission");
 

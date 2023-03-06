@@ -1,5 +1,4 @@
-﻿using OnlineSchool.Domain.InformationAdmission;
-using OnlineSchool.Domain.Student;
+﻿using OnlineSchool.Domain.Student;
 
 namespace OnlineSchool.App.Common.Interfaces.Persistence;
 

@@ -1,12 +1,12 @@
 ﻿using OnlineSchool.Domain.Course;
-using OnlineSchool.Domain.InformationAdmission;
+using OnlineSchool.Domain.StudentCourseInformation;
 using OnlineSchool.Domain.StudentTaskInformation;
 
 namespace OnlineSchool.Domain.Student;
 
 public class StudentEntity
 {
-    private List<InformationAdmissionEntity> _informationAdmissions = new();
+    private List<StudentCourseInformationEntity> _informationAdmissions = new();
     private List<StudentTaskInformationEntity> _tasks = new();
          
     public Guid Id { get; }
@@ -19,7 +19,7 @@ public class StudentEntity
 
     public DateTime BirthDay { get; }
 
-    public IReadOnlyList<InformationAdmissionEntity> InformationAdmissions => _informationAdmissions.AsReadOnly();
+    public IReadOnlyList<StudentCourseInformationEntity> InformationAdmissions => _informationAdmissions.AsReadOnly();
     public IReadOnlyCollection<StudentTaskInformationEntity> Tasks => _tasks.AsReadOnly();
 
     public StudentEntity(Guid id, string firstName, string lastName)
@@ -40,7 +40,7 @@ public class StudentEntity
         if (_informationAdmissions.Any(inf => inf.Course.Id == course.Id))
             return false;
 
-        _informationAdmissions.Add(new InformationAdmissionEntity(this, course));
+        _informationAdmissions.Add(new StudentCourseInformationEntity(this, course));
 
         //Получение Ids всех задач курса
         var tasksIds = course.Modules

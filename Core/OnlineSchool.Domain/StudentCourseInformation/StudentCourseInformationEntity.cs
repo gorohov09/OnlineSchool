@@ -1,9 +1,9 @@
 ﻿using OnlineSchool.Domain.Course;
 using OnlineSchool.Domain.Student;
 
-namespace OnlineSchool.Domain.InformationAdmission;
+namespace OnlineSchool.Domain.StudentCourseInformation;
 
-public class InformationAdmissionEntity
+public class StudentCourseInformationEntity
 {
     public Guid Id { get; set; }
 
@@ -24,7 +24,7 @@ public class InformationAdmissionEntity
 
     public int CountCompletedTasks { get; set; }
 
-    public InformationAdmissionEntity(StudentEntity student, CourseEntity course)
+    public StudentCourseInformationEntity(StudentEntity student, CourseEntity course)
     {
         Id = Guid.NewGuid();
         Student = student;
@@ -32,7 +32,7 @@ public class InformationAdmissionEntity
         DateAdmission = DateTime.Now;
     }
 
-    public InformationAdmissionEntity()
+    public StudentCourseInformationEntity()
     {
 
     }
@@ -41,6 +41,6 @@ public class InformationAdmissionEntity
     {
         var countTaskCourse = Course.GetCountTasks();
         if (countTaskCourse == 0) return 0;
-        return ((double)CountCompletedTasks / (double)countTaskCourse) * 100;
+        return CountCompletedTasks / (double)countTaskCourse * 100;
     }
 }

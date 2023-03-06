@@ -1,8 +1,8 @@
-﻿using OnlineSchool.Domain.InformationAdmission;
+﻿using OnlineSchool.Domain.StudentCourseInformation;
 
 namespace OnlineSchool.App.Common.Interfaces.Persistence;
 
-public interface IStudentCourseRepository : IGenericRepository<InformationAdmissionEntity>
+public interface IStudentCourseRepository : IGenericRepository<StudentCourseInformationEntity>
 {
-    Task<InformationAdmissionEntity?> FindStudentCourse(Guid courseId, Guid studentId);
+    Task<StudentCourseInformationEntity?> FindStudentCourse(Guid courseId, Guid studentId);
 }
