@@ -1,4 +1,4 @@
-﻿namespace OnlineSchool.App.Course.Commands.Entroll;
+﻿namespace OnlineSchool.App.Course.Commands.Enroll;
 
 public record EnrollResult(
     string CourseId,

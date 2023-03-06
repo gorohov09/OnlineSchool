@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace OnlineSchool.App.Course.Commands.Entroll;
+namespace OnlineSchool.App.Course.Commands.Enroll;
 
 public class EnrollCommandValidator : AbstractValidator<EnrollCommand>
 {

@@ -4,7 +4,7 @@ using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.Domain.Common.Errors;
 using OnlineSchool.Domain.StudentTaskInformation;
 
-namespace OnlineSchool.App.Course.Commands.Entroll;
+namespace OnlineSchool.App.Course.Commands.Enroll;
 
 public class EnrollCommandHandler
     : IRequestHandler<EnrollCommand, ErrorOr<EnrollResult>>
@@ -19,7 +19,7 @@ public class EnrollCommandHandler
     public async Task<ErrorOr<EnrollResult>> Handle(EnrollCommand request, CancellationToken cancellationToken)
     {
         //1. Проверить валидность Id курса и студента
-        if (!Guid.TryParse(request.CourseId, out var courseId) 
+        if (!Guid.TryParse(request.CourseId, out var courseId)
             || !Guid.TryParse(request.StudentId, out var studentId))
             return Errors.Course.InvalidId;
 
