@@ -27,7 +27,7 @@ public class ApplicationDbContext : DbContext
     {
         builder.ApplyConfiguration(new StudentConfiguration());
         builder.ApplyConfiguration(new CourseConfiguration());
-        builder.ApplyConfiguration(new InformationAdmissionConfiguration());
+        builder.ApplyConfiguration(new StudentCourseInformationConfiguration());
         builder.ApplyConfiguration(new UserConfiguration());
         builder.ApplyConfiguration(new ModuleConfiguration());
         builder.ApplyConfiguration(new LessonConfiguration());

@@ -4,11 +4,11 @@ using OnlineSchool.Domain.StudentCourseInformation;
 
 namespace OnlineSchool.Infrastructure.Persistence.EntityTypeConfiguration;
 
-public class InformationAdmissionConfiguration : IEntityTypeConfiguration<StudentCourseInformationEntity>
+public class StudentCourseInformationConfiguration : IEntityTypeConfiguration<StudentCourseInformationEntity>
 {
     public void Configure(EntityTypeBuilder<StudentCourseInformationEntity> builder)
     {
-        builder.ToTable("InformationAdmission");
+        builder.ToTable("StudentCourseInformation");
 
         builder.HasKey(inf => inf.Id);
         builder.Property(inf => inf.Id)

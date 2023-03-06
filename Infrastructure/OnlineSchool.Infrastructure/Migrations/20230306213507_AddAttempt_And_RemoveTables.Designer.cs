@@ -12,8 +12,8 @@ using OnlineSchool.Infrastructure.Persistence;
 namespace OnlineSchool.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230304120536_AddAttempt")]
-    partial class AddAttempt
+    [Migration("20230306213507_AddAttempt_And_RemoveTables")]
+    partial class AddAttempt_And_RemoveTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,36 @@ namespace OnlineSchool.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("OnlineSchool.Domain.Attempt.AttemptEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Answer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateDispatch")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRight")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TaskId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("Attempts", (string)null);
+                });
 
             modelBuilder.Entity("OnlineSchool.Domain.Course.CourseEntity", b =>
                 {
@@ -129,32 +159,6 @@ namespace OnlineSchool.Infrastructure.Migrations
                     b.ToTable("Tasks", (string)null);
                 });
 
-            modelBuilder.Entity("OnlineSchool.Domain.InformationAdmission.InformationAdmissionEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("CountCompletedTasks")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("CourseId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("DateAdmission")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("StudentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("InformationAdmission", (string)null);
-                });
-
             modelBuilder.Entity("OnlineSchool.Domain.Student.StudentEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -180,58 +184,30 @@ namespace OnlineSchool.Infrastructure.Migrations
                     b.ToTable("Students", (string)null);
                 });
 
-            modelBuilder.Entity("OnlineSchool.Domain.StudentTaskInformation.Entities.AttemptEntity", b =>
+            modelBuilder.Entity("OnlineSchool.Domain.StudentCourseInformation.StudentCourseInformationEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Answer")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateDispatch")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRight")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("StudentTaskInformationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StudentTaskInformationId");
-
-                    b.ToTable("Attempts", (string)null);
-                });
-
-            modelBuilder.Entity("OnlineSchool.Domain.StudentTaskInformation.StudentTaskInformationEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("CountAttempts")
+                    b.Property<int>("CountCompletedTasks")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsSolve")
-                        .HasColumnType("bit");
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateAdmission")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("TaskId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("TimeLastAttempt")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("StudentId");
 
-                    b.HasIndex("TaskId");
-
-                    b.ToTable("StudentTaskInformation", (string)null);
+                    b.ToTable("InformationAdmission", (string)null);
                 });
 
             modelBuilder.Entity("OnlineSchool.Domain.User.UserEntity", b =>
@@ -259,6 +235,25 @@ namespace OnlineSchool.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("OnlineSchool.Domain.Attempt.AttemptEntity", b =>
+                {
+                    b.HasOne("OnlineSchool.Domain.Student.StudentEntity", "Student")
+                        .WithMany("Attempts")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OnlineSchool.Domain.Course.Entities.TaskEntity", "Task")
+                        .WithMany("Attempts")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Task");
                 });
 
             modelBuilder.Entity("OnlineSchool.Domain.Course.Entities.LessonEntity", b =>
@@ -294,7 +289,7 @@ namespace OnlineSchool.Infrastructure.Migrations
                     b.Navigation("Lesson");
                 });
 
-            modelBuilder.Entity("OnlineSchool.Domain.InformationAdmission.InformationAdmissionEntity", b =>
+            modelBuilder.Entity("OnlineSchool.Domain.StudentCourseInformation.StudentCourseInformationEntity", b =>
                 {
                     b.HasOne("OnlineSchool.Domain.Course.CourseEntity", "Course")
                         .WithMany("InformationAdmissions")
@@ -311,36 +306,6 @@ namespace OnlineSchool.Infrastructure.Migrations
                     b.Navigation("Course");
 
                     b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("OnlineSchool.Domain.StudentTaskInformation.Entities.AttemptEntity", b =>
-                {
-                    b.HasOne("OnlineSchool.Domain.StudentTaskInformation.StudentTaskInformationEntity", "StudentTaskInformation")
-                        .WithMany("Attempts")
-                        .HasForeignKey("StudentTaskInformationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("StudentTaskInformation");
-                });
-
-            modelBuilder.Entity("OnlineSchool.Domain.StudentTaskInformation.StudentTaskInformationEntity", b =>
-                {
-                    b.HasOne("OnlineSchool.Domain.Student.StudentEntity", "Student")
-                        .WithMany("Tasks")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OnlineSchool.Domain.Course.Entities.TaskEntity", "Task")
-                        .WithMany("Students")
-                        .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Student");
-
-                    b.Navigation("Task");
                 });
 
             modelBuilder.Entity("OnlineSchool.Domain.Course.CourseEntity", b =>
@@ -362,19 +327,14 @@ namespace OnlineSchool.Infrastructure.Migrations
 
             modelBuilder.Entity("OnlineSchool.Domain.Course.Entities.TaskEntity", b =>
                 {
-                    b.Navigation("Students");
+                    b.Navigation("Attempts");
                 });
 
             modelBuilder.Entity("OnlineSchool.Domain.Student.StudentEntity", b =>
                 {
-                    b.Navigation("InformationAdmissions");
-
-                    b.Navigation("Tasks");
-                });
-
-            modelBuilder.Entity("OnlineSchool.Domain.StudentTaskInformation.StudentTaskInformationEntity", b =>
-                {
                     b.Navigation("Attempts");
+
+                    b.Navigation("InformationAdmissions");
                 });
 #pragma warning restore 612, 618
         }
