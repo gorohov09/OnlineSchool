@@ -1,7 +1,6 @@
 ﻿using OnlineSchool.Domain.Attempt;
 using OnlineSchool.Domain.Course;
 using OnlineSchool.Domain.StudentCourseInformation;
-using OnlineSchool.Domain.StudentTaskInformation;
 
 namespace OnlineSchool.Domain.Student;
 

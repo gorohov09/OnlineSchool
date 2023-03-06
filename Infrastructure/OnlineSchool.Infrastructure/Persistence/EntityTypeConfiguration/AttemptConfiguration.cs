@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using OnlineSchool.Domain.StudentTaskInformation.Entities;
+using OnlineSchool.Domain.Attempt;
+
 
 namespace OnlineSchool.Infrastructure.Persistence.EntityTypeConfiguration;
 
@@ -15,8 +16,14 @@ public class AttemptConfiguration : IEntityTypeConfiguration<AttemptEntity>
             .IsRequired()
             .ValueGeneratedNever();
 
-        builder.HasOne(attempt => attempt.StudentTaskInformation)
-            .WithMany(inf => inf.Attempts)
+        builder.HasOne(attempt => attempt.Student)
+            .WithMany(student => student.Attempts)
+            .HasForeignKey(attempt => attempt.StudentId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(attempt => attempt.Task)
+            .WithMany(task => task.Attempts)
+            .HasForeignKey(attempt => attempt.TaskId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.Property(attempt => attempt.Answer).IsRequired();

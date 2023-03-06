@@ -1,5 +1,4 @@
 ﻿using OnlineSchool.Domain.Attempt;
-using OnlineSchool.Domain.StudentTaskInformation;
 
 namespace OnlineSchool.Domain.Course.Entities;
 
@@ -41,6 +40,11 @@ public class TaskEntity
     }
 
     public void SetOrder(int order) => Order = order;
+
+    public void AddAttempt(AttemptEntity attempt)
+    {
+        _attempts.Add(attempt);
+    }
 
     private TaskTypeEnum GetTypeTask(string type)
     {

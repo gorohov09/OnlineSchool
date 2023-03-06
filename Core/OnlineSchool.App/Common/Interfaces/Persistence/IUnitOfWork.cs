@@ -7,8 +7,8 @@ public interface IUnitOfWork
     ILessonRepository Lessons { get; }
     ICourseRepository Courses { get; }
     IUserRepository Users { get; }
-    IStudentTaskRepository StudentTasks { get; }
     IStudentCourseRepository StudentCourses { get; }
+    ITaskRepository Tasks { get; }
 
     Task<bool> CompleteAsync();
 }

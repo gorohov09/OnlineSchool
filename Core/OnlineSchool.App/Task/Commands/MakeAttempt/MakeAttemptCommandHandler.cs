@@ -2,8 +2,8 @@
 using MediatR;
 using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.App.Common.Interfaces.Services;
+using OnlineSchool.Domain.Attempt;
 using OnlineSchool.Domain.Common.Errors;
-using OnlineSchool.Domain.StudentTaskInformation.Entities;
 
 namespace OnlineSchool.App.Task.Commands.MakeAttempt;
 
@@ -25,25 +25,20 @@ public class MakeAttemptCommandHandler
             || !Guid.TryParse(request.TaskId, out var taskId))
             return Errors.Course.InvalidId;
 
-        var taskInform = await _unitOfWork.StudentTasks.GetTaskInformStudentWithTask(studentId, taskId);
+        var task = await _unitOfWork.Tasks.GetStudentTaskWithAttempts(studentId, taskId);
 
-        var isRightAnswer = taskInform.Task.RightAnswer == request.Answer;
+        var isRightAnswer = task.RightAnswer == request.Answer;
 
-        if (isRightAnswer && taskInform.Attempts.All(attempt => !attempt.IsRight))
+        if (isRightAnswer && task.Attempts.All(attempt => !attempt.IsRight))
         {
-            var course = await _unitOfWork.Courses.GetCourseByTaskId(taskInform.TaskId);
+            var course = await _unitOfWork.Courses.GetCourseByTaskId(task.Id);
             var studentCourseInformation = await _unitOfWork.StudentCourses.FindStudentCourse(course.Id, studentId);
 
             studentCourseInformation.CountCompletedTasks += 1;
-            taskInform.IsSolve = isRightAnswer;
-        }
+        }  
 
-        taskInform.TimeLastAttempt = _dateTimeProvider.TimeNow;
-        taskInform.CountAttempts += 1;
-        
-
-        var attempt = new AttemptEntity(_dateTimeProvider.TimeNow, isRightAnswer, request.Answer);
-        taskInform.AddAttempt(attempt);
+        var attempt = new AttemptEntity(studentId, taskId, _dateTimeProvider.TimeNow, request.Answer, isRightAnswer);
+        task.AddAttempt(attempt);
 
         if (await _unitOfWork.CompleteAsync())
             return new MakeAttemptResult(isRightAnswer);

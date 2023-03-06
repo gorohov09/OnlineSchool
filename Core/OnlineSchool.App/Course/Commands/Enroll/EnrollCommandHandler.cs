@@ -2,7 +2,6 @@
 using MediatR;
 using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.Domain.Common.Errors;
-using OnlineSchool.Domain.StudentTaskInformation;
 
 namespace OnlineSchool.App.Course.Commands.Enroll;
 
