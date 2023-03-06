@@ -1,6 +1,7 @@
 ﻿using ErrorOr;
 using MediatR;
 using OnlineSchool.App.Common.Interfaces.Persistence;
+using OnlineSchool.App.Common.Interfaces.Services;
 using OnlineSchool.Domain.Course;
 
 namespace OnlineSchool.App.Course.Commands.CreateCourse;
@@ -12,7 +13,7 @@ public class CreateCourseCommandHandler
 
     public CreateCourseCommandHandler(IUnitOfWork unitOfWork)
     {
-        _unitOfWork = unitOfWork;
+        _unitOfWork = unitOfWork; 
     }
 
     public async Task<ErrorOr<bool>> Handle(

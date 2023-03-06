@@ -4,6 +4,7 @@ using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.App.Common.Interfaces.Services;
 using OnlineSchool.Domain.Common.Errors;
 using OnlineSchool.Domain.StudentTaskInformation;
+using OnlineSchool.Domain.User;
 
 namespace OnlineSchool.App.Course.Commands.Entroll;
 
@@ -11,10 +12,12 @@ public class EnrollCommandHandler
     : IRequestHandler<EnrollCommand, ErrorOr<EnrollResult>>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IEmailService _emailService;
 
-    public EnrollCommandHandler(IUnitOfWork unitOfWork)
+    public EnrollCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService)
     {
         _unitOfWork = unitOfWork;
+        _emailService = emailService;
     }
 
     public async Task<ErrorOr<EnrollResult>> Handle(EnrollCommand request, CancellationToken cancellationToken)
@@ -39,11 +42,18 @@ public class EnrollCommandHandler
 
         //_unitOfWork.Students.Update(student);
 
-        //5. Сохранить все в БД
+        //5. Сохранить все в БД и отправить письмо на почту
         if (await _unitOfWork.CompleteAsync())
+        {
+            var user = await _unitOfWork.Users.FindById(studentId);
+            if (user is null)
+                return Errors.User.UserNotFound;
+
+            _emailService.SendEmailAsync(user.Email, $"Запись на курс {course.Name}!", $"{user.FirstName}, добро пожаловать!");
+
             return new EnrollResult(course.Id.ToString(), true);
+        }
 
         return Errors.Enroll.CouldNotEnroll;
-
     }
 }
