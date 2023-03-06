@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OnlineSchool.Infrastructure.Services.Email
 {
-    public class EmailYandexService : IEmailService
+    public class EmailGoogleService : IEmailService
     {
         public async Task SendEmailAsync(string email, string subject, string message)
         {

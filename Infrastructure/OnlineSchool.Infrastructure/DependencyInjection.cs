@@ -9,6 +9,7 @@ using OnlineSchool.Infrastructure.Authentication;
 using OnlineSchool.Infrastructure.Persistence;
 using OnlineSchool.Infrastructure.Persistence.Repositories;
 using OnlineSchool.Infrastructure.Services;
+using OnlineSchool.Infrastructure.Services.Email;
 using OnlineSchool.Infrastructure.Services.YouTube;
 
 namespace OnlineSchool.Infrastructure;
@@ -31,6 +32,7 @@ public static class DependencyInjection
         services.AddScoped<ILessonRepository, LessonRepository>();
         services.AddScoped<IModuleRepository, ModuleRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IEmailService, EmailGoogleService>();
 
         services.AddScoped<IYouTubeService, YouTubeService>();
         services.AddScoped<IStudentTaskRepository, StudentTaskRepository>();
