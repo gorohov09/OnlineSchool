@@ -2,6 +2,7 @@
 using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.Domain.Course;
 using OnlineSchool.Domain.Course.Entities;
+using OnlineSchool.Domain.InformationAdmission;
 
 namespace OnlineSchool.Infrastructure.Persistence.Repositories;
 
