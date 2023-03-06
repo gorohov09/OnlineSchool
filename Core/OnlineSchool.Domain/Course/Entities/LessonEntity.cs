@@ -16,6 +16,8 @@ namespace OnlineSchool.Domain.Course.Entities
 
         public int Order { get; private set; }
 
+        public string? VideoEmbedCode { get; }
+
         public ModuleEntity Module { get; }
 
         public IReadOnlyList<TaskEntity> Tasks => _tasks.AsReadOnly();
@@ -24,6 +26,13 @@ namespace OnlineSchool.Domain.Course.Entities
         {
             Id = Guid.NewGuid();
             Name = name;
+        }
+
+        public LessonEntity(string name, string videoEmbedCode)
+        {
+            Id = Guid.NewGuid();
+            Name = name;
+            VideoEmbedCode = videoEmbedCode;
         }
 
         public LessonEntity()

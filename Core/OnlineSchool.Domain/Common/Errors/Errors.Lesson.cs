@@ -17,5 +17,9 @@ public static partial class Errors
         public static Error CouldNotSave => Error.Conflict(
             code: "Lesson.CouldNotSave",
             description: "Lesson could not save.");
+
+        public static Error CouldNotFindVideo => Error.Conflict(
+            code: "Lesson.CouldNotFindVideo",
+            description: "Could not find video in YouTube.");
     }
 }

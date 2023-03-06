@@ -9,11 +9,11 @@ namespace OnlineSchool.App.Course.Commands.AddTask;
 public class AddTaskCommandHandler
     : IRequestHandler<AddTaskCommand, ErrorOr<string>>
 {
-    private readonly ICourseRepository _courseRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public AddTaskCommandHandler(ICourseRepository courseRepository)
+    public AddTaskCommandHandler(IUnitOfWork unitOfWork)
     {
-        _courseRepository = courseRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<string>> Handle(AddTaskCommand request, CancellationToken cancellationToken)
@@ -25,7 +25,7 @@ public class AddTaskCommandHandler
         }
 
         //2. Ищес урок по Id
-        var lesson = await _courseRepository.FindLessonById(lessonId);
+        var lesson = await _unitOfWork.Lessons.FindLessonByIdWithTasks(lessonId);
         if (lesson is null)
         {
             return Errors.Lesson.NotFound;
@@ -37,8 +37,10 @@ public class AddTaskCommandHandler
 
         lesson.AddTask(task);
 
+        _unitOfWork.Lessons.Update(lesson);
+
         //4. Обновляем курс в БД
-        if (await _courseRepository.UpdateLesson(lesson))
+        if (await _unitOfWork.CompleteAsync())
         {
             return task.Id.ToString();
         }

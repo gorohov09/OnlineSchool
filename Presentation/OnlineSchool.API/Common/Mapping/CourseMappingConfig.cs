@@ -24,6 +24,7 @@ public class CourseMappingConfig : IRegister
 
         config.NewConfig<(AddLessonRequest request, string moduleId), AddLessonCommand>()
             .Map(dest => dest.ModuleId, src => src.moduleId)
+            .Map(dest => dest.LinkVideo, src => src.request.LinkVideo)
             .Map(dest => dest.Name, src => src.request.Name);
 
         config.NewConfig<(AddTaskRequest request, string lessonId), AddTaskCommand>()

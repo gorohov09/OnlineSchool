@@ -2,9 +2,9 @@
 
 namespace OnlineSchool.App.Common.Interfaces.Persistence;
 
-public interface IUserRepository
+public interface IUserRepository : IGenericRepository<UserEntity>
 {
-    Task Add(UserEntity user);
     Task<UserEntity?> FindUserByEmail(string email);
-    Task<UserEntity?> FindUserById(Guid id);
+
+    
 }

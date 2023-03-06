@@ -8,11 +8,11 @@ namespace OnlineSchool.App.Course.Commands.CreateCourse;
 public class CreateCourseCommandHandler
     : IRequestHandler<CreateCourseCommand, ErrorOr<bool>>
 {
-    private readonly ICourseRepository _courseRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateCourseCommandHandler(ICourseRepository courseRepository)
+    public CreateCourseCommandHandler(IUnitOfWork unitOfWork)
     {
-        _courseRepository = courseRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<bool>> Handle(
@@ -23,8 +23,8 @@ public class CreateCourseCommandHandler
         var course = new CourseEntity(request.Name, request.Description);
 
         //2. Добавляем курс в хранилище
-        if (await _courseRepository.AddCourse(course))
-            return true;
+        if (await _unitOfWork.Courses.Add(course))
+            return await _unitOfWork.CompleteAsync();
 
         return false;
     }

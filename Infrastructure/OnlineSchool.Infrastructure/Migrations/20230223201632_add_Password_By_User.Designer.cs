@@ -11,7 +11,7 @@ using OnlineSchool.Infrastructure.Persistence;
 
 namespace OnlineSchool.Infrastructure.Migrations
 {
-    [DbContext(typeof(OnlineSchoolDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20230223201632_add_Password_By_User")]
     partial class add_Password_By_User
     {

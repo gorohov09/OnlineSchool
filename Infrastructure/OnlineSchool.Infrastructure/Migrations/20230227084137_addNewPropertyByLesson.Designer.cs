@@ -12,8 +12,8 @@ using OnlineSchool.Infrastructure.Persistence;
 namespace OnlineSchool.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230225155919_RemoveCountTask_In_Course")]
-    partial class RemoveCountTask_In_Course
+    [Migration("20230227084137_addNewPropertyByLesson")]
+    partial class addNewPropertyByLesson
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,6 +63,9 @@ namespace OnlineSchool.Infrastructure.Migrations
 
                     b.Property<int>("Order")
                         .HasColumnType("int");
+
+                    b.Property<string>("VideoEmbedCode")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
