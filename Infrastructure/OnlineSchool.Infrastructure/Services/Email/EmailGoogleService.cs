@@ -6,20 +6,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using OnlineSchool.Infrastructure.Services.YouTube;
 
 namespace OnlineSchool.Infrastructure.Services.Email
 {
     public class EmailGoogleService : IEmailService
     {
-        public void SendEmailAsync(string email, string subject, string message)
+        private readonly EmailGoogleSettings _settingsGmail;
+
+        public EmailGoogleService(IOptions<EmailGoogleSettings> settingsGmail)
+        {
+            _settingsGmail = settingsGmail.Value;
+		}
+
+		public async Task<bool> SendEmailAsync(string email, string subject, string message)
         {
             var emailMessage = new MimeMessage();
             //от кого отправляем и заголовок
-            emailMessage.From.Add(new MailboxAddress("OnlineSchool", "onlineschoolproject2023@gmail.com"));
+            emailMessage.From.Add(new MailboxAddress(_settingsGmail.From, _settingsGmail.Address));
+
             //кому отправляем
-            emailMessage.To.Add(new MailboxAddress("Запись на курс", email));
+            emailMessage.To.Add(new MailboxAddress("", email));
+
             //тема письма
             emailMessage.Subject = subject;
+
             //тело письма
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
             {
@@ -27,15 +40,24 @@ namespace OnlineSchool.Infrastructure.Services.Email
             };
 
             using (var client = new SmtpClient())
-
             {
                 //Указываем smtp сервер почты и порт
                 client.Connect("smtp.gmail.com", 587, false);
-                //Указываем свой Email адрес и пароль приложения
-                client.Authenticate("onlineschoolproject2023@gmail.com", "supyootzbubmagno");
-                client.Send(emailMessage);
-                client.Disconnect(true);
 
+                //Указываем свой Email адрес и пароль приложения
+                client.Authenticate(_settingsGmail.Address, _settingsGmail.GmailPassword);
+
+                //Проверка нашей почты на авторизацию и соединение
+                if(client.IsAuthenticated && client.IsConnected)
+                {
+					await client.SendAsync(emailMessage);
+
+					client.Disconnect(true);
+
+                    return true;
+				}
+
+                return false;
             }   
         }
     }
