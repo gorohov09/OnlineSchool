@@ -5,7 +5,8 @@ using OnlineSchool.App.Course.Commands.AddLesson;
 using OnlineSchool.App.Course.Commands.AddModule;
 using OnlineSchool.App.Course.Commands.AddTask;
 using OnlineSchool.App.Course.Commands.CreateCourse;
-using OnlineSchool.App.Course.Commands.Entroll;
+using OnlineSchool.App.Course.Commands.Enroll;
+using OnlineSchool.App.Task.Commands.MakeAttempt;
 using OnlineSchool.Contracts.Course;
 using OnlineSchool.Contracts.Course.Lesson;
 using OnlineSchool.Contracts.Course.Module;
@@ -75,6 +76,18 @@ public class CourseController : ControllerBase
             module => Ok(new AddTaskResponse(result.Value)),
             errors => Problem("Ошибка"));
     }
+
+    [HttpPost("task/{taskId}/makeAttempt/{studentId}")]
+    public async Task<IActionResult> MakeAttempt(string taskId, string studentId, [FromBody]MakeAttemptRequest request)
+    {
+        var command = new MakeAttemptCommand(studentId, taskId, request.Answer);
+        var resultAttempt = await _mediator.Send(command);
+
+        return resultAttempt.Match(
+            resAttempt => Ok(resAttempt),
+            errors => Problem("Ошибка"));
+    }
+
 
     [HttpPost("enroll/{courseId}/{studentId}")]
     public async Task<IActionResult> Enroll(string courseId, string studentId)

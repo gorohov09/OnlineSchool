@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.Domain.Course;
-using OnlineSchool.Domain.Course.Entities;
 
 namespace OnlineSchool.Infrastructure.Persistence.Repositories;
 
@@ -36,4 +35,13 @@ public class CourseRepository : GenericRepository<CourseEntity>, ICourseReposito
             .FirstOrDefaultAsync(course => course.Id == id);
     }
 
+    public async Task<CourseEntity?> GetCourseByTaskId(Guid taskId)
+    {
+        return await _context.Courses
+            .FirstOrDefaultAsync(course =>
+            course.Modules
+            .SelectMany(module => module.Lessons)
+            .SelectMany(lesson => lesson.Tasks)
+            .Any(task => task.Id == taskId));
+    }
 }

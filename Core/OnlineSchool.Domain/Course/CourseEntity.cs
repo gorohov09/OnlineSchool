@@ -1,5 +1,5 @@
 ﻿using OnlineSchool.Domain.Course.Entities;
-using OnlineSchool.Domain.InformationAdmission;
+using OnlineSchool.Domain.StudentCourseInformation;
 
 namespace OnlineSchool.Domain.Course;
 
@@ -8,7 +8,7 @@ namespace OnlineSchool.Domain.Course;
 /// </summary>
 public class CourseEntity
 {
-    private List<InformationAdmissionEntity> _informationAdmissions = new();
+    private List<StudentCourseInformationEntity> _informationAdmissions = new();
     private List<ModuleEntity> _modules = new();
 
     /// <summary>
@@ -36,7 +36,7 @@ public class CourseEntity
     /// </summary>
     public DateTime Updated { get; }
 
-    public IReadOnlyList<InformationAdmissionEntity> InformationAdmissions => _informationAdmissions.AsReadOnly();
+    public IReadOnlyList<StudentCourseInformationEntity> InformationAdmissions => _informationAdmissions.AsReadOnly();
     public IReadOnlyList<ModuleEntity> Modules => _modules.AsReadOnly();
 
     public CourseEntity(string name, string description)
