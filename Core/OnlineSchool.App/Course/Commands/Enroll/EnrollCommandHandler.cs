@@ -1,6 +1,7 @@
 ﻿using ErrorOr;
 using MediatR;
 using OnlineSchool.App.Common.Interfaces.Persistence;
+using OnlineSchool.App.Common.Interfaces.Services;
 using OnlineSchool.Domain.Common.Errors;
 
 namespace OnlineSchool.App.Course.Commands.Enroll;
