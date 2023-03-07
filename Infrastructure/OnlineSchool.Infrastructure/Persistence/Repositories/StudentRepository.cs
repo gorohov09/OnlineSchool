@@ -15,6 +15,7 @@ public class StudentRepository : GenericRepository<StudentEntity>, IStudentRepos
     {
         return await _context.Students
             .Include(student => student.InformationAdmissions)
+            .ThenInclude(inf => inf.Course)
             .FirstOrDefaultAsync(student => student.Id == studentId);
     }
 
