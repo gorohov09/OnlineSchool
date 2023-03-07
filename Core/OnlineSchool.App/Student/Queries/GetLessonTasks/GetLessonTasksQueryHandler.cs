@@ -2,7 +2,7 @@
 using MediatR;
 using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.Domain.Common.Errors;
-using OnlineSchool.Domain.StudentTaskInformation;
+using OnlineSchool.Domain.Course.Entities;
 
 namespace OnlineSchool.App.Student.Queries.GetLessonTasks;
 
@@ -26,21 +26,10 @@ public class GetLessonTasksQueryHandler
             return Errors.Lesson.InvalidId;
         }
 
-        //1. Получаем задачи урока
-        var lesson = await _unitOfWork.Lessons.FindLessonByIdWithTasks(lessonId);
-        if (lesson is null)
-        {
-            return Errors.Lesson.NotFound;
-        }
+        //1. Сделать проверку, что студенту доступен этот курс
 
-        var tasksIds = lesson.Tasks.Select(t => t.Id).ToList();
-
-        //2. Получаем информацию по задачам для студента
-        var tasksInformation = await _unitOfWork.StudentTasks.GetTasksStudentForLesson(studentId, tasksIds);
-
-        //Делаем првоерку, если урок не доступен студенту
-        if (tasksIds.Count != tasksInformation.Count)
-            return Errors.Student.StudentNotEnrollLesson;
+        //2. Получаем информацию по задачам для студента по определенному уроку
+        var tasksInformation = await _unitOfWork.Tasks.GetStudentLessonTasksWithAttempts(studentId, lessonId);
 
         //3. Формируем список для результата
         var listTaskVm = new List<TaskVm>();
@@ -52,13 +41,21 @@ public class GetLessonTasksQueryHandler
         return new LessonTasksVm(listTaskVm);
     }
 
-    private void AddTaskVm(List<TaskVm> tasks, StudentTaskInformationEntity taskInformation, int order)
+    private void AddTaskVm(List<TaskVm> tasks, TaskEntity task, int order)
     {
-        if (taskInformation.TimeLastAttempt.Year < 2000)
-            tasks.Add(new TaskVm(taskInformation.TaskId, order,
-                taskInformation.Task.Name, taskInformation.IsSolve, true, null));
+        if (task.Attempts.Count() == 0)
+        {
+            tasks.Add(new TaskVm(task.Id, order, task.Name, false, true, null));
+        }
+        else if (task.Attempts.Any(attempt => attempt.IsRight))
+        {
+            var lastTimeAttempt = task.Attempts.Max(attempt => attempt.DateDispatch);
+            tasks.Add(new TaskVm(task.Id, order, task.Name, true, false, lastTimeAttempt));
+        }
         else
-            tasks.Add(new TaskVm(taskInformation.TaskId, order,
-                taskInformation.Task.Name, taskInformation.IsSolve, false, taskInformation.TimeLastAttempt));
+        {
+            var lastTimeAttempt = task.Attempts.Max(attempt => attempt.DateDispatch);
+            tasks.Add(new TaskVm(task.Id, order, task.Name, false, false, lastTimeAttempt));
+        }
     }
 }

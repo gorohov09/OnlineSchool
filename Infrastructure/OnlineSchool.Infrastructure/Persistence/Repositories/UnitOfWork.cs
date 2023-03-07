@@ -16,11 +16,14 @@ public class UnitOfWork : IUnitOfWork, IDisposable
 
     public IUserRepository Users { get; }
 
-    public IStudentTaskRepository StudentTasks { get; }
+    public ITaskRepository Tasks { get; }
+
+    public IStudentCourseRepository StudentCourses { get; }
 
     public UnitOfWork(ApplicationDbContext context, IStudentRepository studentRepository,
         IModuleRepository moduleRepository, ILessonRepository lessonRepository,
-        ICourseRepository courseRepository, IUserRepository userRepository, IStudentTaskRepository studentTaskRepository)
+        ICourseRepository courseRepository, IUserRepository userRepository, 
+        ITaskRepository taskRepository, IStudentCourseRepository studentCourseRepository)
     {
         _context = context;
         Students = studentRepository;
@@ -28,7 +31,8 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         Lessons = lessonRepository;
         Courses = courseRepository;
         Users = userRepository;
-        StudentTasks = studentTaskRepository;
+        Tasks = taskRepository;
+        StudentCourses = studentCourseRepository;
     }
 
     public async Task<bool> CompleteAsync()
