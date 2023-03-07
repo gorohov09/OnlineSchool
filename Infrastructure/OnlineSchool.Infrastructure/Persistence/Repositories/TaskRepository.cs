@@ -15,6 +15,7 @@ public class TaskRepository : GenericRepository<TaskEntity>, ITaskRepository
         return await _context.Tasks
             .Include(task => task.Attempts.Where(attempt => attempt.StudentId == studentId))
             .Where(task => task.Lesson.Id == lessonId)
+            .OrderBy(task => task.Order)
             .ToListAsync();
     }
 
