@@ -30,7 +30,7 @@ public class EnrollCommandHandler
             return Errors.Course.InvalidId;
 
         //2. Получить курс и студента, создать объект - InformationAdmission
-        var course = await _unitOfWork.Courses.FindCourseByIdWithModulesLessonsTasks(courseId);
+        var course = await _unitOfWork.Courses.FindById(courseId);
         if (course is null)
             return Errors.Course.NotFound;
 
@@ -41,8 +41,6 @@ public class EnrollCommandHandler
         //Оформляем поступление студента на курс
         if (!student.EnrollCourse(course))
             return Errors.Enroll.StudentAlreadyEnroll;
-
-        //_unitOfWork.Students.Update(student);
 
         //5. Сохранить все в БД и отправить письмо на почту
         if (await _unitOfWork.CompleteAsync())
