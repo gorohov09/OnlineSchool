@@ -1,4 +1,5 @@
-﻿using OnlineSchool.App.Common.Interfaces.Persistence;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.Domain.Course.Entities;
 
 namespace OnlineSchool.Infrastructure.Persistence.Repositories;
@@ -9,13 +10,18 @@ public class TaskRepository : GenericRepository<TaskEntity>, ITaskRepository
     {
     }
 
-    public Task<List<TaskEntity>> GetStudentLessonTasksWithAttempts(Guid studentId, Guid lessonId)
+    public async Task<List<TaskEntity>> GetStudentLessonTasksWithAttempts(Guid studentId, Guid lessonId)
     {
-        throw new NotImplementedException();
+        return await _context.Tasks
+            .Include(task => task.Attempts.Where(attempt => attempt.StudentId == studentId))
+            .Where(task => task.Lesson.Id == lessonId)
+            .ToListAsync();
     }
 
-    public Task<TaskEntity> GetStudentTaskWithAttempts(Guid studentId, Guid taskId)
+    public async Task<TaskEntity> GetStudentTaskWithAttempts(Guid studentId, Guid taskId)
     {
-        throw new NotImplementedException();
+        return await _context.Tasks
+            .Include(task => task.Attempts.Where(attempt => attempt.StudentId == studentId))
+            .FirstOrDefaultAsync(task => task.Id == taskId);
     }
 }
