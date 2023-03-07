@@ -1,5 +1,6 @@
 ﻿using ErrorOr;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.App.Common.Interfaces.Services;
@@ -14,13 +15,13 @@ public class EnrollCommandHandler
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IEmailService _emailService;
-    private readonly ILogger<EnrollCommandHandler> _Logger;
+    private readonly ILogger<EnrollCommandHandler> _logger;
 
-    public EnrollCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService,  ILogger<EnrollCommandHandler> Logger)
+    public EnrollCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService,  ILogger<EnrollCommandHandler> logger)
     {
         _unitOfWork = unitOfWork;
         _emailService = emailService;
-        _Logger = Logger;
+        _logger = logger;
     }
 
     public async Task<ErrorOr<EnrollResult>> Handle(EnrollCommand request, CancellationToken cancellationToken)
@@ -55,7 +56,9 @@ public class EnrollCommandHandler
             var check = await _emailService.SendEmailAsync(user.Email, $"Запись на курс {course.Name}!", $"{user.FirstName}, добро пожаловать!");
             if (!check)
             {
-				_Logger.LogWarning("Письмо не отправлено на почту");
+				_logger.LogWarning($"Письмо не отправлено на почту с адресом {user.Email}. " +
+					$"{user.LastName} {user.FirstName} не получил письмо. " +
+					$"Дата: {DateTime.Now.AddHours(3)}.");
 			}
 
 			return new EnrollResult(course.Id.ToString(), true);
