@@ -45,10 +45,17 @@ namespace OnlineSchool.Infrastructure.Services.Email
                 client.Connect("smtp.gmail.com", 587, false);
 
                 //Указываем свой Email адрес и пароль приложения
-                client.Authenticate(_settingsGmail.Address, _settingsGmail.GmailPassword);
+                try
+                {
+                    //client.Authenticate(_settingsGmail.Address, _settingsGmail.GmailPassword);
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
 
                 //Проверка нашей почты на авторизацию и соединение
-                if(client.IsAuthenticated && client.IsConnected)
+                if(client.IsConnected)
                 {
 					await client.SendAsync(emailMessage);
 
