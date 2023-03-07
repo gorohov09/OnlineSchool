@@ -23,7 +23,11 @@ public static class DependencyInjection
         var youTubeSettings = new YouTubeSettings();
         configuration.Bind(YouTubeSettings.SectionName, youTubeSettings);
 
+        var emailSettings = new EmailGoogleSettings();
+        configuration.Bind(EmailGoogleSettings.SectionName, emailSettings);
+
         services.AddSingleton(Options.Create(youTubeSettings));
+        services.AddSingleton(Options.Create(emailSettings));
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
         services.AddScoped<IUserRepository, UserRepository>();
@@ -41,10 +45,9 @@ public static class DependencyInjection
 
         services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.UseSqlServer("data source=VLAD\\VLAD;initial catalog=OnlineSchoolDb;trusted_connection=true");
+            options.UseSqlServer(configuration.GetConnectionString("SqlServer"));
         });
-        //@"data source=LAPTOP-9S2AK2B9;initial catalog=OnlineSchoolDB;trusted_connection=true"
-        //"Data Source=LAPTOP-IGE01LPP\\SQLEXPRESS;Initial Catalog=OnlineSchoolDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+
         return services;
     }
 }
