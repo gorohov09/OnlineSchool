@@ -8,4 +8,5 @@ public interface ICourseRepository : IGenericRepository<CourseEntity>
     Task<CourseEntity?> FindCourseByIdWithModulesLessonsTasks(Guid id);
     Task<CourseEntity?> FindCourseByIdWithModulesLessons(Guid id);
     Task<CourseEntity?> FindCourseByIdWithModules(Guid id);
+    Task<CourseEntity?> GetCourseByTaskId(Guid taskId);
 }

@@ -30,10 +30,11 @@ public static class DependencyInjection
         services.AddScoped<ICourseRepository, CourseRepository>();
         services.AddScoped<ILessonRepository, LessonRepository>();
         services.AddScoped<IModuleRepository, ModuleRepository>();
+        services.AddScoped<IStudentCourseRepository, StudentCourseRepository>();
+        services.AddScoped<ITaskRepository, TaskRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<IYouTubeService, YouTubeService>();
-        services.AddScoped<IStudentTaskRepository, StudentTaskRepository>();
 
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 

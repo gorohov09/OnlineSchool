@@ -1,10 +1,10 @@
-﻿using OnlineSchool.Domain.StudentTaskInformation;
+﻿using OnlineSchool.Domain.Attempt;
 
 namespace OnlineSchool.Domain.Course.Entities;
 
 public class TaskEntity
 {
-    private List<StudentTaskInformationEntity> _students = new();
+    private List<AttemptEntity> _attempts = new();
 
     public Guid Id { get; }
 
@@ -22,7 +22,7 @@ public class TaskEntity
 
     public LessonEntity Lesson { get; }
 
-    public IReadOnlyCollection<StudentTaskInformationEntity> Students => _students.AsReadOnly();
+    public IReadOnlyCollection<AttemptEntity> Attempts => _attempts.AsReadOnly();
 
     public TaskEntity(string name, string description, string type, string question, string rightAnswer)
     {
@@ -40,6 +40,11 @@ public class TaskEntity
     }
 
     public void SetOrder(int order) => Order = order;
+
+    public void AddAttempt(AttemptEntity attempt)
+    {
+        _attempts.Add(attempt);
+    }
 
     private TaskTypeEnum GetTypeTask(string type)
     {
