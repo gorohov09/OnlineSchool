@@ -23,8 +23,8 @@ public static class DependencyInjection
         var youTubeSettings = new YouTubeSettings();
         configuration.Bind(YouTubeSettings.SectionName, youTubeSettings);
 
-        var emailSettings = new EmailGoogleSettings();
-        configuration.Bind(EmailGoogleSettings.SectionName, emailSettings);
+        var emailSettings = new EmailYandexSettings();
+        configuration.Bind(EmailYandexSettings.SectionName, emailSettings);
 
         services.AddSingleton(Options.Create(youTubeSettings));
         services.AddSingleton(Options.Create(emailSettings));
@@ -38,11 +38,12 @@ public static class DependencyInjection
         services.AddScoped<IStudentCourseRepository, StudentCourseRepository>();
         services.AddScoped<ITaskRepository, TaskRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddScoped<IEmailService, EmailGoogleService>();
+        
 
         services.AddScoped<IYouTubeService, YouTubeService>();
+		services.AddScoped<IEmailService, EmailYandexService>();
 
-        services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+		services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 
         services.AddDbContext<ApplicationDbContext>(options =>
         {
