@@ -5,20 +5,16 @@ using OnlineSchool.Domain.Common.Errors;
 
 namespace OnlineSchool.App.Course.Queries.GetStructureOfCourses
 {
-    public class GetCoursesModulesLessonsQueryHandler
+    public class GetCourseStructureHandler
         : IRequestHandler<GetCourseStructureQuery, ErrorOr<CourseStructureVm>>
     {
-        private readonly ICourseRepository _courseRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetCoursesModulesLessonsQueryHandler(ICourseRepository courseRepository)
+        public GetCourseStructureHandler(IUnitOfWork unitOfWork)
         {
-            _courseRepository = courseRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        //public Task<ErrorOr<CourseStructureVm>> Handle(GetCourseStructureQuery request, CancellationToken cancellationToken)
-        //{
-        //    throw new NotImplementedException();
-        //}
         public async Task<ErrorOr<CourseStructureVm>> Handle(
             GetCourseStructureQuery request,
             CancellationToken cancellationToken)
@@ -29,23 +25,24 @@ namespace OnlineSchool.App.Course.Queries.GetStructureOfCourses
                 return Errors.Course.InvalidId;
             }
 
-            //2. Проверяем, существует ли данный rehc.
-            var course = await _courseRepository.FindCourseWithModulesAndLessonsById(courseId);
+            //2. Проверяем, существует ли данный курс.
+            var course = await _unitOfWork.Courses.FindCourseByIdWithModulesLessons(courseId);
+
             if (course is null)
             {
                 return Errors.Course.NotFound;
             }
 
             var result = new CourseStructureVm(
-                course.Id,
+                course.Id.ToString(),
                 course.Name,
-                course.Modules.OrderBy(module => module.Order)
+                course.Modules/*.OrderBy(module => module.Order)*/
                 .Select(module => new ModuleVm(
-                    module.Id,
+                    module.Id.ToString(),
                     module.Name,
-                    module.Lessons.OrderBy(lesson => lesson.Order)
+                    module.Lessons/*.OrderBy(lesson => lesson.Order)*/
                     .Select(lesson => new LessonVm(
-                        lesson.Id,
+                        lesson.Id.ToString(),
                         lesson.Name
                         )).ToList()
                     )).ToList()

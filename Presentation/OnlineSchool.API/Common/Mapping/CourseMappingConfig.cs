@@ -4,6 +4,7 @@ using OnlineSchool.App.Course.Commands.AddModule;
 using OnlineSchool.App.Course.Commands.AddTask;
 using OnlineSchool.App.Course.Commands.CreateCourse;
 using OnlineSchool.App.Course.Commands.Enroll;
+using OnlineSchool.App.Course.Queries.GetStructureOfCourses;
 using OnlineSchool.Contracts.Course;
 using OnlineSchool.Contracts.Course.Lesson;
 using OnlineSchool.Contracts.Course.Module;

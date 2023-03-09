@@ -6,6 +6,7 @@ using OnlineSchool.App.Course.Commands.AddModule;
 using OnlineSchool.App.Course.Commands.AddTask;
 using OnlineSchool.App.Course.Commands.CreateCourse;
 using OnlineSchool.App.Course.Commands.Enroll;
+using OnlineSchool.App.Course.Queries.GetStructureOfCourses;
 using OnlineSchool.App.Task.Commands.MakeAttempt;
 using OnlineSchool.Contracts.Course;
 using OnlineSchool.Contracts.Course.Lesson;
@@ -101,7 +102,7 @@ public class CourseController : ControllerBase
             errors => Problem("Ошибка"));
     }
 
-    [HttpPost("getStructure")]
+    [HttpGet("getStructure")]
     public async Task<IActionResult> GetStructure(string courseId)
     {
         var query = new GetCourseStructureQuery(courseId);
