@@ -9,6 +9,7 @@ using OnlineSchool.Infrastructure.Authentication;
 using OnlineSchool.Infrastructure.Persistence;
 using OnlineSchool.Infrastructure.Persistence.Repositories;
 using OnlineSchool.Infrastructure.Services;
+using OnlineSchool.Infrastructure.Services.Email;
 using OnlineSchool.Infrastructure.Services.YouTube;
 
 namespace OnlineSchool.Infrastructure;
@@ -22,7 +23,11 @@ public static class DependencyInjection
         var youTubeSettings = new YouTubeSettings();
         configuration.Bind(YouTubeSettings.SectionName, youTubeSettings);
 
+        var emailSettings = new EmailYandexSettings();
+        configuration.Bind(EmailYandexSettings.SectionName, emailSettings);
+
         services.AddSingleton(Options.Create(youTubeSettings));
+        services.AddSingleton(Options.Create(emailSettings));
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
         services.AddScoped<IUserRepository, UserRepository>();
@@ -33,17 +38,18 @@ public static class DependencyInjection
         services.AddScoped<IStudentCourseRepository, StudentCourseRepository>();
         services.AddScoped<ITaskRepository, TaskRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        
 
         services.AddScoped<IYouTubeService, YouTubeService>();
+		services.AddScoped<IEmailService, EmailYandexService>();
 
-        services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+		services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 
         services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.UseSqlServer("Data Source=LAPTOP-IGE01LPP\\SQLEXPRESS;Initial Catalog=OnlineSchoolDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            options.UseSqlServer(configuration.GetConnectionString("SqlServer"));
         });
-        //@"data source=LAPTOP-9S2AK2B9;initial catalog=OnlineSchoolDB;trusted_connection=true"
-        //"Data Source=LAPTOP-IGE01LPP\\SQLEXPRESS;Initial Catalog=OnlineSchoolDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+
         return services;
     }
 }

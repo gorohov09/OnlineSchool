@@ -1,5 +1,7 @@
 ﻿using ErrorOr;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.App.Common.Interfaces.Services;
 using OnlineSchool.Domain.Common.Errors;
@@ -10,10 +12,14 @@ public class EnrollCommandHandler
     : IRequestHandler<EnrollCommand, ErrorOr<EnrollResult>>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IEmailService _emailService;
+    private readonly ILogger<EnrollCommandHandler> _logger;
 
-    public EnrollCommandHandler(IUnitOfWork unitOfWork)
+    public EnrollCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService,  ILogger<EnrollCommandHandler> logger)
     {
         _unitOfWork = unitOfWork;
+        _emailService = emailService;
+        _logger = logger;
     }
 
     public async Task<ErrorOr<EnrollResult>> Handle(EnrollCommand request, CancellationToken cancellationToken)
@@ -36,11 +42,24 @@ public class EnrollCommandHandler
         if (!student.EnrollCourse(course))
             return Errors.Enroll.StudentAlreadyEnroll;
 
-        //5. Сохранить все в БД
+        //5. Сохранить все в БД и отправить письмо на почту
         if (await _unitOfWork.CompleteAsync())
-            return new EnrollResult(course.Id.ToString(), true);
+        {
+            var user = await _unitOfWork.Users.FindById(studentId);
+            if (user is null)
+                return Errors.User.UserNotFound;
+
+            var check = await _emailService.SendEmailAsync(user.Email, $"Запись на курс {course.Name}!", $"{user.FirstName}, добро пожаловать!");
+            if (!check)
+            {
+				_logger.LogWarning($"Письмо не отправлено на почту с адресом {user.Email}. " +
+					$"{user.LastName} {user.FirstName} не получил письмо. " +
+					$"Дата: {DateTime.Now.AddHours(3)}.");
+			}
+
+			return new EnrollResult(course.Id.ToString(), true);
+        }
 
         return Errors.Enroll.CouldNotEnroll;
-
     }
 }
