@@ -91,4 +91,9 @@ public class CourseEntity
     {
         return _modules.Count();
     }
+
+    public int GetCountStudents()
+    {
+        return _informationAdmissions.Count();
+    }
 }
