@@ -29,14 +29,14 @@ namespace OnlineSchool.App.Course.Queries
 			// 1. Проверка корректности Id курса
 			if (!Guid.TryParse(request.СourseId, out var courseId))
 			{
-				return Errors.User.InvalidId;
+				return Errors.Course.InvalidId;
 			}
 
 			// 2. Проверим, что такой курс существует
 			var course = await _unitOfWork.Courses.FindCourseByIdWithModulesLessons(courseId);
 			if (course is null)
 			{
-				return Errors.User.UserNotFound;
+				return Errors.Course.NotFound;
 			}
 
 			// 3. Формируем итоговую модель
