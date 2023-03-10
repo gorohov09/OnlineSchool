@@ -27,7 +27,7 @@ namespace OnlineSchool.App.Course.Queries
 			CancellationToken cancellationToken)
 		{
 			// 1. Проверка корректности Id курса
-			if (!Guid.TryParse(request.CourseId, out var courseId))
+			if (!Guid.TryParse(request.СourseId, out var courseId))
 			{
 				return Errors.User.InvalidId;
 			}

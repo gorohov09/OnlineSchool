@@ -10,6 +10,6 @@ using System.Threading.Tasks;
 namespace OnlineSchool.App.Course.Queries
 {
 	public record GetCourseDetailsQuery(
-		string CourseId) : IRequest<ErrorOr<CourseDetailsVm>>;
+		string СourseId) : IRequest<ErrorOr<CourseDetailsVm>>;
 	
 }

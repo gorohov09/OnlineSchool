@@ -6,6 +6,7 @@ using OnlineSchool.App.Course.Commands.AddModule;
 using OnlineSchool.App.Course.Commands.AddTask;
 using OnlineSchool.App.Course.Commands.CreateCourse;
 using OnlineSchool.App.Course.Commands.Enroll;
+using OnlineSchool.App.Course.Queries;
 using OnlineSchool.App.Student.Queries.GetCourses;
 using OnlineSchool.App.Task.Commands.MakeAttempt;
 using OnlineSchool.Contracts.Course;
@@ -32,7 +33,7 @@ public class CourseController : ControllerBase
     [HttpGet("{courseId}")]
 	public async Task<IActionResult> GetCourseById(string courseId)
     {
-		var queru = new GetCoursesStudentQuery(courseId);
+		var queru = new GetCourseDetailsQuery(courseId);
 
 		var coursesResult = await _mediator.Send(queru);
 
