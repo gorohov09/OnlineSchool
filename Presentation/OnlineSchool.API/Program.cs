@@ -33,6 +33,7 @@ var app = builder.Build();
     app.UseCors("AllowAllHeaders");
 
     app.UseAuthorization();
+    app.UseAuthentication();
 
     app.MapControllers();
 

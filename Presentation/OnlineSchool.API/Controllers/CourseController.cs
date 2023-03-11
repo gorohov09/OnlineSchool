@@ -14,6 +14,7 @@ using OnlineSchool.Contracts.Course.Get;
 using OnlineSchool.Contracts.Course.Lesson;
 using OnlineSchool.Contracts.Course.Module;
 using OnlineSchool.Contracts.Course.Task;
+using System.Security.Claims;
 
 namespace OnlineSchool.API.Controllers;
 
@@ -47,6 +48,8 @@ public class CourseController : ControllerBase
     [HttpPost("create")]
     public async Task<IActionResult> CreateCourse(CreateCourseRequest request)
     {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
         var command = _mapper.Map<CreateCourseCommand>(request);
 
         var result = await _mediator.Send(command);
