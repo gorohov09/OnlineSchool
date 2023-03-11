@@ -19,5 +19,4 @@ namespace OnlineSchool.App.Course.Queries
 		string LessonId,
 		int Order,
 		string Name);
-
 }

@@ -35,13 +35,13 @@ public class CourseController : ControllerBase
     {
 		var queru = new GetCourseDetailsQuery(courseId);
 
-		var coursesResult = await _mediator.Send(queru);
+		var courseResult = await _mediator.Send(queru);
 
-		return coursesResult.Match(
-			coursesResult => Ok(_mapper.Map<GetCourseDetailsResponse>(coursesResult)),
-			errors => Problem("Ошибка")
-			);
-	}
+        return courseResult.Match(
+            course => Ok(_mapper.Map<GetCourseDetailsResponse>(course)),
+            errors => Problem("Ошибка")
+            );
+    }
 
 
     [HttpPost("create")]

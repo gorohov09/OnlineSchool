@@ -1,14 +1,8 @@
 ﻿using ErrorOr;
 using MediatR;
 using OnlineSchool.App.Common.Interfaces.Persistence;
-using OnlineSchool.App.Student.Queries.GetCourses;
 using OnlineSchool.Domain.Common.Errors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static OnlineSchool.Domain.Common.Errors.Errors;
+
 
 namespace OnlineSchool.App.Course.Queries
 {
@@ -53,9 +47,8 @@ namespace OnlineSchool.App.Course.Queries
 				module.Lessons.Select(lesson => new LessonVm(
 					lesson.Id.ToString(),
 					lesson.Order,
-					lesson.Name))
-				.ToList()))
-			.ToList());
+					lesson.Name)).OrderBy(lesson => lesson.Order)
+				.ToList())).OrderBy(module => module.Order).ToList());
 
 			return courseInformation;
 		}
