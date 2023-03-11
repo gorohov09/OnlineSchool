@@ -6,8 +6,11 @@ using OnlineSchool.App.Course.Commands.AddModule;
 using OnlineSchool.App.Course.Commands.AddTask;
 using OnlineSchool.App.Course.Commands.CreateCourse;
 using OnlineSchool.App.Course.Commands.Enroll;
+using OnlineSchool.App.Course.Queries;
+using OnlineSchool.App.Student.Queries.GetCourses;
 using OnlineSchool.App.Task.Commands.MakeAttempt;
 using OnlineSchool.Contracts.Course;
+using OnlineSchool.Contracts.Course.Get;
 using OnlineSchool.Contracts.Course.Lesson;
 using OnlineSchool.Contracts.Course.Module;
 using OnlineSchool.Contracts.Course.Task;
@@ -26,6 +29,20 @@ public class CourseController : ControllerBase
         _mediator = mediator;
         _mapper = mapper;
     }
+
+    [HttpGet("{courseId}")]
+	public async Task<IActionResult> GetCourseById(string courseId)
+    {
+		var queru = new GetCourseDetailsQuery(courseId);
+
+		var courseResult = await _mediator.Send(queru);
+
+        return courseResult.Match(
+            course => Ok(_mapper.Map<GetCourseDetailsResponse>(course)),
+            errors => Problem("Ошибка")
+            );
+    }
+
 
     [HttpPost("create")]
     public async Task<IActionResult> CreateCourse(CreateCourseRequest request)
