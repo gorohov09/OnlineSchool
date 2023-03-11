@@ -1,6 +1,8 @@
-﻿namespace OnlineSchool.App.Common.Interfaces.Authentication;
+﻿using OnlineSchool.Domain.User;
+
+namespace OnlineSchool.App.Common.Interfaces.Authentication;
 
 public interface IJwtTokenGenerator
 {
-    string GenerateToken(Guid userId, string firstName, string lastName, bool isStudent);
+    string GenerateToken(UserEntity user);
 }

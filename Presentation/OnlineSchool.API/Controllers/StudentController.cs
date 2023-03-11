@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OnlineSchool.App.Student.Queries;
 using OnlineSchool.App.Student.Queries.GetCourses;
 using OnlineSchool.App.Student.Queries.GetLessonTasks;
 using OnlineSchool.Contracts.Student;
@@ -10,8 +9,7 @@ using OnlineSchool.Contracts.Student;
 namespace OnlineSchool.API.Controllers;
 
 [Route("api/student")]
-[ApiController]
-public class StudentController : ControllerBase
+public class StudentController : ApiController
 {
     private readonly ISender _mediator;
     private readonly IMapper _mapper;
@@ -22,9 +20,11 @@ public class StudentController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet("{studentId}/courses")]
-    public async Task<IActionResult> GetCourses(string studentId)
+    [HttpGet("courses")]
+    public async Task<IActionResult> GetCourses()
     {
+        var studentId = GetUserId();
+
         var queru = new GetCoursesStudentQuery(studentId);
 
         var coursesResult = await _mediator.Send(queru);
@@ -35,9 +35,11 @@ public class StudentController : ControllerBase
             );
     }
 
-    [HttpGet("{studentId}/{lessonId}/tasks")]
-    public async Task<IActionResult> GetTasksLesson(string studentId, string lessonId)
+    [HttpGet("{lessonId}/tasks")]
+    public async Task<IActionResult> GetTasksLesson(string lessonId)
     {
+        var studentId = GetUserId();
+
         var queru = new GetLessonTasksQuery(studentId, lessonId);
 
         var tasksLessonResult = await _mediator.Send(queru);
