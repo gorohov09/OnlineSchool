@@ -1,5 +1,6 @@
 ﻿using OnlineSchool.Domain.Course.Entities;
 using OnlineSchool.Domain.StudentCourseInformation;
+using OnlineSchool.Domain.Teacher;
 
 namespace OnlineSchool.Domain.Course;
 
@@ -35,6 +36,8 @@ public class CourseEntity
     /// Дата обновления
     /// </summary>
     public DateTime Updated { get; }
+
+    public TeacherEntity Teacher { get; }
 
     public IReadOnlyList<StudentCourseInformationEntity> InformationAdmissions => _informationAdmissions.AsReadOnly();
     public IReadOnlyList<ModuleEntity> Modules => _modules.AsReadOnly();

@@ -12,17 +12,28 @@ public class UserEntity
 
     public string Email { get; }
 
-    public UserEntity(string firstName, string lastName, string password, string email)
+    public UserType Type { get; }
+
+    public UserEntity(string firstName, string lastName, string password, string email, UserType userType)
     {
         Id = Guid.NewGuid();
         FirstName = firstName;
         LastName = lastName;
         Password = password;
         Email = email;
+        Type = userType;
     }
 
     public UserEntity()
     {
 
     }
+
+    public UserType GetTypeUser => Type;
+}
+
+public enum UserType
+{
+    Teacher,
+    Student
 }
