@@ -30,6 +30,19 @@ public class UserEntity
     }
 
     public UserType GetTypeUser => Type;
+
+    public string GetUserTypeToString()
+    {
+        switch (Type)
+        {
+            case UserType.Teacher:
+                return "teacher";
+            case UserType.Student:
+                return "student";
+        }
+
+        return "";
+    }
 }
 
 public enum UserType

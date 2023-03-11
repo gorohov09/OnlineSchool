@@ -51,7 +51,7 @@ public class RegisterCommandHandler :
         else
         {
             var teacher = new TeacherEntity(user.Id, user.FirstName, user.LastName);
-            //Добавить учителя в таблицу
+            await _unitOfWork.Teachers.Add(teacher);
         }
 
         await _unitOfWork.CompleteAsync();

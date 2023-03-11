@@ -1,5 +1,6 @@
 ﻿using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineSchool.App.Course.Commands.AddLesson;
 using OnlineSchool.App.Course.Commands.AddModule;
@@ -7,7 +8,6 @@ using OnlineSchool.App.Course.Commands.AddTask;
 using OnlineSchool.App.Course.Commands.CreateCourse;
 using OnlineSchool.App.Course.Commands.Enroll;
 using OnlineSchool.App.Course.Queries.GetCourseDetails;
-using OnlineSchool.App.Student.Queries.GetCourses;
 using OnlineSchool.App.Task.Commands.MakeAttempt;
 using OnlineSchool.Contracts.Course;
 using OnlineSchool.Contracts.Course.Get;
@@ -18,6 +18,7 @@ using System.Security.Claims;
 
 namespace OnlineSchool.API.Controllers;
 
+[Authorize]
 [Route("api/course")]
 [ApiController]
 public class CourseController : ControllerBase
@@ -46,6 +47,7 @@ public class CourseController : ControllerBase
 
 
     [HttpPost("create")]
+    [Authorize(Roles = "teacher")]
     public async Task<IActionResult> CreateCourse(CreateCourseRequest request)
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

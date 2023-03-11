@@ -2,13 +2,13 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OnlineSchool.App.Student.Queries;
 using OnlineSchool.App.Student.Queries.GetCourses;
 using OnlineSchool.App.Student.Queries.GetLessonTasks;
 using OnlineSchool.Contracts.Student;
 
 namespace OnlineSchool.API.Controllers;
 
+[Authorize]
 [Route("api/student")]
 [ApiController]
 public class StudentController : ControllerBase
