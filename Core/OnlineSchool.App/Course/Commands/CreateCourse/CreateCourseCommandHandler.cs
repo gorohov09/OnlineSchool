@@ -1,11 +1,10 @@
 ﻿using ErrorOr;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Configuration;
 using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.App.Common.Interfaces.Services;
 using OnlineSchool.Domain.Course;
-using static OnlineSchool.Domain.Common.Errors.Errors;
+using OnlineSchool.Domain.Common.Errors;
 
 namespace OnlineSchool.App.Course.Commands.CreateCourse;
 
@@ -27,12 +26,27 @@ public class CreateCourseCommandHandler
         CreateCourseCommand request, 
         CancellationToken cancellationToken)
     {
+        if (!Guid.TryParse(request.TeacherId, out var teacherId))
+        {
+            return Errors.User.InvalidId;
+        }
+
+        var teacher = await _unitOfWork.Teachers.FindById(teacherId);
+
+        if (teacher is null)
+        {
+            return Errors.User.UserNotFound;
+        }
+
         //1. Создаем курс
         var course = new CourseEntity(request.Name, request.Description);
 
         //2. Добавляем курс в хранилище
         if (await _unitOfWork.Courses.Add(course))
-			return await _unitOfWork.CompleteAsync();
+        {
+            teacher.AddCourse(course);
+            return await _unitOfWork.CompleteAsync();
+        }	
 
 		return false;
     }

@@ -15,7 +15,10 @@ public class CourseMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<CreateCourseRequest, CreateCourseCommand>();
+        config.NewConfig<(CreateCourseRequest request, string teacherId), CreateCourseCommand>()
+            .Map(dest => dest.TeacherId, src => src.teacherId)
+            .Map(dest => dest.Name, src => src.request.Name)
+            .Map(dest => dest.Description, src => src.request.Description);
 
         config.NewConfig<(AddModuleRequest request, string courseId), AddModuleCommand>()
             .Map(dest => dest.CourseId, src => src.courseId)

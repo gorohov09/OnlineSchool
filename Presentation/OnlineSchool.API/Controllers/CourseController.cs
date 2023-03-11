@@ -62,6 +62,7 @@ public class CourseController : ApiController
     }
 
     [HttpPost("{courseId}/addModule")]
+    [Authorize(Roles = "teacher")]
     public async Task<IActionResult> AddModule(string courseId, [FromBody]AddModuleRequest request)
     {
         var command = _mapper.Map<AddModuleCommand>((request, courseId));
@@ -75,6 +76,7 @@ public class CourseController : ApiController
     }
 
     [HttpPost("module/{moduleId}/addLesson")]
+    [Authorize(Roles = "teacher")]
     public async Task<IActionResult> AddLesson(string moduleId, [FromBody]AddLessonRequest request)
     {
         var command = _mapper.Map<AddLessonCommand>((request, moduleId));
@@ -87,6 +89,7 @@ public class CourseController : ApiController
     }
 
     [HttpPost("lesson/{lessonId}/addTask")]
+    [Authorize(Roles = "teacher")]
     public async Task<IActionResult> AddTask(string lessonId, [FromBody]AddTaskRequest request)
     {
         var command = _mapper.Map<AddTaskCommand>((request, lessonId));
@@ -98,9 +101,11 @@ public class CourseController : ApiController
             errors => Problem("Ошибка"));
     }
 
-    [HttpPost("task/{taskId}/makeAttempt/{studentId}")]
-    public async Task<IActionResult> MakeAttempt(string taskId, string studentId, [FromBody]MakeAttemptRequest request)
+    [HttpPost("task/{taskId}/makeAttempt")]
+    public async Task<IActionResult> MakeAttempt(string taskId, [FromBody]MakeAttemptRequest request)
     {
+        var studentId = GetUserId();
+
         var command = new MakeAttemptCommand(studentId, taskId, request.Answer);
         var resultAttempt = await _mediator.Send(command);
 
@@ -110,9 +115,11 @@ public class CourseController : ApiController
     }
 
 
-    [HttpPost("enroll/{courseId}/{studentId}")]
-    public async Task<IActionResult> Enroll(string courseId, string studentId)
+    [HttpPost("enroll/{courseId}")]
+    public async Task<IActionResult> Enroll(string courseId)
     {
+        var studentId = GetUserId();
+
         var command = _mapper.Map<EnrollCommand>((studentId, courseId));
 
         var resultEnroll = await _mediator.Send(command);

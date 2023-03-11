@@ -20,9 +20,11 @@ public class StudentController : ApiController
         _mapper = mapper;
     }
 
-    [HttpGet("{studentId}/courses")]
-    public async Task<IActionResult> GetCourses(string studentId)
+    [HttpGet("courses")]
+    public async Task<IActionResult> GetCourses()
     {
+        var studentId = GetUserId();
+
         var queru = new GetCoursesStudentQuery(studentId);
 
         var coursesResult = await _mediator.Send(queru);
@@ -33,9 +35,11 @@ public class StudentController : ApiController
             );
     }
 
-    [HttpGet("{studentId}/{lessonId}/tasks")]
-    public async Task<IActionResult> GetTasksLesson(string studentId, string lessonId)
+    [HttpGet("{lessonId}/tasks")]
+    public async Task<IActionResult> GetTasksLesson(string lessonId)
     {
+        var studentId = GetUserId();
+
         var queru = new GetLessonTasksQuery(studentId, lessonId);
 
         var tasksLessonResult = await _mediator.Send(queru);
