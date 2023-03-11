@@ -8,10 +8,8 @@ using OnlineSchool.Contracts.Student;
 
 namespace OnlineSchool.API.Controllers;
 
-[Authorize]
 [Route("api/student")]
-[ApiController]
-public class StudentController : ControllerBase
+public class StudentController : ApiController
 {
     private readonly ISender _mediator;
     private readonly IMapper _mapper;

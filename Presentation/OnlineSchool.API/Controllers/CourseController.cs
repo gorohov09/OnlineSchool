@@ -18,10 +18,9 @@ using System.Security.Claims;
 
 namespace OnlineSchool.API.Controllers;
 
-[Authorize]
+
 [Route("api/course")]
-[ApiController]
-public class CourseController : ControllerBase
+public class CourseController : ApiController
 {
     private readonly ISender _mediator;
     private readonly IMapper _mapper;
@@ -50,7 +49,7 @@ public class CourseController : ControllerBase
     [Authorize(Roles = "teacher")]
     public async Task<IActionResult> CreateCourse(CreateCourseRequest request)
     {
-        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var userId = GetUserId();
 
         var command = _mapper.Map<CreateCourseCommand>(request);
 

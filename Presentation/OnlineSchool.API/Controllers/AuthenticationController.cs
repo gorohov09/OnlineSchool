@@ -12,8 +12,7 @@ namespace OnlineSchool.API.Controllers;
 
 [Route("api/auth")]
 [AllowAnonymous]
-[ApiController]
-public class AuthenticationController : ControllerBase
+public class AuthenticationController : ApiController
 {
     private readonly ISender _mediator;
     private readonly IMapper _mapper;
