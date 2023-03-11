@@ -49,9 +49,9 @@ public class CourseController : ApiController
     [Authorize(Roles = "teacher")]
     public async Task<IActionResult> CreateCourse(CreateCourseRequest request)
     {
-        var userId = GetUserId();
+        var teacherId = GetUserId();
 
-        var command = _mapper.Map<CreateCourseCommand>(request);
+        var command = _mapper.Map<CreateCourseCommand>((request, teacherId));
 
         var result = await _mediator.Send(command);
 
