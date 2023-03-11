@@ -32,16 +32,22 @@ public class CourseController : ApiController
     }
 
     [HttpGet("{courseId}")]
-	public async Task<IActionResult> GetCourseById(string courseId)
+    public async Task<IActionResult> GetCourseById(string courseId)
     {
-		var queru = new GetCourseDetailsQuery(courseId);
+        var queru = new GetCourseDetailsQuery(courseId);
 
-		var courseResult = await _mediator.Send(queru);
+        var courseResult = await _mediator.Send(queru);
 
         return courseResult.Match(
             course => Ok(_mapper.Map<GetCourseDetailsResponse>(course)),
             errors => Problem("Ошибка")
             );
+    }
+
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAllCourses()
+    {
+
     }
 
 
