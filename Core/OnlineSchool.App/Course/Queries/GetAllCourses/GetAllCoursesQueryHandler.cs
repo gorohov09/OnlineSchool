@@ -32,10 +32,7 @@ public class GetAllCoursesQueryHandler
 		}
 
 		var courses = await _unitOfWork.Courses.FindCoursesByIdTeacherWithModulesLessonsTasksStudents(teacherId);
-		if (courses is null)
-		{
-			return Errors.Course.NotFound;
-		}
+		
 
 		var oneCourseModel = courses.Select(course => new CourseVm(
 			course.Id.ToString(),
