@@ -5,6 +5,7 @@ public record GetAllCoursesResponse(
 
 public record GetCourseResponse(
 	string CourseId,
+	string Name,
 	string Description,
 	int CountStudents,
 	int CountModules,
