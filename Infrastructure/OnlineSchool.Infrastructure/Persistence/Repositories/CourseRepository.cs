@@ -35,7 +35,19 @@ public class CourseRepository : GenericRepository<CourseEntity>, ICourseReposito
             .FirstOrDefaultAsync(course => course.Id == id);
     }
 
-    public async Task<CourseEntity?> GetCourseByTaskId(Guid taskId)
+	public async Task<List<CourseEntity>?> FindCoursesByIdTeacherWithModulesLessonsTasksStudents(Guid id)
+    {
+        return await _context.Courses
+            .Include(course => course.InformationAdmissions)
+            .Include(course => course.Modules)
+            .ThenInclude(module => module.Lessons)
+            .ThenInclude(lesson => lesson.Tasks)
+            .Where(course => course.Teacher.Id == id)
+            .ToListAsync();
+	}
+
+
+	public async Task<CourseEntity?> GetCourseByTaskId(Guid taskId)
     {
         return await _context.Courses
             .FirstOrDefaultAsync(course =>
