@@ -11,6 +11,7 @@ List<CourseVm> Courses);
 
 public record CourseVm(
 	string CourseId,
+	string Name,
 	string Description,
 	int CountStudents,
 	int CountModules,
