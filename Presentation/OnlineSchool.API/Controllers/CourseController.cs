@@ -46,10 +46,12 @@ public class CourseController : ApiController
             );
     }
 
-    [HttpGet("{teacherId}")]
-    public async Task<IActionResult> GetTeacherCourses(string teacherId)
+    [HttpGet("teacherCourses")]
+    public async Task<IActionResult> GetTeacherCourses()
     {
-		var queru = new GetTeacherCoursesQuery(teacherId);
+        var teacherId = GetUserId();
+
+        var queru = new GetTeacherCoursesQuery(teacherId);
 
         var coursesResult = await _mediator.Send(queru);
 
