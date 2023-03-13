@@ -1,12 +1,12 @@
 ﻿namespace OnlineSchool.App.Course.Queries;
 
 public record CourseDetailsVm(
-		string CourseId,
-		string Name,
-		string Description,
-		DateTime Create,
-		DateTime Update,
-		List<ModuleVm> Modules);
+	string CourseId,
+	string Name,
+	string Description,
+	DateTime Create,
+	DateTime Update,
+	List<ModuleVm> Modules);
 
 public record ModuleVm(
 	string ModuleId,

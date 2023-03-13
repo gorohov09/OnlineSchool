@@ -1,12 +1,14 @@
 ﻿using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using OnlineSchool.App.Course.Commands.AddLesson;
 using OnlineSchool.App.Course.Commands.AddModule;
 using OnlineSchool.App.Course.Commands.AddTask;
 using OnlineSchool.App.Course.Commands.CreateCourse;
 using OnlineSchool.App.Course.Commands.Enroll;
+using OnlineSchool.App.Course.Queries.GetAllCourses;
 using OnlineSchool.App.Course.Queries.GetCourseDetails;
 using OnlineSchool.App.Task.Commands.MakeAttempt;
 using OnlineSchool.Contracts.Course;
@@ -32,17 +34,30 @@ public class CourseController : ApiController
     }
 
     [HttpGet("{courseId}")]
-	public async Task<IActionResult> GetCourseById(string courseId)
+    public async Task<IActionResult> GetCourseById(string courseId)
     {
-		var queru = new GetCourseDetailsQuery(courseId);
+        var queru = new GetCourseDetailsQuery(courseId);
 
-		var courseResult = await _mediator.Send(queru);
+        var courseResult = await _mediator.Send(queru);
 
         return courseResult.Match(
             course => Ok(_mapper.Map<GetCourseDetailsResponse>(course)),
             errors => Problem("Ошибка")
             );
     }
+
+    [HttpGet("teacher/{teacherId}")]
+    public async Task<IActionResult> GetAllCourses(string teacherId)
+    {
+		var queru = new GetAllCoursesQuery(teacherId);
+
+        var coursesResult = await _mediator.Send(queru);
+
+		return coursesResult.Match(
+			course => Ok(_mapper.Map<GetAllCoursesResponse>(course)),
+			errors => Problem("Ошибка")
+			);
+	}
 
 
     [HttpPost("create")]
