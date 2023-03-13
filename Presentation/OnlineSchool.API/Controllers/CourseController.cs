@@ -46,15 +46,15 @@ public class CourseController : ApiController
             );
     }
 
-    [HttpGet("teacher/{teacherId}")]
-    public async Task<IActionResult> GetAllCourses(string teacherId)
+    [HttpGet("{teacherId}")]
+    public async Task<IActionResult> GetTeacherCourses(string teacherId)
     {
-		var queru = new GetAllCoursesQuery(teacherId);
+		var queru = new GetTeacherCoursesQuery(teacherId);
 
         var coursesResult = await _mediator.Send(queru);
 
 		return coursesResult.Match(
-			course => Ok(_mapper.Map<GetAllCoursesResponse>(course)),
+			course => Ok(_mapper.Map<GetTeacherCoursesResponse>(course)),
 			errors => Problem("Ошибка")
 			);
 	}

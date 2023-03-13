@@ -1,6 +1,6 @@
 ﻿namespace OnlineSchool.Contracts.Course.Get;
 
-public record GetAllCoursesResponse(
+public record GetTeacherCoursesResponse(
 	List<GetCourseResponse> Courses);
 
 public record GetCourseResponse(

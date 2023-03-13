@@ -5,17 +5,17 @@ using OnlineSchool.Domain.Common.Errors;
 
 namespace OnlineSchool.App.Course.Queries.GetAllCourses;
 
-public class GetAllCoursesQueryHandler
-	: IRequestHandler<GetAllCoursesQuery, ErrorOr<AllCoursesVm>>
+public class GetTeacherCoursesQueryHandler
+	: IRequestHandler<GetTeacherCoursesQuery, ErrorOr<TeacherCoursesVm>>
 {
 	private readonly IUnitOfWork _unitOfWork;
 
-	public GetAllCoursesQueryHandler(IUnitOfWork unitOfWork)
+	public GetTeacherCoursesQueryHandler(IUnitOfWork unitOfWork)
 	{
 		_unitOfWork = unitOfWork;
 	}
-	public async Task<ErrorOr<AllCoursesVm>> Handle
-		(GetAllCoursesQuery request, 
+	public async Task<ErrorOr<TeacherCoursesVm>> Handle
+		(GetTeacherCoursesQuery request, 
 		CancellationToken cancellationToken)
 	{
 		// 1. Проверка корректности Id преподавателя
@@ -32,9 +32,8 @@ public class GetAllCoursesQueryHandler
 		}
 
 		var courses = await _unitOfWork.Courses.FindCoursesByIdTeacherWithModulesLessonsTasksStudents(teacherId);
-		
 
-		var oneCourseModel = courses.Select(course => new CourseVm(
+		var teacherCourses = courses.Select(course => new CourseVm(
 			course.Id.ToString(),
 			course.Name,
 			course.Description,
@@ -46,8 +45,6 @@ public class GetAllCoursesQueryHandler
 			course.Updated))
 			.ToList();
 
-		var allCourseModel = new AllCoursesVm(oneCourseModel);
-
-		return allCourseModel;
+		return new TeacherCoursesVm(teacherCourses);
 	}
 }

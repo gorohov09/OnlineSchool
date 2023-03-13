@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OnlineSchool.App.Course.Queries.GetAllCourses;
 
-public record AllCoursesVm(
+public record TeacherCoursesVm(
 List<CourseVm> Courses);
 
 public record CourseVm(
