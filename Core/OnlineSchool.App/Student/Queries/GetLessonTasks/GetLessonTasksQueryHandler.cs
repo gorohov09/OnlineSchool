@@ -1,5 +1,6 @@
 ﻿using ErrorOr;
 using MediatR;
+using Newtonsoft.Json;
 using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.Domain.Common.Errors;
 using OnlineSchool.Domain.Course.Entities;
@@ -34,28 +35,30 @@ public class GetLessonTasksQueryHandler
         //3. Формируем список для результата
         var listTaskVm = new List<TaskVm>();
 
-        int order = 1;
         foreach (var taskInformation in tasksInformation)
-            AddTaskVm(listTaskVm, taskInformation, order++);
+        {
+            var task = JsonConvert.DeserializeObject<TaskInformation>(taskInformation.TaskInformation);
+            AddTaskVm(listTaskVm, taskInformation, task.Name);
+        }
 
         return new LessonTasksVm(listTaskVm);
     }
 
-    private void AddTaskVm(List<TaskVm> tasks, TaskEntity task, int order)
+    private void AddTaskVm(List<TaskVm> tasks, TaskEntity task, string taskName)
     {
-        //if (task.Attempts.Count() == 0)
-        //{
-        //    tasks.Add(new TaskVm(task.Id, order, task.Name, false, true, null));
-        //}
-        //else if (task.Attempts.Any(attempt => attempt.IsRight))
-        //{
-        //    var lastTimeAttempt = task.Attempts.Max(attempt => attempt.DateDispatch);
-        //    tasks.Add(new TaskVm(task.Id, order, task.Name, true, false, lastTimeAttempt));
-        //}
-        //else
-        //{
-        //    var lastTimeAttempt = task.Attempts.Max(attempt => attempt.DateDispatch);
-        //    tasks.Add(new TaskVm(task.Id, order, task.Name, false, false, lastTimeAttempt));
-        //}
+        if (task.Attempts.Count() == 0)
+        {
+            tasks.Add(new TaskVm(task.Id, task.Order, taskName, false, true, null));
+        }
+        else if (task.Attempts.Any(attempt => attempt.IsRight))
+        {
+            var lastTimeAttempt = task.Attempts.Max(attempt => attempt.DateDispatch);
+            tasks.Add(new TaskVm(task.Id, task.Order, taskName, true, false, lastTimeAttempt));
+        }
+        else
+        {
+            var lastTimeAttempt = task.Attempts.Max(attempt => attempt.DateDispatch);
+            tasks.Add(new TaskVm(task.Id, task.Order, taskName, false, false, lastTimeAttempt));
+        }
     }
 }

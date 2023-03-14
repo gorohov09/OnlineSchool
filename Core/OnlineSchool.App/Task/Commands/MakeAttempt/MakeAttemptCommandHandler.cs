@@ -1,9 +1,11 @@
 ﻿using ErrorOr;
 using MediatR;
+using Newtonsoft.Json;
 using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.App.Common.Interfaces.Services;
 using OnlineSchool.Domain.Attempt;
 using OnlineSchool.Domain.Common.Errors;
+using OnlineSchool.Domain.Course.Entities;
 
 namespace OnlineSchool.App.Task.Commands.MakeAttempt;
 
@@ -26,8 +28,9 @@ public class MakeAttemptCommandHandler
             return Errors.Course.InvalidId;
 
         var task = await _unitOfWork.Tasks.GetStudentTaskWithAttempts(studentId, taskId);
+        var taskInformation = JsonConvert.DeserializeObject<TaskInformation>(task.TaskInformation);
 
-        var isRightAnswer = true /*task.RightAnswer == request.Answer*/;
+        var isRightAnswer = taskInformation.CheckAnswer(request.Answer);
 
         if (isRightAnswer && task.Attempts.All(attempt => !attempt.IsRight))
         {
