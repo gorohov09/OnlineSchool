@@ -3,8 +3,8 @@
 public record AddTaskRequest(
     string Name,
     string Type,
-    string Description,
+    string? Description,
     string Question,
     string Answer,
-    string Answers,
-    string WrongAnswers);
+    string? Answers,
+    string? WrongAnswers);
