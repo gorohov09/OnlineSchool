@@ -9,7 +9,7 @@ public class AddTaskCommandValidator : AbstractValidator<AddTaskCommand>
         RuleFor(task => task.LessonId).NotEmpty();
         RuleFor(task => task.Name).NotEmpty();
         RuleFor(task => task.Description).NotEmpty();
-        RuleFor(task => task.TaskType).NotEmpty();
-        RuleFor(task => task.RightAnswer).NotEmpty();
+        RuleFor(task => task.Answer).NotEmpty();
+        RuleFor(task => task.Question).NotEmpty();
     }
 }

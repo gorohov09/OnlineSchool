@@ -8,30 +8,18 @@ public class TaskEntity
 
     public Guid Id { get; }
 
-    public string Name { get; }
+    public string TaskInformation { get; }
 
-    public int Order { get; private set; }
-
-    public string Description { get; }
-
-    public TaskTypeEnum TaskType { get; }
-
-    public string Question { get; }
-
-    public string RightAnswer { get; }
+    public int Order { get; set; }
 
     public LessonEntity Lesson { get; }
 
     public IReadOnlyCollection<AttemptEntity> Attempts => _attempts.AsReadOnly();
 
-    public TaskEntity(string name, string description, string type, string question, string rightAnswer)
+    public TaskEntity(string taskInformation)
     {
         Id = Guid.NewGuid();
-        Name = name;
-        Description = description;
-        TaskType = GetTypeTask(type);
-        Question = question;
-        RightAnswer = rightAnswer;
+        TaskInformation = taskInformation;
     }
 
     public TaskEntity()
@@ -45,22 +33,5 @@ public class TaskEntity
     {
         _attempts.Add(attempt);
     }
-
-    private TaskTypeEnum GetTypeTask(string type)
-    {
-        var result = type switch
-        {
-            "lecture" => TaskTypeEnum.Lecture,
-            "practice" => TaskTypeEnum.Practice,
-            _ => throw new Exception("IncorrectType")
-        };
-        return result;
-    }
-
 }
 
-public enum TaskTypeEnum
-{
-    Lecture,
-    Practice
-}

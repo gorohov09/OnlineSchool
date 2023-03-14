@@ -15,11 +15,8 @@ public class TaskConfiguration : IEntityTypeConfiguration<TaskEntity>
             .IsRequired()
             .ValueGeneratedNever();
 
-        builder.Property(task => task.Name);
+        builder.Property(task => task.TaskInformation);
         builder.Property(task => task.Order);
-        builder.Property(task => task.Description);
-        builder.Property(task => task.RightAnswer);
-        builder.Property(task => task.TaskType);
 
 
         builder.HasOne(task => task.Lesson)

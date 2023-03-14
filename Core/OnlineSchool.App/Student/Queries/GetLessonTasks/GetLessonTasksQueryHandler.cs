@@ -43,19 +43,19 @@ public class GetLessonTasksQueryHandler
 
     private void AddTaskVm(List<TaskVm> tasks, TaskEntity task, int order)
     {
-        if (task.Attempts.Count() == 0)
-        {
-            tasks.Add(new TaskVm(task.Id, order, task.Name, false, true, null));
-        }
-        else if (task.Attempts.Any(attempt => attempt.IsRight))
-        {
-            var lastTimeAttempt = task.Attempts.Max(attempt => attempt.DateDispatch);
-            tasks.Add(new TaskVm(task.Id, order, task.Name, true, false, lastTimeAttempt));
-        }
-        else
-        {
-            var lastTimeAttempt = task.Attempts.Max(attempt => attempt.DateDispatch);
-            tasks.Add(new TaskVm(task.Id, order, task.Name, false, false, lastTimeAttempt));
-        }
+        //if (task.Attempts.Count() == 0)
+        //{
+        //    tasks.Add(new TaskVm(task.Id, order, task.Name, false, true, null));
+        //}
+        //else if (task.Attempts.Any(attempt => attempt.IsRight))
+        //{
+        //    var lastTimeAttempt = task.Attempts.Max(attempt => attempt.DateDispatch);
+        //    tasks.Add(new TaskVm(task.Id, order, task.Name, true, false, lastTimeAttempt));
+        //}
+        //else
+        //{
+        //    var lastTimeAttempt = task.Attempts.Max(attempt => attempt.DateDispatch);
+        //    tasks.Add(new TaskVm(task.Id, order, task.Name, false, false, lastTimeAttempt));
+        //}
     }
 }

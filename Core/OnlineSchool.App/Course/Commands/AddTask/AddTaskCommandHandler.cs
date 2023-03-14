@@ -1,5 +1,6 @@
 ﻿using ErrorOr;
 using MediatR;
+using Newtonsoft.Json;
 using OnlineSchool.App.Common.Interfaces.Persistence;
 using OnlineSchool.Domain.Common.Errors;
 using OnlineSchool.Domain.Course.Entities;
@@ -31,9 +32,29 @@ public class AddTaskCommandHandler
             return Errors.Lesson.NotFound;
         }
 
+        var typeTask = request.Type switch
+        {
+            "freeResponse" => TypeTask.FreeResponse,
+            "oneAnswer" => TypeTask.OneAnswer,
+            "manyAnswer" => TypeTask.ManyAnswer,
+            _ => throw new NotImplementedException()
+        };
+
+        var taskInform = new TaskInformation
+        {
+            Name = request.Name,
+            Description = request.Description,
+            Type = typeTask,
+            Answer = new Answer { Value = request.Answer},
+            Question = request.Question,
+            WrongAnswers = typeTask == TypeTask.OneAnswer ? GetAnswers(request.WrongAnswers) : null,
+            Answers = typeTask == TypeTask.ManyAnswer ? GetAnswers(request.Answers) : null
+        };
+
+        var taskInformString = JsonConvert.SerializeObject(taskInform);
+
         //3. Создаем сущность задачи и добавляем в курс
-        var task = new TaskEntity(request.Name, request.Description, request.TaskType,
-            request.Question, request.RightAnswer);
+        var task = new TaskEntity(taskInformString);
 
         lesson.AddTask(task);
 
@@ -46,5 +67,11 @@ public class AddTaskCommandHandler
         }
 
         return Errors.Course.CouldNotSave;
+    }
+
+    private List<Answer> GetAnswers(string answers)
+    {
+        var parseAnswers = answers.Split(new char[] { ' ', ',', ':', ';' }, StringSplitOptions.RemoveEmptyEntries);
+        return parseAnswers.Select(x => new Answer { Value = x }).ToList();
     }
 }

@@ -33,9 +33,11 @@ public class CourseMappingConfig : IRegister
             .Map(dest => dest.LessonId, src => src.lessonId)
             .Map(dest => dest.Name, src => src.request.Name)
             .Map(dest => dest.Description, src => src.request.Description)
-            .Map(dest => dest.RightAnswer, src => src.request.RightAnswer)
+            .Map(dest => dest.Type, src => src.request.Type)
             .Map(dest => dest.Question, src => src.request.Question)
-            .Map(dest => dest.TaskType, src => src.request.TaskType);
+            .Map(dest => dest.Answer, src => src.request.Answer)
+            .Map(dest => dest.Answers, src => src.request.Answers)
+            .Map(dest => dest.WrongAnswers, src => src.request.WrongAnswers);
 
         config.NewConfig<(string studentId, string courseId), EnrollCommand>()
             .Map(dest => dest.StudentId, src => src.studentId)

@@ -5,8 +5,10 @@ namespace OnlineSchool.App.Course.Commands.AddTask;
 
 public record AddTaskCommand(
     string Name,
+    string Type,
     string Description,
-    string TaskType,
     string Question,
-    string RightAnswer,
+    string Answer,
+    string Answers,
+    string WrongAnswers,
     string LessonId) : IRequest<ErrorOr<string>>;

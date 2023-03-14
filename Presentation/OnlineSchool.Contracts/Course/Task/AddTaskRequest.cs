@@ -2,7 +2,9 @@
 
 public record AddTaskRequest(
     string Name,
+    string Type,
     string Description,
-    string TaskType,
     string Question,
-    string RightAnswer);
+    string Answer,
+    string Answers,
+    string WrongAnswers);
