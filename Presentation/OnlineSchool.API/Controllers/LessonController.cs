@@ -1,6 +1,8 @@
 ﻿using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using OnlineSchool.App.Lesson.Queries.GetLessonDetails;
+using OnlineSchool.Contracts.Course.Lesson;
 
 namespace OnlineSchool.API.Controllers;
 
@@ -16,18 +18,18 @@ public class LessonController : ApiController
         _mapper = mapper;
     }
 
-    //[HttpGet("{lessonId}")]
-    //public async Task<IActionResult> GetLessonById(string lessonId)
-    //{
-    //    //var queru = new GetCourseDetailsQuery(lessonId);
+    [HttpGet("{lessonId}")]
+    public async Task<IActionResult> GetLessonById(string lessonId)
+    {
+        var queru = new GetLessonDetailsQuery(lessonId);
 
-    //    //var courseResult = await _mediator.Send(queru);
+        var lessonResult = await _mediator.Send(queru);
 
-    //    //return courseResult.Match(
-    //    //    course => Ok(_mapper.Map<GetCourseDetailsResponse>(course)),
-    //    //    errors => Problem("Ошибка")
-    //    //    );
-    //}
+        return lessonResult.Match(
+            course => Ok(_mapper.Map<GetLessonDetailsResponse>(course)),
+            errors => Problem("Ошибка")
+            );
+    }
 }
 
 

@@ -2,4 +2,4 @@
 
 namespace OnlineSchool.App.Authentication.Common;
 
-public record AuthenticationResult(string Token);
+public record AuthenticationResult(string Token, string TypeUser);

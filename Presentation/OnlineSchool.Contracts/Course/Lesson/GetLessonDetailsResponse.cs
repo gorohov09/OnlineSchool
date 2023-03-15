@@ -1,12 +1,12 @@
-﻿namespace OnlineSchool.App.Lesson.Queries.GetLessonDetails;
+﻿namespace OnlineSchool.Contracts.Course.Lesson;
 
-public record LessonDetailsVm(
+public record GetLessonDetailsResponse(
     string Id,
     string Name,
     string EmbedHtmlVideo,
-    List<TaskVm> Tasks);
+    List<TaskResponse> Tasks);
 
-public record TaskVm(
+public record TaskResponse(
     string Id,
     int Order,
     string Type,

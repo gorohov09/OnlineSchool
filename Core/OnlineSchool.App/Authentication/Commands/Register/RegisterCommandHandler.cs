@@ -58,6 +58,6 @@ public class RegisterCommandHandler :
 
         var token = _jwtTokenGenerator.GenerateToken(user);
 
-        return new AuthenticationResult(token);
+        return new AuthenticationResult(token, user.GetUserTypeToString());
     }
 }

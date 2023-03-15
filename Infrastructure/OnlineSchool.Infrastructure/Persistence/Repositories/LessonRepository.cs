@@ -13,7 +13,7 @@ public class LessonRepository : GenericRepository<LessonEntity>, ILessonReposito
     public async Task<LessonEntity?> FindLessonByIdWithTasks(Guid lessonId)
     {
         return await _context.Lessons
-            .Include(lesson => lesson.Tasks)
+            .Include(lesson => lesson.Tasks.OrderBy(task => task.Order))
             .FirstOrDefaultAsync(lesson => lesson.Id == lessonId);
     }
 }

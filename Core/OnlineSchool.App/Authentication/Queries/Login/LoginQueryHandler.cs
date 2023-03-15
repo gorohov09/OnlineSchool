@@ -28,7 +28,7 @@ namespace OnlineSchool.App.Authentication.Queries.Login
                 if (user.Password == request.Password)
                 {
                     var jwtToken = _jwtTokenGenerator.GenerateToken(user);
-                    return new AuthenticationResult(jwtToken);
+                    return new AuthenticationResult(jwtToken, user.GetUserTypeToString());
                 }
             }
 

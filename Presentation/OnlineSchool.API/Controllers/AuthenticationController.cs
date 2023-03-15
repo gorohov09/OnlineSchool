@@ -44,7 +44,7 @@ public class AuthenticationController : ApiController
         var authResult = await _mediator.Send(query);
 
         return authResult.Match(
-            authResult => Ok(new AuthenticationResponse(authResult.Token)),
+            authResult => Ok(new AuthenticationResponse(authResult.Token, authResult.TypeUser)),
             errors => Problem("Ошибка")
             );
     }

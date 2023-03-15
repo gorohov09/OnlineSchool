@@ -23,6 +23,17 @@ public class TaskInformation
 
         return false;
     }
+
+    public string GetTypeTask()
+    {
+        return Type switch
+        {
+            TypeTask.FreeResponse => "Свободный ответ",
+            TypeTask.OneAnswer => "Один ответ",
+            TypeTask.ManyAnswer => "Несколько ответов",
+            _ => throw new NotImplementedException()
+        };
+    }
 }
 
 public class Answer
