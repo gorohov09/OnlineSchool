@@ -10,6 +10,14 @@ public class LessonRepository : GenericRepository<LessonEntity>, ILessonReposito
     {
     }
 
+    public async Task<LessonEntity?> FindFirstLessonByCourse(Guid courseId)
+    {
+        return await _context.Lessons
+            .Where(lesson => lesson.Module.Course.Id == courseId)
+            .OrderBy(lesson => lesson.Order)
+            .FirstOrDefaultAsync();   
+    }
+
     public async Task<LessonEntity?> FindLessonByIdWithTasks(Guid lessonId)
     {
         return await _context.Lessons
