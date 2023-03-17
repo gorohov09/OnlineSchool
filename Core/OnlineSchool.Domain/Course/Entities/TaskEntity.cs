@@ -33,5 +33,15 @@ public class TaskEntity
     {
         _attempts.Add(attempt);
     }
+
+    public AttemptEntity GetLastAttempt()
+    {
+        if (_attempts.Count == 0)
+            return null;
+
+        return _attempts
+            .OrderBy(attempt => attempt.DateDispatch)
+            .Last();
+    }
 }
 
