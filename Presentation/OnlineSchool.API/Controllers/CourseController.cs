@@ -10,6 +10,7 @@ using OnlineSchool.App.Course.Commands.CreateCourse;
 using OnlineSchool.App.Course.Commands.Enroll;
 using OnlineSchool.App.Course.Queries.GetAllCourses;
 using OnlineSchool.App.Course.Queries.GetCourseDetails;
+using OnlineSchool.App.Course.Queries.GetPopularCourses;
 using OnlineSchool.App.Task.Commands.MakeAttempt;
 using OnlineSchool.Contracts.Course;
 using OnlineSchool.Contracts.Course.Get;
@@ -60,6 +61,21 @@ public class CourseController : ApiController
 			errors => Problem("Ошибка")
 			);
 	}
+
+    [HttpGet("popularCourses")]
+    public async Task<IActionResult> GetPopularCourses()
+    {
+        var studentId = GetUserId();
+
+        var queru = new GetPopularCoursesQuery(studentId);
+
+        var coursesResult = await _mediator.Send(queru);
+
+        return coursesResult.Match(
+            course => Ok(_mapper.Map<GetPopularCoursesResponse>(course)),
+            errors => Problem("Ошибка")
+            );
+    }
 
 
     [HttpPost("create")]

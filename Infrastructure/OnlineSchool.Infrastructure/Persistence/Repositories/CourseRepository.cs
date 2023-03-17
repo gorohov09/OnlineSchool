@@ -46,8 +46,23 @@ public class CourseRepository : GenericRepository<CourseEntity>, ICourseReposito
             .ToListAsync();
 	}
 
+    /// <summary>
+    /// Пока что никаких популярных курсов не выбираем, пока это фиктивность
+    /// В будущем здесь будет популярность по рейтингу курса
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<CourseEntity>> FindPopularCoursesWithModulesLessonsTasksStudents()
+    {
+        return await _context.Courses
+            .Include(course => course.InformationAdmissions)
+            .ThenInclude(inf => inf.Student)
+            .Include(course => course.Modules)
+            .ThenInclude(module => module.Lessons)
+            .ThenInclude(lesson => lesson.Tasks)
+            .ToListAsync();
+    }
 
-	public async Task<CourseEntity?> GetCourseByTaskId(Guid taskId)
+    public async Task<CourseEntity?> GetCourseByTaskId(Guid taskId)
     {
         return await _context.Courses
             .FirstOrDefaultAsync(course =>
