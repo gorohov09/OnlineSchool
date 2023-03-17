@@ -75,6 +75,11 @@ public class CourseEntity
         _modules.Add(module);
     }
 
+    public bool IsEnrollStudent(Guid studentId)
+    {
+        return _informationAdmissions.Any(course => course.Student.Id == studentId);
+    }
+
     public int GetCountTasks()
     {
         return _modules
