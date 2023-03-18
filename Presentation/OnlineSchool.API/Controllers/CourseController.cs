@@ -34,10 +34,17 @@ public class CourseController : ApiController
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Также выводится информация о результатах пользователя по курсу
+    /// </summary>
+    /// <param name="courseId"></param>
+    /// <returns></returns>
     [HttpGet("{courseId}")]
     public async Task<IActionResult> GetCourseById(string courseId)
     {
-        var queru = new GetCourseDetailsQuery(courseId);
+        var userId = GetUserId();
+
+        var queru = new GetCourseDetailsQuery(courseId, userId);
 
         var courseResult = await _mediator.Send(queru);
 

@@ -26,7 +26,7 @@ public class GetCoursesStudentQueryHandler
         }
 
         // 1. Проверим, что такой пользователь существует
-        var student = await _unitOfWork.Students.FindStudentByIdWithInformAdmissions(studentId);
+        var student = await _unitOfWork.Students.FindStudentByIdWithInformAdmissionsCoursesModulesLessonsTasks(studentId);
         if (student is null)
         {
             return Errors.User.UserNotFound;

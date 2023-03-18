@@ -4,6 +4,7 @@ public record CourseDetailsVm(
 	string CourseId,
 	string Name,
 	string Description,
+	double? PersentPassing,
 	DateTime Create,
 	DateTime Update,
 	List<ModuleVm> Modules);

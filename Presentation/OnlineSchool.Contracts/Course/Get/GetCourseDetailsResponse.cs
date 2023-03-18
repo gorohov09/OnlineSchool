@@ -5,6 +5,7 @@ namespace OnlineSchool.Contracts.Course.Get
 		string CourseId,
 		string Name,
 		string Description,
+		double? PersentPassing,
 		DateTime Create,
 		DateTime Update,
 		List<ModuleResponse> Modules);
