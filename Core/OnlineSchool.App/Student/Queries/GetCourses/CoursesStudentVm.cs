@@ -1,6 +1,4 @@
-﻿
-
-namespace OnlineSchool.App.Student.Queries.GetCourses
+﻿namespace OnlineSchool.App.Student.Queries.GetCourses
 {
     public record CoursesStudentVm(
         string Id,
