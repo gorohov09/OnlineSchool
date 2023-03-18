@@ -41,6 +41,6 @@ public class StudentCourseInformationEntity
     {
         var countTaskCourse = Course.GetCountTasks();
         if (countTaskCourse == 0) return 0;
-        return CountCompletedTasks / (double)countTaskCourse * 100;
+        return Math.Round(CountCompletedTasks / (double)countTaskCourse * 100, 2);
     }
 }
