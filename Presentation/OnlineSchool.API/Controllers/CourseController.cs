@@ -1,7 +1,6 @@
 ﻿using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using OnlineSchool.App.Course.Commands.AddLesson;
 using OnlineSchool.App.Course.Commands.AddModule;
@@ -11,13 +10,13 @@ using OnlineSchool.App.Course.Commands.Enroll;
 using OnlineSchool.App.Course.Queries.GetAllCourses;
 using OnlineSchool.App.Course.Queries.GetCourseDetails;
 using OnlineSchool.App.Course.Queries.GetPopularCourses;
+using OnlineSchool.App.Course.Queries.GetRatingStudents;
 using OnlineSchool.App.Task.Commands.MakeAttempt;
 using OnlineSchool.Contracts.Course;
 using OnlineSchool.Contracts.Course.Get;
 using OnlineSchool.Contracts.Course.Lesson;
 using OnlineSchool.Contracts.Course.Module;
 using OnlineSchool.Contracts.Course.Task;
-using System.Security.Claims;
 
 namespace OnlineSchool.API.Controllers;
 
@@ -80,6 +79,19 @@ public class CourseController : ApiController
 
         return coursesResult.Match(
             course => Ok(_mapper.Map<GetPopularCoursesResponse>(course)),
+            errors => Problem("Ошибка")
+            );
+    }
+
+    [HttpGet("ratingStudents/{courseId}")]
+    public async Task<IActionResult> GetRatingStudentsByCourse(string courseId)
+    {
+        var queru = new GetRatingStudentsQuery(courseId);
+
+        var ratingResult = await _mediator.Send(queru);
+
+        return ratingResult.Match(
+            rating => Ok(_mapper.Map<RatingStudentsResponse>(rating)),
             errors => Problem("Ошибка")
             );
     }

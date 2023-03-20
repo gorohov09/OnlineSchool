@@ -15,4 +15,13 @@ public class StudentCourseRepository : GenericRepository<StudentCourseInformatio
         return await _context.InformationAdmissions
             .FirstOrDefaultAsync(inf => inf.Course.Id == courseId && inf.Student.Id == studentId);
     }
+
+    public async Task<List<StudentCourseInformationEntity>> GetRatingStudentCourseInformationsWithStudentByCourseId(Guid courseId)
+    {
+        return await _context.InformationAdmissions
+            .Include(inf => inf.Student)
+            .Where(inf => inf.Course.Id == courseId)
+            .OrderByDescending(inf => inf.CountCompletedTasks)
+            .ToListAsync();
+    }
 }
