@@ -16,6 +16,9 @@ public class CourseConfiguration : IEntityTypeConfiguration<CourseEntity>
         builder.Property(course => course.Description);
         builder.Property(course => course.Created);
         builder.Property(course => course.Updated);
+        builder.Property(course => course.IsAvailable);
+        builder.Property(course => course.Rating);
+        builder.Property(course => course.Price);
 
         builder.Property(course => course.Id)
             .IsRequired()

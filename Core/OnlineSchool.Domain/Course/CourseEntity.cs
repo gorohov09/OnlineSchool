@@ -37,6 +37,12 @@ public class CourseEntity
     /// </summary>
     public DateTime Updated { get; }
 
+    public bool IsAvailable { get; }
+
+    public double Rating { get; }
+
+    public decimal Price { get; }
+
     public TeacherEntity Teacher { get; }
 
     public IReadOnlyList<StudentCourseInformationEntity> InformationAdmissions => _informationAdmissions.AsReadOnly();
