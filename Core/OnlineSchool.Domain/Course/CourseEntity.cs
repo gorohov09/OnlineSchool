@@ -1,4 +1,5 @@
 ﻿using OnlineSchool.Domain.Course.Entities;
+using OnlineSchool.Domain.Student;
 using OnlineSchool.Domain.StudentCourseInformation;
 using OnlineSchool.Domain.Teacher;
 
@@ -36,6 +37,12 @@ public class CourseEntity
     /// Дата обновления
     /// </summary>
     public DateTime Updated { get; }
+
+    public bool IsAvailable { get; }
+
+    public double Rating { get; }
+
+    public decimal Price { get; }
 
     public TeacherEntity Teacher { get; }
 
@@ -103,5 +110,24 @@ public class CourseEntity
     public int GetCountStudents()
     {
         return _informationAdmissions.Count();
+    }
+
+    /// <summary>
+    /// Получить всех студентов курса
+    /// </summary>
+    /// <returns></returns>
+    public List<StudentEntity> GetAllStudent()
+    {
+        try
+        {
+            if (_informationAdmissions is not null)
+                return _informationAdmissions.Select(course => course.Student).ToList();
+        }
+        catch
+        {
+            throw new Exception("Вы пытаетесь получить студентов, но не подгрузили по ним данные");
+        }
+
+        throw new Exception("Вы пытаетесь получить студентов, но не подгрузили по ним данные");
     }
 }

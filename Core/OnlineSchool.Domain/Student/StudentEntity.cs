@@ -49,4 +49,11 @@ public class StudentEntity
     {
         return Patronymic is null ? $"{LastName} {FirstName}": $"{LastName} {FirstName} {Patronymic}";
     }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj == null) return false;
+        var student = obj as StudentEntity;
+        return student.Id == Id;
+    }
 }
