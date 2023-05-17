@@ -30,6 +30,9 @@ var app = builder.Build();
         app.UseSwaggerUI();
     }
 
+    app.UseSwagger();
+    app.UseSwaggerUI();
+
     app.UseCors("AllowAllHeaders");
 
     app.UseAuthentication();
