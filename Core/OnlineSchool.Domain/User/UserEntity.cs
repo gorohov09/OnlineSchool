@@ -39,6 +39,8 @@ public class UserEntity
                 return "teacher";
             case UserType.Student:
                 return "student";
+            case UserType.Manager:
+                return "manager";
         }
 
         return "";
@@ -48,5 +50,6 @@ public class UserEntity
 public enum UserType
 {
     Teacher,
-    Student
+    Student,
+    Manager
 }
