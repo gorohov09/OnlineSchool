@@ -9,15 +9,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{571F427C-91F1-4115-A46C-6E9E84D765DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineSchool.API", "Presentation\OnlineSchool.API\OnlineSchool.API.csproj", "{1E555C0D-0819-4332-A65F-4B7EBE0D48AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineSchool.API", "Presentation\OnlineSchool.API\OnlineSchool.API.csproj", "{1E555C0D-0819-4332-A65F-4B7EBE0D48AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineSchool.Contracts", "Presentation\OnlineSchool.Contracts\OnlineSchool.Contracts.csproj", "{7F5645BA-1ABF-4B45-A8A7-89E7A01383FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineSchool.Contracts", "Presentation\OnlineSchool.Contracts\OnlineSchool.Contracts.csproj", "{7F5645BA-1ABF-4B45-A8A7-89E7A01383FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineSchool.Infrastructure", "Infrastructure\OnlineSchool.Infrastructure\OnlineSchool.Infrastructure.csproj", "{6A78FF3D-DC44-49F0-AF91-AA626518F74C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineSchool.Infrastructure", "Infrastructure\OnlineSchool.Infrastructure\OnlineSchool.Infrastructure.csproj", "{6A78FF3D-DC44-49F0-AF91-AA626518F74C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineSchool.App", "Core\OnlineSchool.App\OnlineSchool.App.csproj", "{495E7827-23FC-4164-9A25-01E105523965}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineSchool.App", "Core\OnlineSchool.App\OnlineSchool.App.csproj", "{495E7827-23FC-4164-9A25-01E105523965}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineSchool.Domain", "Core\OnlineSchool.Domain\OnlineSchool.Domain.csproj", "{DAD30B2B-F37A-4424-9056-E0DB71740935}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineSchool.Domain", "Core\OnlineSchool.Domain\OnlineSchool.Domain.csproj", "{DAD30B2B-F37A-4424-9056-E0DB71740935}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityServer", "{E79B86E8-E503-48B2-A5C6-7A2B34E9BEF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineSchool.AuthServer", "IdentityServer\OnlineSchool.AuthServer\OnlineSchool.AuthServer.csproj", "{F0A82EF3-870A-488E-AFD9-9DA1BB93F73F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,10 @@ Global
 		{DAD30B2B-F37A-4424-9056-E0DB71740935}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAD30B2B-F37A-4424-9056-E0DB71740935}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAD30B2B-F37A-4424-9056-E0DB71740935}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0A82EF3-870A-488E-AFD9-9DA1BB93F73F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0A82EF3-870A-488E-AFD9-9DA1BB93F73F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0A82EF3-870A-488E-AFD9-9DA1BB93F73F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0A82EF3-870A-488E-AFD9-9DA1BB93F73F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +63,7 @@ Global
 		{6A78FF3D-DC44-49F0-AF91-AA626518F74C} = {AC5F1B6D-AA79-4FA3-9AB2-4E1A66EDAF4E}
 		{495E7827-23FC-4164-9A25-01E105523965} = {BD016089-F018-44AE-A766-C2F846AF9898}
 		{DAD30B2B-F37A-4424-9056-E0DB71740935} = {BD016089-F018-44AE-A766-C2F846AF9898}
+		{F0A82EF3-870A-488E-AFD9-9DA1BB93F73F} = {E79B86E8-E503-48B2-A5C6-7A2B34E9BEF6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {225A87C4-AEC5-4768-A9F5-7751F81C558D}
