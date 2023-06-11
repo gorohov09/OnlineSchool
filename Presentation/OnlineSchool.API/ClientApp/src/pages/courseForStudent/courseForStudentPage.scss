@@ -1,0 +1,72 @@
+.wrapper_course {
+    display: flex;
+    min-height: 100vh;
+    
+    .left_side{
+        min-width: 225px;
+    }
+
+    .right_side{
+        flex-basis: 100%;
+        background: linear-gradient(120deg, #dcd3ff, #ffffff, #cbbdff);
+        .main_course {
+            display:flex;
+            flex-direction: column;
+            align-items:center;
+            .main_course__wrapper{
+                margin-top: 50px;
+                max-width: 1400px;
+                border-radius: 10px;
+                background: linear-gradient(#a890fd ,#6439ff);
+                flex: 8;
+                display: flex;
+                flex-direction: column;
+                padding: 40px;
+                justify-content: center;
+                
+        
+                h2 {
+                    font-size: 52px;
+                    color: var(--text-color);
+                    font-weight: 700;
+                    margin-bottom: 40px;
+                }
+        
+                h3 {
+                    margin-top: 20px;
+                    color: var(--text-color);
+                }
+        
+                .video {
+                    display: flex;
+                    border: 1px solid var(--secondary--color);
+                    border-radius:10px;
+                    justify-content: center;
+                    padding: 30px;
+                    iframe {
+                        width: 800px;
+                        height: 500px;
+                    }
+                }
+        
+                .tasksButton {
+                    margin-top: 15px;
+                    display: flex;
+                    justify-content: center;
+                    .solveTask {
+                        color: var(--primary-color);
+                        background-color: var(--text-color);
+                        padding: 10px;
+                        font-size: 15px;
+                        border-radius: 5px;
+                    }
+            
+                    a {
+                        text-decoration: none;
+                    }
+                }
+            } 
+        }
+    }
+    
+}

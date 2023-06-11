@@ -1,0 +1,77 @@
+.module {
+    display: flex;
+    min-height: 100vh;
+    .left_side{
+        min-width: 225px;
+    }
+
+    .right_side{
+        flex-basis: 100%;
+        background: linear-gradient(120deg, #dcd3ff, #ffffff, #cbbdff);
+        .moduleContainer {
+            flex: 6;
+            
+            .addModule {
+                display:flex;
+                flex-direction: column;
+                align-items:center;
+                justify-content: center;
+                .addModule__form{
+                    display: flex;
+                    flex-direction: column;
+                    padding: 40px;
+                    justify-content: center;
+                    align-items: center;
+                    color: var(--text-color);
+
+                    form{
+                        border-radius: 10px;
+                        background: linear-gradient(#a890fd ,#6439ff);
+
+                        .input{
+                            p {
+                                font-size: 1em;
+                                font-weight: 500;
+                                color: white;
+                            }
+                    
+                            input[type=text] {
+                                padding:5px; 
+                                border:2px solid #ccc; 
+                                -webkit-border-radius: 5px;
+                                border-radius: 5px;
+                            }
+                            
+                            input[type=text]:focus {
+                                border-color:#333;
+                            }
+                    
+                            margin-bottom: 15px;
+                        }
+                        
+                    }
+
+                    h2 {
+                        font-size: 24px;
+                        text-align: center;
+                        font-weight: 500;
+                        margin: 30px;
+                    }
+        
+                    span {
+                        font-size: 20px;
+                        font-weight: 400;
+                        margin-bottom: 15px;
+                    }
+        
+                    .save {
+                        width:fit-content;
+                        align-self:center;
+                    }
+                }
+            }
+        }
+    }
+
+    
+}

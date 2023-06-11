@@ -1,0 +1,32 @@
+.wrapper_home {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background: linear-gradient(120deg, #dcd3ff, #ffffff, #cbbdff);
+    min-height: 100vh;
+
+    .all_courses {
+        display: flex;
+        
+        flex-direction: column;
+        padding-left: 50px;
+        padding-right: 50px;
+
+        .popular_courses {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .title_courses {
+            text-align:center;
+            font-size: 30px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-top: 20px;
+        }
+    }
+}
