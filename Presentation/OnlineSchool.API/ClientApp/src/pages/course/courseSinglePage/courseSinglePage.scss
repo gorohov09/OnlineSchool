@@ -1,0 +1,93 @@
+.course {
+    display: flex;
+    
+    .left_side{
+        min-width: 225px;
+        
+    }
+
+    .right_side{
+        .courseContainer {
+            flex: 6;
+    
+            .singleCourse {
+                display: flex;
+                flex-direction: column;
+                padding: 40px;
+                max-width: 800px;
+                margin-top: 50px;
+                // justify-content: center;
+
+                border-radius: 10px;
+                background: linear-gradient(#a890fd ,#6439ff);
+                
+                h2 {
+                    font-size: 36px;
+                    color: var(--text-color);
+                    font-weight: 500;
+                    margin-bottom: 30px;
+                }
+    
+                h3 {
+                    margin-top: 20px;
+                    color: var(--text-color);
+                }
+    
+                span {
+                    font-size: 20px;
+                    color: var(--text-color);
+                    font-weight: 400;
+                    margin-top: 15px;
+                }
+    
+                .dateCourse {
+                    margin-top: 20px;
+                    display: flex;
+                    justify-content: space-around;
+                    width: 700px;
+                }
+    
+                .addLesson {
+                    color: var(--text-color);
+                    background-color: #6439ff;
+                    padding: 10px;
+                    font-size: 15px;
+                    border-radius: 5px;
+                    margin-top: 20px;
+                }
+    
+                .addModule {
+                    color: var(--text-color);
+                    background-color: #6439ff;
+                    padding: 10px;
+                    font-size: 15px;
+                    border-radius: 20px;
+                }
+    
+                .lessons {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                }
+    
+                a {
+                    text-decoration: none;
+                    margin-top: 15px;
+                }
+    
+                .structureCourse {
+                    margin-top: 20px;
+                    display:flex;
+                    justify-content: center;
+                    align-items:center;
+                    flex-direction: column;
+                    .addModule__button{
+                        
+                        margin-bottom: 20px;
+                    }
+                }
+            }
+        }
+    }
+    
+}

@@ -22,4 +22,8 @@
     <ProjectReference Include="..\OnlineSchool.Contracts\OnlineSchool.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ClientApp\" />
+  </ItemGroup>
+
 </Project>
