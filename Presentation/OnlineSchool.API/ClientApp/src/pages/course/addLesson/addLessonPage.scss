@@ -1,0 +1,51 @@
+.lesson {
+    min-height: 100vh;
+    display: flex;
+    .left_side{
+        min-width: 225px;
+    }
+
+    .right_side{
+        flex-basis: 100%;
+        background: linear-gradient(120deg, #dcd3ff, #ffffff, #cbbdff);
+        .lessonContainer {
+            flex: 6;
+            display:flex;
+            flex-direction: column;
+            align-items:center;
+    
+            .addLesson {
+                display: flex;
+                flex-direction: column;
+                padding: 40px;
+                justify-content: center;
+                .addLesson__form{
+                    .lesson__form{
+                        border-radius: 10px;
+                        background: linear-gradient(#a890fd ,#6439ff);
+                        h2 {
+                            font-size: 24px;
+                            color: var(--text-color);
+                            font-weight: 500;
+                            margin: 30px;
+                        }
+            
+                        span {
+                            font-size: 20px;
+                            color: var(--text-color);
+                            font-weight: 500;
+                            margin-bottom: 15px;
+                        }
+            
+                        .save {
+                            width:fit-content;
+                            align-self:center;
+                        }
+                        
+                    }
+                }
+                
+            }
+        }
+    }
+}

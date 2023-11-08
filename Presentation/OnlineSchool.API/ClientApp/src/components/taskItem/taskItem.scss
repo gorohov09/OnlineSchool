@@ -1,0 +1,34 @@
+.taskItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //border: 3px solid rgb(144, 8, 255);
+    background-color: red;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+    cursor: pointer;
+
+    .text {
+        font-size: 15px;
+        color: white;
+        font-weight: 700;
+    }
+}
+
+.select_task {
+    border: 3px solid #8462ff;;
+}
+
+.firt_attempt {
+    background-color: rgb(119, 119, 119);
+}
+
+.solve_task {
+    background-color: #a890fd;;
+}
+
+.not_solve_task {
+    background-color: #ae007c;
+}

@@ -1,0 +1,17 @@
+.wrapper_student_rating_course {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    h1 {
+        font-weight: 500;
+        font-size: 50px;
+        color:#6a5be2;
+        margin-top: 15px;
+    }
+
+    .student_rating_course {
+        min-width: 1400px;
+        margin-top: 30px;
+    }
+}
